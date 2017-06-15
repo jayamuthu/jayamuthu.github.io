@@ -1,4 +1,4 @@
-Sitemap: http://johntfoster.github.io/sitemapindex.xml
+Sitemap: https://vanangamudi.gitlab.io/sitemapindex.xml
 
 User-Agent: *
-Host: johntfoster.github.io
+Host: vanangamudi.gitlab.io
