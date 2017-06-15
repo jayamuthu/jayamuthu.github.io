@@ -1,11 +1,13 @@
 .. title: VanangamudiMNIST
 .. slug: vanangamudimnist
 .. date: 2017-04-27 23:00:00 UTC-03:00
-.. tags: deep learning, intro, mnist
+.. tags: deep learning, intro, mnist, draft
 .. description:
 .. category: neural networks
 .. section: neural networks
 
+WORK IN PROGRESS
+   
 .. code:: python3
 
     import torch
@@ -111,10 +113,6 @@ Take a look into how the data looks like
     from mpl_toolkits.axes_grid1 import ImageGrid
     from PIL import Image
     
-    def showImage(path):
-        image = Image.open(path)
-        image.show()
-    
     fig = plt.figure(1,(10., 50.))
     grid = ImageGrid(fig, 111,
                      nrows_ncols=(2 , 5),
@@ -151,31 +149,7 @@ MODEL
 .. code:: python3
 
     model = Model()
-    optimizer = optim.SGD(model.parameters(), lr=0.1, momentum=0.1)
-
-Training
---------
-
-Train for a single epoch
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code:: python3
-
-    def train(model, optim, dataset):
-        model.train()
-        avg_loss = 0
-        for i, (data, target) in enumerate(dataset):
-            data = data.view(1, -1)
-            data, target = Variable(data), Variable(target.long())
-            optimizer.zero_grad()
-            output = model(data)
-    
-            loss = F.nll_loss(output, target)
-            loss.backward()
-            optimizer.step()
-            avg_loss += loss.data[0]
-            
-        return avg_loss/len(dataset)
+    optimizer = optim.SGD(model.parameters(), lr=1, momentum=0.1)
 
 DATASET - MODEL - OUTPUT
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -208,8 +182,30 @@ DATASET - MODEL - OUTPUT
 
 
 
-.. image::  /images/vanangamudimnist/output_12_0.png
+.. image::  /images/vanangamudimnist/output_9_0.png
 
+
+Lets try to understand what is in the picture above.
+
+The first one is the collection of all the data that we have. The second
+one is the matrix of weights connecting the input of 25 input neurons to
+10 output neurons. And the last one we will get to it little later.
+
+What is special about 25 and 10 here?
+                                     
+
+Nothing. Our dataset is a set of images of numbers each having a size of
+5x5 ==> 25. And we have how many different numbers a hand? 0,1,2...9 ==>
+10 numbers or 10 different classes of output(this will become clear in
+the next post)
+
+I can hear you screaming,
+
+"no no no, get back to the dataset? What is that weird picture on the
+left, having weird zero in the top-left, and three on the bottom-right
+and some messed up fours and eights in the middle."
+
+Let get to it. Look the picture below.
 
 .. code:: python3
 
@@ -238,27 +234,141 @@ DATASET - MODEL - OUTPUT
 
 
 
-.. image::  /images/vanangamudimnist/output_13_0.png
+.. image::  /images/vanangamudimnist/output_11_0.png
 
 
 
-.. image::  /images/vanangamudimnist/output_13_1.png
+.. image::  /images/vanangamudimnist/output_11_1.png
 
+
+Voila!! We have just arranged the image matrix into a vector. The reason
+is it reduces the computational complexity to a little and makes it
+easier to operate over mutiple samples of data at the same time. We saw
+that the model - matrix which connects the 25 input neurons to 10 output
+neurons. So we cannot keep the input images as matrices , if we do, then
+the result of matrix multiplication is not same as the output of the
+neural network which looks at all the pixels of the image and say how
+similar the input image is to the classes of numbers.
+
+This is important to remember, **a simple neural network looks at the
+input and try to figure out which class does this input belong to**
+
+in our case inputs are the images of numbers, and outputs are how
+similar are the classes to the input. Th output neuron with highest
+value is more closer to the input and the output neuron with least value
+is very NOT similar to the input.
+
+For example after training, if we feed the image of number 3, the output
+neurons corresponding to 3, 8, 9 and probably 7 will have larger values
+and the output neurons corresponding to 1 and 6 will have the least
+value. Don't worry if you don't understand why, it will become clearer
+as we go on.
 
 How many correct predictions without any training
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Too much theory, lets get our hands dirty. Let see how many numbers did
+our model predicted correctly.
+
 .. code:: python3
 
-    pred = output.data.max(1)[1].squeeze()
+    # Remember that output = model(Variable(data))
+    pred = output.data.max(1)[1].squeeze()    
+    print(pred.size(), target.size())
     correct = pred.eq(target.long()).sum()
     print('correct: {}/{}'.format(correct, len(dataset)))
 
 
 .. parsed-literal::
 
+    torch.Size([10]) torch.Size([10, 1])
     correct: 0/10
 
+
+NONE out of TEN
+~~~~~~~~~~~~~~~
+
+That is right it predicted none out of ten. We feeded our network with
+all of our data and asked it to figure what is the number that is in the
+image. Remember what we learned earlier about output neurons. The neural
+network tell us which number is present in the image by lighting up that
+corresponding neuron. Lets say if gave 6, the network will light up the
+6th neuron will be the brightest, i.e the 6th neurons value will be the
+highest compared to all other neurons.
+
+But our network above lit up wrong bulbs, for all the output. None out
+of ten. But why? Isn't neural network are supposed to smarter? Well yes
+and no. That is the difference between traditional image processing
+algorithms and neural networks.
+
+Wait, let me tell you a story, that I heard. During the second world
+war, there were skilled flight spotter. Their job was to spot and report
+if any air craft was approaching. As the war got intense, there was need
+for more spotters and there were lot of volunteers even from schools and
+colleges but there was very little time to train them. So the skilled
+spotters, listed out a set of things to look for in the enemy flights
+and asked the new volunteers to memorize them as part of the training.
+But the volunteers never got good at spotting. Ooosh, we will continue
+the story later, lets get back to the point.
+
+In classical image processing systems, we humans think, think and think
+and think a lot more and come up a set of rules or instructions, just
+like those skilled spotters. We give those instructions to the system,
+to make it understand how to process the images to extract
+information(called features - things to look for in the enemy flight)
+from them, and then use that information to make further decisions, such
+predicting what number is in the image. We feed that system with
+knowledge first before asking it to do anything for us.
+
+But did we feed any knowledge to network? We just told it the input size
+is 25 and output size is 10. How can you expect someone to guess what is
+in your hand, by just telling them its size. That is rude of you. Shame
+on you. Okay okay. How do we make the system more knowledgable about the
+input? Training. The holy grail of deep learning.
+
+What is training?
+~~~~~~~~~~~~~~~~~
+
+We know that the knowledge of the neural network is in the weights of
+the connections - represented as matrix above. We also know that by
+multiplying this matrix by an input image vector we will get an output
+which is a set of scores that describes, how similar the input is to the
+output neurons.
+
+Imagine giving random values to the weights and feed the network with
+our data and see whether it predicts all our numbers correctly. If it
+did, fine and dandy, but if not give random values to the weights again
+and repeat the process until our network predicts all the numbers
+correctly. That is training in most simple form.
+
+But think about how long will it take to find such random magical values
+for every weight in the network to make it work as expected. We don't
+know that for sure. right? You wanna continue the story. don't you?
+Alright.
+
+The skilled people tried as much as they can to identify the
+distinguishing features of the home and enemy air crafts and tried to
+make the volunteers understand them. It never worked. Then they changes
+the strategy. They put them on the job and made them learn themselves.
+i.e every skilled spotter will have ten volunteers and whenever an
+aircraft is seen, the volunteers will shout the kind of the plane, say
+'german'. Then the skilled one, will reveal the correct answer. This
+technique was extrememly sucessful, a spotter sent in an emergency
+message not only identifying it as a German aircraft, but also the
+correct make and
+model..\ `more <http://www.colebrookhistoricalsociety.org/PDF%20Images/Air%20Spotters%20of%20WWII.pdf>`__
+
+Hey, why don't we try the same with our network? Lets feed the images
+into it and shout the answer into its tiny little output neurons so that
+it can update its weights by itself. Now I know you're asking how can we
+expect, a dumb network which cannot even predict a number in an image to
+train itself? Well that is where it gets interesting. I must now ask you
+to read backpropogation algorithm to understand how the training works.
+Take your time, this is at the heart of deep learning and neural
+networks. I suggest Michael Nielson's
+`book <http://neuralnetworksanddeeplearning.com/chap2.html>`__
+
+So now you understand why it predicted none out of ten correctly.
 
 lets combine the above two blocks and make a function out of it
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -304,11 +414,13 @@ lets combine the above two blocks and make a function out of it
             
         return dataset_img, model_img, output_img 
 
-Lets take a closer look
-~~~~~~~~~~~~~~~~~~~~~~~
+Lets take a closer look at DATASET - MODEL - OUTPUT
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-with help from,
-https://stackoverflow.com/questions/20998083/show-the-values-in-the-grid-using-matplotlib
+*with help from,
+https://stackoverflow.com/questions/20998083/show-the-values-in-the-grid-using-matplotlib*
+
+and understand what those colors mean.
 
 .. code:: python3
 
@@ -316,7 +428,7 @@ https://stackoverflow.com/questions/20998083/show-the-values-in-the-grid-using-m
     fig = plt.figure(1, (80., 80.))
     grid = ImageGrid(fig, 111,
                          nrows_ncols=(1, 3),
-                         axes_pad=0.1)
+                         axes_pad=0.5)
     
     
     data = [data.view(-1) for data, target in dataset]
@@ -353,6 +465,14 @@ https://stackoverflow.com/questions/20998083/show-the-values-in-the-grid-using-m
 .. image::  /images/vanangamudimnist/output_19_0.png
 
 
+If you zoom in the picture you will see numbers corresponding to the
+colors - violet means the lowest value, and yellow is the highest
+values. i.e violet does not mean 0 and yellow does not mean 1 as you
+might think from the dataset image. Take look at the following. It shows
+a single row from the output image. Go on pick the darkest square in the
+output above. First row itself has the darkeset one right, corresponding
+to number 0, i.e *data[0]* the least value from that row is **-3.2037**
+
 .. code:: python3
 
     print(model(Variable(data[0].view(1, -1))))
@@ -361,7 +481,25 @@ https://stackoverflow.com/questions/20998083/show-the-values-in-the-grid-using-m
 .. parsed-literal::
 
     Variable containing:
-    -2.6310 -2.2685 -2.7027 -1.6844 -2.3093 -2.8675 -2.0508 -2.2570 -2.9351 -2.0451
+    -2.1720 -2.6992 -2.3346 -3.2037 -2.2863 -2.7303 -1.9134 -3.1497 -2.5078 -1.4163
+    [torch.FloatTensor of size 1x10]
+    
+
+
+Similarly the brightest yellow is in the second last row, corresonding
+to number 8 whose value is **-1.3997** you can see below. The reason I
+am stressing about this fact is, this is will influence how we interpret
+the following images.
+
+.. code:: python3
+
+    print(model(Variable(data[8].view(1, -1))))
+
+
+.. parsed-literal::
+
+    Variable containing:
+    -2.3037 -2.7743 -2.3580 -3.0758 -2.3436 -2.6253 -2.0029 -3.0572 -2.3033 -1.3997
     [torch.FloatTensor of size 1x10]
     
 
@@ -405,6 +543,27 @@ https://stackoverflow.com/questions/20998083/show-the-values-in-the-grid-using-m
     
         plt.show()
 
+What does each row mean?
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+DATASET
+'''''''
+numbers, each row is a number. first one is 0 second one is 1 and so on.
+
+MODEL
+'''''
+weights corresponding to pixels in the image for a number.
+first row is for 0 and last one is for 9.
+
+OUTPUT
+''''''
+scores of similarity. relative resemblance of the input number to all output
+numbers. First row contains scores of 0, how similar it is to all other
+numbers first square in the first row is how simlilar 0 is to 0, second
+square similar it is to 1. Now the scores are not only incorrect but
+stupid. This will become better and clear as we train the network. Lets
+take look at the DATASET-MODEL-OUTPUT trinity once again before training
+
 Before Training
 ~~~~~~~~~~~~~~~
 
@@ -415,17 +574,44 @@ Before Training
 
 
 
-.. image::  /images/vanangamudimnist/output_23_0.png
+.. image::  /images/vanangamudimnist/output_27_0.png
 
 
 .. parsed-literal::
 
-    correct: 0/10, loss:2.4226558208465576
+    correct: 2/10, loss:5.612292289733887
 
 
 
-.. image::  /images/vanangamudimnist/output_23_2.png
+.. image::  /images/vanangamudimnist/output_27_2.png
 
+
+Training
+--------
+
+Train for a single epoch
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Training for a single epoch means run over all the ten images we have
+now.
+
+.. code:: python3
+
+    def train(model, optim, dataset):
+        model.train()
+        avg_loss = 0
+        for i, (data, target) in enumerate(dataset):
+            data = data.view(1, -1)
+            data, target = Variable(data), Variable(target.long())
+            optimizer.zero_grad()
+            output = model(data)
+    
+            loss = F.nll_loss(output, target)
+            loss.backward()
+            optimizer.step()
+            avg_loss += loss.data[0]
+            
+        return avg_loss/len(dataset)
 
 Train the model once and see how it works
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -439,7 +625,7 @@ Train the model once and see how it works
 
 .. parsed-literal::
 
-    2.7791757822036742
+    5.025314002856613
 
 
 
@@ -450,20 +636,20 @@ Train the model once and see how it works
 
 
 
-.. image::  /images/vanangamudimnist/output_26_0.png
+.. image::  /images/vanangamudimnist/output_33_0.png
 
 
 .. parsed-literal::
 
-    correct: 1/10, loss:2.178180694580078
+    correct: 2/10, loss:4.517192363739014
 
 
 
-.. image::  /images/vanangamudimnist/output_26_2.png
+.. image::  /images/vanangamudimnist/output_33_2.png
 
 
-train once more and see the internals
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+train once again
+~~~~~~~~~~~~~~~~
 
 .. code:: python3
 
@@ -474,7 +660,7 @@ train once more and see the internals
 
 .. parsed-literal::
 
-    2.5523715019226074
+    6.229383989237249
 
 
 
@@ -485,17 +671,27 @@ train once more and see the internals
 
 
 
-.. image::  /images/vanangamudimnist/output_29_0.png
+.. image::  /images/vanangamudimnist/output_36_0.png
 
 
 .. parsed-literal::
 
-    correct: 3/10, loss:2.002211093902588
+    correct: 2/10, loss:5.612292289733887
 
 
 
-.. image::  /images/vanangamudimnist/output_29_2.png
+.. image::  /images/vanangamudimnist/output_36_2.png
 
+
+As you can see the diagonal of the output matrix is getting brighter and
+brighter.
+
+That is what we want right? For each number, say for number 0. the first
+square in first row should be the brightest one. 1. the second square in
+second row should be the brightest one 2. the third square in third row
+should be the brightest one and so on.
+
+Lets see the numbers directly.
 
 .. code:: python3
 
@@ -535,54 +731,78 @@ train once more and see the internals
     
     
     
-    Columns 0 to 9 
-    -0.0775 -0.0061 -0.0071  0.1463 -0.1230  0.0227  0.0463 -0.0465 -0.1198  0.0708
-    -0.0960  0.1528 -0.0926  0.0864 -0.1663  0.0769 -0.0363  0.1534  0.1049 -0.1288
-     0.0276 -0.0589  0.0924 -0.0903 -0.0308 -0.0125  0.0882 -0.2251 -0.0315  0.1383
-     0.0111 -0.1083  0.0613 -0.0896 -0.0466  0.0821 -0.1129 -0.1794 -0.1222  0.1119
-    -0.0691  0.1172 -0.0798 -0.2986  0.1729 -0.0716 -0.0129  0.0876 -0.0316  0.1776
-    -0.0339 -0.1906 -0.1352  0.0487  0.0832  0.1772 -0.1550  0.0129  0.0819 -0.2758
-    -0.1543 -0.1738  0.0953 -0.2080  0.1313 -0.0913  0.0670 -0.1560  0.1633 -0.0711
-    -0.0094 -0.1027  0.0004 -0.0643  0.1243  0.1438  0.1580 -0.2372  0.1431  0.1654
-     0.1362 -0.1573  0.1594 -0.0289  0.1687 -0.1899  0.1157 -0.0792 -0.1001 -0.0151
-    -0.0201  0.0337 -0.0241  0.2104  0.1608  0.0809 -0.1552 -0.0117  0.1460  0.0480
+    Columns 0 to 5 
+    -2.1409e-02  4.2460e-03 -1.2784e-01 -9.2460e-01  2.2646e-01 -1.6198e-01
+    -1.7675e-01 -1.5970e-01 -5.5067e-01  5.3697e-01 -6.8309e-01 -9.3652e-02
+     1.2107e-01 -3.7729e-03 -1.2085e-01 -2.7483e-01 -1.0604e-01 -2.0264e-02
+    -1.4431e-01  1.8848e-01 -4.8268e-01  1.6243e+00 -4.7103e-01 -1.2424e-01
+    -8.4964e-02  1.3595e-01  8.2023e-02 -2.3063e+00  6.9857e-02 -7.0763e-02
+    -1.8295e-01 -1.3728e-01 -2.6704e-01 -2.1062e-01 -2.4467e-01  4.2020e-02
+    -1.3971e-01 -1.7245e-01 -5.2512e-01 -5.2434e-01 -5.6130e-01  5.2664e-02
+    -2.2362e-05  3.4310e-07  9.5566e-01  1.2486e+00  1.1215e+00  7.6289e-02
+    -5.5967e-02 -2.0803e-02  1.0438e-01  1.4612e-02 -8.5276e-02 -1.2986e-01
+     1.0088e-01 -1.2029e-02  7.5389e-01  7.1461e-01  7.7840e-01  6.5960e-03
     
-    Columns 10 to 19 
-    -0.1558  0.1090  0.0960 -0.1309 -0.0409 -0.0088  0.0410 -0.0089  0.0684  0.0250
-     0.0668 -0.1753 -0.2620 -0.0575 -0.2509  0.1885 -0.1592 -0.0623  0.0243 -0.0514
-     0.1202 -0.1700 -0.0461 -0.0950  0.0881 -0.0374  0.1558  0.1514  0.0030 -0.1964
-     0.1443 -0.1058 -0.3234 -0.1575  0.0171  0.1277  0.1745  0.0623  0.1512  0.1205
-    -0.1277  0.1327  0.0083  0.0360  0.1246 -0.0239 -0.1319 -0.1319  0.0878 -0.1434
-     0.1563  0.1458  0.2015 -0.0692 -0.1107 -0.0947 -0.1483 -0.1704  0.1684  0.2312
-    -0.1601  0.1189 -0.1619  0.1456  0.1256  0.0410  0.0905  0.1292 -0.0377  0.1647
-     0.0471  0.0785  0.0429 -0.0644  0.0917 -0.1105  0.1714 -0.0471  0.0624  0.0284
-     0.0962 -0.1139 -0.0221  0.2518  0.1174 -0.1687  0.0239  0.2354  0.1081 -0.1129
-    -0.0703  0.1948  0.1462 -0.0811  0.0574 -0.0644 -0.1046 -0.2400  0.0926  0.2163
+    Columns 6 to 11 
+    -3.1649e-02  1.1384e+00 -1.1480e+00  1.7545e-01  1.7853e-01 -6.7999e-03
+    -6.8279e-02  7.8894e-01  9.4570e-01 -4.1318e-01 -1.0593e-01  1.4646e-01
+     4.0769e-02 -1.0477e-01  1.3396e-01  1.7865e-03 -8.4921e-02 -3.6588e-02
+     1.3825e-01 -2.6876e+00 -1.9398e-01  2.6879e-01 -1.3638e-01  1.4243e-01
+    -1.0103e-01  3.4419e-01 -1.2307e-01  1.4506e+00 -9.0435e-02  1.9610e-01
+     4.1847e-02 -7.2008e-02 -1.5228e-01 -2.7651e-01 -4.1503e-02  1.3833e-01
+    -1.8495e-01  6.0923e-01  4.7509e-02 -2.8791e+00  9.2975e-02 -1.2441e-01
+     1.8534e-01 -9.9896e-01  4.5080e-02  1.1106e+00  1.4632e-01  1.9500e-01
+     9.2784e-02  3.3228e-02  1.6034e-01 -2.1986e-01  1.1957e-01  2.8319e-02
+     7.8399e-02  9.5756e-01 -1.1282e-01  9.0589e-01 -1.6549e-01  1.9607e-01
     
-    Columns 20 to 24 
-    -0.0508 -0.0765 -0.0687  0.0739 -0.2297
-     0.0377 -0.0319  0.0110  0.2238 -0.0110
-     0.1466  0.1324 -0.0583 -0.0821  0.1188
-     0.1669  0.1309  0.1754 -0.0106  0.1148
-    -0.1915  0.0448 -0.0192 -0.0364 -0.1001
-    -0.0478 -0.0359  0.1435 -0.0016 -0.0797
-     0.1716  0.0418  0.0949  0.0791 -0.0613
-     0.1299  0.0025 -0.2672 -0.0257  0.0699
-    -0.0256 -0.0980  0.0459 -0.1216  0.0568
-     0.0782 -0.0537  0.2157  0.1004 -0.1848
+    Columns 12 to 17 
+     1.7040e-01 -2.8453e+00 -2.3460e-02 -3.9600e-02  1.9960e-01  3.8225e-01
+    -6.1945e-01  6.5375e-01 -6.4628e-01  1.6838e-01  5.6368e-02 -3.6657e-01
+     2.1246e+00 -1.2438e-01  6.3885e-03  1.9497e-01  1.0285e-01  2.0309e+00
+    -2.6819e+00 -2.8137e-01 -3.0056e-01 -1.4555e-01  4.7257e-02 -1.3722e-01
+     6.0960e-01  4.6798e-01 -2.0350e-01 -1.4253e-01  1.5675e-01 -2.6489e-01
+     7.6892e-02 -4.7542e-02 -2.6124e-01  1.5899e-01  6.9080e-02 -2.1853e+00
+     6.5536e-01  7.3328e-01 -6.0622e-01 -1.8997e-01  4.8286e-02  6.2121e-01
+    -8.1130e-01 -6.0516e-01  1.0741e+00 -1.2013e-01  4.1172e-02 -7.6751e-01
+     9.1453e-02  6.6864e-02 -1.4625e-01 -5.4003e-02  5.9834e-02  2.0818e+00
+     8.9738e-01  2.1355e+00  9.2207e-01  3.1551e-02 -6.6280e-02 -1.3800e+00
+    
+    Columns 18 to 23 
+    -8.9352e-01  2.0858e+00  1.7814e-01  4.8872e-02 -8.2379e-01 -1.0105e+00
+     1.2774e+00 -4.2619e-01  1.1048e-01  1.8686e-02  5.1238e-01  5.1993e-01
+     3.1865e-02 -2.3320e+00 -3.7356e-02 -1.3884e-01 -2.7684e-01 -1.5349e-02
+    -7.1277e-02 -2.7990e-01  1.3008e-01 -3.7282e-02  1.8002e+00  1.6977e+00
+    -6.3949e-02  3.4460e-02  1.7473e-01 -1.7493e-02 -1.6987e+00 -1.6962e+00
+     1.1112e-01  4.3918e-02 -1.0419e-01  1.5245e-02  4.3709e-02 -2.7670e-01
+     1.4553e-01 -7.1268e-01  1.8934e-01 -6.1015e-02  4.4298e-01  4.7727e-01
+    -4.3424e-02  1.1260e+00  7.9789e-02 -1.1804e-01 -8.8973e-01 -7.3535e-01
+     1.3687e-01 -2.0125e-02  1.5918e-01  3.5658e-02  1.5523e-02 -2.8574e-02
+     1.7359e-01  7.8479e-01  2.7161e-02 -1.3845e-01  6.6989e-01  1.0438e+00
+    
+    Columns 24 to 24 
+    -9.7401e-01
+     4.8338e-01
+    -9.6530e-02
+    -4.5731e-01
+     1.0194e-01
+    -7.3102e-02
+    -6.9555e-01
+     1.2106e+00
+    -1.0058e-01
+     8.9773e-01
     [torch.FloatTensor of size 10x25]
     
     
-    -2.6310 -2.2685 -2.7027 -1.6844 -2.3093 -2.8675 -2.0508 -2.2570 -2.9351 -2.0451
-    -2.3111 -2.5781 -2.8429 -2.1439 -2.1065 -2.3409 -2.2654 -2.1675 -2.5843 -1.9814
-    -2.4300 -2.5531 -2.7617 -2.0206 -2.1601 -3.1099 -1.8916 -2.0229 -2.3853 -2.2703
-    -2.4533 -2.4207 -2.7293 -2.0219 -2.3339 -3.0570 -1.6293 -2.3657 -2.6332 -2.1060
-    -2.5164 -2.4800 -2.3811 -2.0388 -2.4169 -2.8624 -1.8470 -2.0271 -2.4557 -2.3934
-    -2.3725 -2.3360 -2.8593 -2.0409 -2.3049 -2.6920 -2.0207 -2.2202 -2.6686 -1.9323
-    -2.4916 -2.3202 -2.8539 -1.8623 -2.3450 -2.7756 -1.9968 -2.1851 -2.5846 -2.0858
-    -2.5090 -2.3410 -2.2558 -1.9410 -2.5716 -2.8679 -1.8594 -2.4068 -2.5268 -2.1622
-    -2.4983 -2.3660 -2.8174 -1.8228 -2.2903 -2.9784 -1.8904 -2.1410 -2.7288 -2.1487
-    -2.3764 -2.3790 -2.8200 -1.9986 -2.2475 -2.8920 -1.9115 -2.1734 -2.8101 -1.9925
+    -1.8951 -3.0990 -2.4551 -3.0093 -1.7739 -2.6089 -2.5364 -2.0660 -2.1625 -2.2514
+    -2.1781 -2.7517 -2.5426 -2.8550 -2.4796 -2.4915 -2.2114 -2.0888 -1.8542 -2.0388
+    -2.1145 -2.6975 -2.5567 -2.8537 -1.9199 -2.7830 -2.3421 -1.8379 -2.2474 -2.2321
+    -2.1322 -2.8608 -2.4920 -2.5258 -1.8850 -2.8998 -2.5453 -1.8023 -2.3346 -2.1681
+    -1.8469 -2.9699 -2.2015 -3.1667 -2.0084 -2.6576 -2.4082 -2.2481 -2.3704 -1.9320
+    -2.0919 -3.1307 -2.5809 -3.1170 -1.8169 -2.5929 -2.4064 -2.0703 -2.0027 -2.0852
+    -1.9148 -3.0944 -2.6748 -3.1971 -1.8961 -2.4784 -2.3848 -2.0387 -2.0052 -2.2390
+    -2.0944 -2.7722 -2.2755 -2.6268 -1.8789 -2.8344 -2.4311 -1.9023 -2.4157 -2.2898
+    -1.7936 -3.0717 -2.5689 -3.0730 -1.9359 -2.6488 -2.4653 -1.9917 -2.1822 -2.1618
+    -1.9710 -3.1083 -2.4753 -2.9933 -1.8570 -2.7636 -2.4873 -2.0237 -2.1800 -2.0083
     [torch.FloatTensor of size 10x10]
     
 
@@ -590,42 +810,187 @@ train once more and see the internals
 Train over multiple epochs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+means run over the all the samples multiple times.
+
 .. code:: python3
 
-    def train_epochs(epochs, model, optim, dataset, print_every=100):
+    def train_epochs(epochs, model, optim, dataset, print_every=10):
         snaps = []
-        for epoch in range(epochs):
+        for epoch in range(epochs+1):
             avg_loss = train(model, optim, dataset)
             if not epoch % print_every:
+                print('\n\n========================================================')
                 print('epoch: {}, loss:{}'.format(epoch, avg_loss/len(dataset)/10))
                 snaps.append(test_and_print(model, dataset))
                 
-    
-                return snaps
+        return snaps
 
 .. code:: python3
 
     model = Model()
     optimizer = optim.SGD(model.parameters(), lr=0.1, momentum=0.1)
 
+Lets train for 100 epochs and see how the model evolves. We see that in
+the output image, the diagonal get brigher and brighter and some other
+pixels getting darker and darker. It appears to be smoothing over time.
+Also see that after just 10 epochs the network predicts 9/10 correctly
+and then after 20 epochs it mastered the task, predicting 10/10 all the
+time. But we already know that is what we want and we know why. Lets
+focus on the model for while, because that is where the secret lies.
+
 .. code:: python3
 
-    snaps = train_epochs(100, model, optimizer, dataset)
+    snaps = train_epochs(30, model, optimizer, dataset, print_every=3)
 
 
 .. parsed-literal::
 
-    epoch: 0, loss:0.024241248846054074
+    
+    
+    ========================================================
+    epoch: 0, loss:0.026460402011871338
 
 
 
-.. image::  /images/vanangamudimnist/output_34_1.png
+.. image::  /images/vanangamudimnist/output_43_1.png
 
 
 .. parsed-literal::
 
-    correct: 1/10, loss:2.3493340015411377
+    correct: 2/10, loss:2.073272466659546
+    
+    
+    ========================================================
+    epoch: 3, loss:0.021199819922447204
 
+
+
+.. image::  /images/vanangamudimnist/output_43_3.png
+
+
+.. parsed-literal::
+
+    correct: 4/10, loss:1.6355892419815063
+    
+    
+    ========================================================
+    epoch: 6, loss:0.017176918864250185
+
+
+
+.. image::  /images/vanangamudimnist/output_43_5.png
+
+
+.. parsed-literal::
+
+    correct: 8/10, loss:1.3098194599151611
+    
+    
+    ========================================================
+    epoch: 9, loss:0.014191543579101563
+
+
+
+.. image::  /images/vanangamudimnist/output_43_7.png
+
+
+.. parsed-literal::
+
+    correct: 9/10, loss:1.0765085220336914
+    
+    
+    ========================================================
+    epoch: 12, loss:0.011957092225551604
+
+
+
+.. image::  /images/vanangamudimnist/output_43_9.png
+
+
+.. parsed-literal::
+
+    correct: 10/10, loss:0.906408965587616
+    
+    
+    ========================================================
+    epoch: 15, loss:0.010259300589561463
+
+
+
+.. image::  /images/vanangamudimnist/output_43_11.png
+
+
+.. parsed-literal::
+
+    correct: 10/10, loss:0.7792903184890747
+    
+    
+    ========================================================
+    epoch: 18, loss:0.00894222415983677
+
+
+
+.. image::  /images/vanangamudimnist/output_43_13.png
+
+
+.. parsed-literal::
+
+    correct: 10/10, loss:0.6815679669380188
+    
+    
+    ========================================================
+    epoch: 21, loss:0.007896171763539314
+
+
+
+.. image::  /images/vanangamudimnist/output_43_15.png
+
+
+.. parsed-literal::
+
+    correct: 10/10, loss:0.6043521165847778
+    
+    
+    ========================================================
+    epoch: 24, loss:0.007046647027134896
+
+
+
+.. image::  /images/vanangamudimnist/output_43_17.png
+
+
+.. parsed-literal::
+
+    correct: 10/10, loss:0.5418585538864136
+    
+    
+    ========================================================
+    epoch: 27, loss:0.0063434053510427486
+
+
+
+.. image::  /images/vanangamudimnist/output_43_19.png
+
+
+.. parsed-literal::
+
+    correct: 10/10, loss:0.4902641177177429
+    
+    
+    ========================================================
+    epoch: 30, loss:0.005752057082951069
+
+
+
+.. image::  /images/vanangamudimnist/output_43_21.png
+
+
+.. parsed-literal::
+
+    correct: 10/10, loss:0.4469718337059021
+
+
+Lets put all those picture above into a single one to get a big picture
 
 .. code:: python3
 
@@ -646,1049 +1011,164 @@ Train over multiple epochs
 
 
 
-.. image::  /images/vanangamudimnist/output_35_0.png
+.. image::  /images/vanangamudimnist/output_45_0.png
+
+
+But before that, lets train it for few thousand epochs so the network
+get more clear picture of the data :)
+
+.. code:: python3
+
+    snaps = train_epochs(100000, model, optimizer, dataset, print_every=20000)
+
+
+.. parsed-literal::
+
+    
+    
+    ========================================================
+    epoch: 0, loss:1.258878206499503e-06
+
+
+
+.. image::  /images/vanangamudimnist/output_47_1.png
+
+
+.. parsed-literal::
+
+    correct: 10/10, loss:0.00012586693628691137
+    
+    
+    ========================================================
+    epoch: 20000, loss:1.0712449220591226e-06
+
+
+
+.. image::  /images/vanangamudimnist/output_47_3.png
+
+
+.. parsed-literal::
+
+    correct: 10/10, loss:0.00010710894275689498
+    
+    
+    ========================================================
+    epoch: 40000, loss:9.329484500995023e-07
+
+
+
+.. image::  /images/vanangamudimnist/output_47_5.png
+
+
+.. parsed-literal::
+
+    correct: 10/10, loss:9.328305895905942e-05
+    
+    
+    ========================================================
+    epoch: 60000, loss:8.258246189143392e-07
+
+
+
+.. image::  /images/vanangamudimnist/output_47_7.png
+
+
+.. parsed-literal::
+
+    correct: 10/10, loss:8.257329318439588e-05
+    
+    
+    ========================================================
+    epoch: 80000, loss:7.412774466502015e-07
+
+
+
+.. image::  /images/vanangamudimnist/output_47_9.png
+
+
+.. parsed-literal::
+
+    correct: 10/10, loss:7.412034028675407e-05
+    
+    
+    ========================================================
+    epoch: 100000, loss:6.743323947375758e-07
+
+
+
+.. image::  /images/vanangamudimnist/output_47_11.png
+
+
+.. parsed-literal::
+
+    correct: 10/10, loss:6.74271141178906e-05
 
 
 .. code:: python3
 
-    snaps = train_epochs(100000, model, optimizer, dataset, print_every=1000)
-
-
-.. parsed-literal::
-
-    epoch: 0, loss:1.4979378305724824e-05
-
-
-
-.. image::  /images/vanangamudimnist/output_36_1.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0014949440956115723
-    epoch: 1000, loss:1.3566501729656011e-05
-
-
-
-.. image::  /images/vanangamudimnist/output_36_3.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0013541923835873604
-    epoch: 2000, loss:1.2397395898005925e-05
-
-
-
-.. image::  /images/vanangamudimnist/output_36_5.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0012376849772408605
-    epoch: 3000, loss:1.141426396497991e-05
-
-
-
-.. image::  /images/vanangamudimnist/output_36_7.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0011396838817745447
-    epoch: 4000, loss:1.0574486601399258e-05
-
-
-
-.. image::  /images/vanangamudimnist/output_36_9.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0010559528600424528
-    epoch: 5000, loss:9.851084818365054e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_11.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0009838090045377612
-    epoch: 6000, loss:9.220464067766443e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_13.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.000920907303225249
-    epoch: 7000, loss:8.666477806400509e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_15.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0008656416903249919
-    epoch: 8000, loss:8.17526801256463e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_17.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.000816631130874157
-    epoch: 9000, loss:7.73639925319003e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_19.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0007728362688794732
-    epoch: 10000, loss:7.342388962570113e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_21.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.000733515596948564
-    epoch: 11000, loss:6.987177541304847e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_23.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0006980619509704411
-    epoch: 12000, loss:6.66436344909016e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_25.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0006658405181951821
-    epoch: 13000, loss:6.370135299221147e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_27.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0006364684668369591
-    epoch: 14000, loss:6.1013935264782045e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_29.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0006096391589380801
-    epoch: 15000, loss:5.854485207237304e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_31.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0005849882145412266
-    epoch: 16000, loss:5.626929625577759e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_33.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0005622674943879247
-    epoch: 17000, loss:5.416594656708185e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_35.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0005412654136307538
-    epoch: 18000, loss:5.2213049784768376e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_37.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0005217638099566102
-    epoch: 19000, loss:5.039620846218896e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_39.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0005036209477111697
-    epoch: 20000, loss:4.869873519055546e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_41.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0004866681119892746
-    epoch: 21000, loss:4.7111265157582235e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_43.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00047081400407478213
-    epoch: 22000, loss:4.562667345453519e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_45.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00045598665019497275
-    epoch: 23000, loss:4.423383987159469e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_47.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0004420751647558063
-    epoch: 24000, loss:4.292191806598566e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_49.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0004289712815079838
-    epoch: 25000, loss:4.168330851825886e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_51.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00041659921407699585
-    epoch: 26000, loss:4.051415649882984e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_53.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00040492042899131775
-    epoch: 27000, loss:3.9410730714735106e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_55.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00039389816811308265
-    epoch: 28000, loss:3.836599891656078e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_57.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00038346173823811114
-    epoch: 29000, loss:3.7375376195996066e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_59.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0003735655336640775
-    epoch: 30000, loss:3.643752643256448e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_61.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00036419619573280215
-    epoch: 31000, loss:3.554246144631179e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_63.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00035525442217476666
-    epoch: 32000, loss:3.4688986270339234e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_65.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0003467276110313833
-    epoch: 33000, loss:3.38783597908332e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_67.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0003386292955838144
-    epoch: 34000, loss:3.3104618269135243e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_69.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00033089861972257495
-    epoch: 35000, loss:3.236417862353846e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_71.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0003235008043702692
-    epoch: 36000, loss:3.1655030616093424e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_73.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00031641527311876416
-    epoch: 37000, loss:3.097559627349256e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_75.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0003096264263149351
-    epoch: 38000, loss:3.0326169580803253e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_77.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00030313775641843677
-    epoch: 39000, loss:2.9704941298405175e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_79.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00029693052056245506
-    epoch: 40000, loss:2.9106522124493495e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_81.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0002909509348683059
-    epoch: 41000, loss:2.8533561817312146e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_83.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0002852260076906532
-    epoch: 42000, loss:2.797896486299578e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_85.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00027968379436060786
-    epoch: 43000, loss:2.744394249020843e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_87.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0002743378863669932
-    epoch: 44000, loss:2.6928670158667955e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_89.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0002691886038519442
-    epoch: 45000, loss:2.6431842416059228e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_91.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00026422421797178686
-    epoch: 46000, loss:2.595654157630634e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_93.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00025947438552975655
-    epoch: 47000, loss:2.5499546827632003e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_95.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0002549075579736382
-    epoch: 48000, loss:2.5057809216377793e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_97.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00025049326359294355
-    epoch: 49000, loss:2.4633905304654037e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_99.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0002462573756929487
-    epoch: 50000, loss:2.4225734814535825e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_101.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00024217806640081108
-    epoch: 51000, loss:2.3830521495256107e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_103.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0002382286766078323
-    epoch: 52000, loss:2.344911696127383e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_105.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0002344170061405748
-    epoch: 53000, loss:2.3082216066541153e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_107.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00023075027274899185
-    epoch: 54000, loss:2.272542646096554e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_109.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00022718461696058512
-    epoch: 55000, loss:2.237642715044785e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_111.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00022369690123014152
-    epoch: 56000, loss:2.2039403484086506e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_113.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.000220328540308401
-    epoch: 57000, loss:2.171287556848256e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_115.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00021706517145503312
-    epoch: 58000, loss:2.139623753464548e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_117.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0002139005810022354
-    epoch: 59000, loss:2.108841326844413e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_119.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00021082404418848455
-    epoch: 60000, loss:2.0792475115740673e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_121.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0002078662655549124
-    epoch: 61000, loss:2.0501944491115864e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_123.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00020496267825365067
-    epoch: 62000, loss:2.0219945909047967e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_125.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0002021441760007292
-    epoch: 63000, loss:1.9942749677284153e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_127.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0001993737678276375
-    epoch: 64000, loss:1.9675384701258736e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_129.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00019670158508233726
-    epoch: 65000, loss:1.9416159211687046e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_131.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0001941107475431636
-    epoch: 66000, loss:1.9162728531227913e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_133.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00019157768110744655
-    epoch: 67000, loss:1.8914568463515025e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_135.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00018909727805294096
-    epoch: 68000, loss:1.8671469733817505e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_137.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00018666766118258238
-    epoch: 69000, loss:1.8432843062328176e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_139.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00018428244220558554
-    epoch: 70000, loss:1.8202659266535192e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_141.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00018198174075223505
-    epoch: 71000, loss:1.7980593765969386e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_143.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00017976219533011317
-    epoch: 72000, loss:1.776098020854988e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_145.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00017756715533323586
-    epoch: 73000, loss:1.7548067298776003e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_147.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00017543925787322223
-    epoch: 74000, loss:1.7340696340397697e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_149.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00017336638120468706
-    epoch: 75000, loss:1.7136688547907397e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_151.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00017132725042756647
-    epoch: 76000, loss:1.6937134751060513e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_153.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00016933264851104468
-    epoch: 77000, loss:1.674388626270229e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_155.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00016740091086830944
-    epoch: 78000, loss:1.6554753019590862e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_157.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00016551054432056844
-    epoch: 79000, loss:1.637008828765829e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_159.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0001636647357372567
-    epoch: 80000, loss:1.6191334980248941e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_161.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00016187792061828077
-    epoch: 81000, loss:1.6014868397178361e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_163.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00016011403931770474
-    epoch: 82000, loss:1.584194154929719e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_165.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00015838549006730318
-    epoch: 83000, loss:1.5670943212171552e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_167.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00015667623665649444
-    epoch: 84000, loss:1.5502425030717862e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_169.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0001549917069496587
-    epoch: 85000, loss:1.5339244127972053e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_171.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00015336077194660902
-    epoch: 86000, loss:1.5179560068645515e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_173.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0001517643395345658
-    epoch: 87000, loss:1.5023343512439169e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_175.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00015020293358247727
-    epoch: 88000, loss:1.4870688719383907e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_177.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00014867704885546118
-    epoch: 89000, loss:1.4721054612891748e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_179.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00014718130114488304
-    epoch: 90000, loss:1.4575626482837834e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_181.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00014572765212506056
-    epoch: 91000, loss:1.44314118733746e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_183.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00014428579015657306
-    epoch: 92000, loss:1.4288767615653342e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_185.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00014286009536590427
-    epoch: 93000, loss:1.4148931950330734e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_187.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0001414622092852369
-    epoch: 94000, loss:1.4011994953762042e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_189.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00014009341248311102
-    epoch: 95000, loss:1.3878234531148337e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_191.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00013875641161575913
-    epoch: 96000, loss:1.3746419735980453e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_193.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0001374386774841696
-    epoch: 97000, loss:1.361803597319522e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_195.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00013615534408017993
-    epoch: 98000, loss:1.3493407550413395e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_197.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.00013490939454641193
-    epoch: 99000, loss:1.337103256446426e-06
-
-
-
-.. image::  /images/vanangamudimnist/output_36_199.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.0001336860441369936
-
+    torch.save(model.state_dict(), 'model_100000.pth')
 
 .. code:: python3
 
-    torch.save(model.state_dict(), 'model_150000.pth')
-
-.. code:: python3
-
+    test_and_print(model, dataset)
     plot_with_values(model, dataset)
 
 
 
-.. image::  /images/vanangamudimnist/output_38_0.png
+.. image::  /images/vanangamudimnist/output_49_0.png
+
+
+.. parsed-literal::
+
+    correct: 10/10, loss:6.74271141178906e-05
+
+
+
+.. image::  /images/vanangamudimnist/output_49_2.png
 
 
 .. code:: python3
 
-    normalized_model = model.output_layer.weight.data.numpy()
-    normalized_model = numpy.absolute(normalized_model)
-    total  =  normalized_model.sum()
-    normalized_model = normalized_model/total
+    _model = model.output_layer.weight.data.numpy()
+    plt.figure(1, (25, 10))
+    plt.matshow(_model)
+    plt.show()
     
-    plt.matshow(normalized_model)
-
+    fig = plt.figure(1,(10., 10.))
+    grid = ImageGrid(fig, 111,
+                     nrows_ncols=(2 , 5),
+                     axes_pad=0.1)
+    
+    for i, (data, target) in enumerate(dataset):
+        grid[i].matshow(Image.fromarray(data.numpy()))
+    plt.show()
 
 
 
 .. parsed-literal::
 
-    <matplotlib.image.AxesImage at 0x7f12dd850b38>
+    <matplotlib.figure.Figure at 0x7f12abf90208>
 
 
 
+.. image::  /images/vanangamudimnist/output_50_1.png
 
-.. image::  /images/vanangamudimnist/output_39_1.png
 
+
+.. image::  /images/vanangamudimnist/output_50_2.png
+
+
+Dive into the model
+-------------------
+
+At first look, the bright differentiating spots belongs to 5, 6 and 8, 9
+pairs.
+
+-  Take 8 and 9, the last two rows, the squares at index 17 are clearly
+   at extremes. To understand why look at the 17th pixel in images of 8
+   and 9. That is the only pixel distinguishing 8 and 9.
+-  Take 5 and 6, the same 17th pixel makes all the difference.
+
+Now you may ask why the rows in model matrix corresponding to 8 and 9
+are exactly same except for that one single pixel. I will let you ponder
+over that point for a while.
