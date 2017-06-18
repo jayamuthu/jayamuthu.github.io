@@ -6,8 +6,19 @@
 .. category: neural networks
 .. section: neural networks
 
-WORK IN PROGRESS
-   
+The problem I designed for this post came to me when I was trying to
+explain neural network to my friend who is just getting started on it.
+The hello world of deep learning is MNIST, but the size of the MNIST
+images is 28x28 which is too large to help us understand the ideas in
+terms of observable concrete computations and visualizations. So here
+you go.
+
+*Note: It is not my intention for you to read the code. I advice against
+it. I include the code in the post for the reason that, if anyone
+interested in trying it out in their desktop or laptop, they should be
+able to. Please don't read the code, focus on the concepts and
+computations :)*
+
 .. code:: python3
 
     import torch
@@ -15,6 +26,9 @@ WORK IN PROGRESS
 
 DATASET
 -------
+
+Dataset is a collection of data. What is in a dataset and why we need
+it?
 
 .. code:: python3
 
@@ -120,15 +134,26 @@ Take a look into how the data looks like
     
     for i, (data, target) in enumerate(dataset):
         grid[i].matshow(Image.fromarray(data.numpy()))
+        grid[i].tick_params(axis='both', which='both', length=0, labelsize=0)
     plt.show()
 
 
 
-.. image::  /images/vanangamudimnist/output_4_0.png
+.. image:: /images/vanangamudimnist/output_5_0.png
 
+
+We have a set of 10 images of numbers 0..9. We want to make a neural
+network to predict what is the number on the image.
 
 MODEL
 -----
+
+Model is the term we use to refer to the network. Our model is a simple
+**25**\ x\ **10** matrix. Don't get startled by the class and the
+imports. It just does matrix multiplication. For now assume
+***model()*** is a function which will take in a matrix of size (AxB) as
+input and mutiply it with the network weight matrix of size (BxC), to
+produce another matrix as output of size (AxC).
 
 .. code:: python3
 
@@ -154,6 +179,9 @@ MODEL
 DATASET - MODEL - OUTPUT
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
+To understand the network and its training process, it is helpful to see
+the holy trinity INPUT-MODEL-OUTPUT
+
 .. code:: python3
 
     fig = plt.figure(1, (16., 16.))
@@ -168,21 +196,28 @@ DATASET - MODEL - OUTPUT
     target = [target.view(-1) for data, target in dataset]
     target = torch.stack(target).squeeze()
     grid[0].matshow(Image.fromarray(data.numpy()))
-    grid[0].set_xlabel('DATASET', fontsize=24)
+    grid[0].set_title('DATASET', fontsize=24)
+    grid[0].set_ylabel('10', fontsize=24)
+    grid[0].set_xlabel('25', fontsize=24)
+    grid[0].tick_params(axis='both', which='both', length=0, labelsize=0)
     
     grid[1].matshow(Image.fromarray(model.output_layer.weight.data.numpy()))
-    grid[1].set_xlabel('MODEL', fontsize=24)
+    grid[1].set_title('MODEL', fontsize=24)
+    grid[1].set_xlabel('25', fontsize=24)
+    grid[1].tick_params(axis='both', which='both', length=0, labelsize=0)
+    
     
     output = model(Variable(data))
     grid[2].matshow(Image.fromarray(output.data.numpy()))
-    grid[2].set_xlabel('OUTPUT', fontsize=24)
-    
+    grid[2].set_title('OUTPUT', fontsize=24)
+    grid[2].set_xlabel('10', fontsize=24)
+    grid[2].tick_params(axis='both', which='both', length=0, labelsize=0)
     
     plt.show()
 
 
 
-.. image::  /images/vanangamudimnist/output_9_0.png
+.. image:: /images/vanangamudimnist/output_11_0.png
 
 
 Lets try to understand what is in the picture above.
@@ -199,11 +234,11 @@ Nothing. Our dataset is a set of images of numbers each having a size of
 10 numbers or 10 different classes of output(this will become clear in
 the next post)
 
-I can hear you screaming,
+What is that weird picture on the left, having weird
 
-"no no no, get back to the dataset? What is that weird picture on the
-left, having weird zero in the top-left, and three on the bottom-right
-and some messed up fours and eights in the middle."
+- zero in the  top-left,
+- and three on the bottom-right
+- and some messed up fours and eights in the middle.
 
 Let get to it. Look the picture below.
 
@@ -216,6 +251,7 @@ Let get to it. Look the picture below.
     
     for i, (d, t) in enumerate(dataset):
         grid[i].matshow(Image.fromarray(d.numpy()))
+        grid[i].tick_params(axis='both', which='both', length=0, labelsize=0)
         
     plt.show()
     
@@ -230,33 +266,30 @@ Let get to it. Look the picture below.
     for i, d in enumerate(data):
         grid[i].matshow(Image.fromarray(d.numpy()))
         grid[i].set_ylabel('{}'.format(i), fontsize=36)
+        grid[i].tick_params(axis='both', which='both', length=0, labelsize=0)
 
 
 
-
-.. image::  /images/vanangamudimnist/output_11_0.png
-
+.. image:: /images/vanangamudimnist/output_13_0.png
 
 
-.. image::  /images/vanangamudimnist/output_11_1.png
+
+.. image:: /images/vanangamudimnist/output_13_1.png
 
 
-Voila!! We have just arranged the image matrix into a vector. The reason
-is it reduces the computational complexity to a little and makes it
-easier to operate over mutiple samples of data at the same time. We saw
-that the model - matrix which connects the 25 input neurons to 10 output
-neurons. So we cannot keep the input images as matrices , if we do, then
-the result of matrix multiplication is not same as the output of the
-neural network which looks at all the pixels of the image and say how
-similar the input image is to the classes of numbers.
+Voila!! We have just arranged the image matrix into a vector. TODO why?
 
 This is important to remember, **a simple neural network looks at the
 input and try to figure out which class does this input belong to**
 
-in our case inputs are the images of numbers, and outputs are how
-similar are the classes to the input. Th output neuron with highest
-value is more closer to the input and the output neuron with least value
-is very NOT similar to the input.
+In our case inputs are the images of numbers, and outputs are how
+similar are the classes to the input. The output neuron with highest
+value is closer(very similar) to the input and the output neuron with
+least value is very NOT similar to the input. **The inputs are real
+valued - it can take any numerical value but the output is discrete, a
+whole number corresponding to index of the neuron with largest numerical
+value.** Also note that output of the network does not mean output of
+neurons.
 
 For example after training, if we feed the image of number 3, the output
 neurons corresponding to 3, 8, 9 and probably 7 will have larger values
@@ -281,12 +314,12 @@ our model predicted correctly.
 
 .. parsed-literal::
 
-    torch.Size([10]) torch.Size([10, 1])
-    correct: 0/10
+    torch.Size([10]) torch.Size([10])
+    correct: 1/10
 
 
-NONE out of TEN
-~~~~~~~~~~~~~~~
+(N)ONE out of TEN
+~~~~~~~~~~~~~~~~~
 
 That is right it predicted none out of ten. We feeded our network with
 all of our data and asked it to figure what is the number that is in the
@@ -362,20 +395,20 @@ Hey, why don't we try the same with our network? Lets feed the images
 into it and shout the answer into its tiny little output neurons so that
 it can update its weights by itself. Now I know you're asking how can we
 expect, a dumb network which cannot even predict a number in an image to
-train itself? Well that is where it gets interesting. I must now ask you
-to read backpropogation algorithm to understand how the training works.
-Take your time, this is at the heart of deep learning and neural
-networks. I suggest Michael Nielson's
-`book <http://neuralnetworksanddeeplearning.com/chap2.html>`__
+train itself? Well that is where it gets interesting. We can't.
+Backpropgation to the rescue. It is the algorithm to update the weights
+of the network on our behalf.
+
+It looks at how difference between output of network and desired output,
+changes with respect to the weights, and then it modifies the weights
+based on it. [2]
 
 So now you understand why it predicted none out of ten correctly.
 
-lets combine the above two blocks and make a function out of it
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 .. code:: python3
 
-    def test_and_print(model, dataset, plot=True):
+    import sys
+    def test_and_print(model, dataset, title='', plot=True):
           
         data = [data.view(-1) for data, target in dataset]
         data = torch.stack(data).squeeze()
@@ -392,7 +425,10 @@ lets combine the above two blocks and make a function out of it
         
         pred = output.data.max(1)[1] 
         correct = pred.eq(target.long()).sum()
-        
+    
+        print('correct: {}/{}, loss:{}'.format(correct, len(dataset), loss.data[0]))
+        sys.stdout.flush()
+    
         if plot:
             fig = plt.figure(1,(16., 16.))
             grid = ImageGrid(fig, 111,
@@ -400,27 +436,30 @@ lets combine the above two blocks and make a function out of it
                              axes_pad=0.1)
     
             grid[0].matshow(dataset_img)
-            grid[0].set_xlabel('DATASET', fontsize=24)
+            grid[0].set_title('DATASET', fontsize=24)
+            grid[0].tick_params(axis='both', which='both', length=0, labelsize=0)
+            grid[0].set_ylabel('10', fontsize=24)
+            grid[0].set_xlabel('25', fontsize=24)
     
             grid[1].matshow(model_img)
-            grid[1].set_xlabel('MODEL', fontsize=24)
+            grid[1].set_title('MODEL', fontsize=24)
+            grid[1].tick_params(axis='both', which='both', length=0, labelsize=0)
+            grid[1].set_xlabel('25', fontsize=24)
             
             grid[2].matshow(output_img)
-            grid[2].set_xlabel('OUTPUT', fontsize=24)
+            grid[2].set_title('OUTPUT', fontsize=24)
+            grid[2].tick_params(axis='both', which='both', length=0, labelsize=0)
+            grid[2].set_xlabel('10', fontsize=24)
             
             plt.show()    
             
-        print('correct: {}/{}, loss:{}'.format(correct, len(dataset), loss.data[0]))
             
         return dataset_img, model_img, output_img 
 
 Lets take a closer look at DATASET - MODEL - OUTPUT
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*with help from,
-https://stackoverflow.com/questions/20998083/show-the-values-in-the-grid-using-matplotlib*
-
-and understand what those colors mean.
+and understand what those colors mean.[1]
 
 .. code:: python3
 
@@ -438,21 +477,29 @@ and understand what those colors mean.
     target = torch.stack(target)
     
     grid[0].matshow(Image.fromarray(data.numpy()))
-    grid[0].set_xlabel('DATASET', fontsize=72)
+    grid[0].set_title('DATASET', fontsize=144)
+    grid[0].tick_params(axis='both', which='both', length=0, labelsize=0)
+    grid[0].set_ylabel('10', fontsize=144)
+    grid[0].set_xlabel('25', fontsize=144)
     for (x,y), val in numpy.ndenumerate(data.numpy()):
          grid[0].text(y, x, '{:d}'.format(int(val)), ha='center', va='center', fontsize=24,
                 bbox=dict(boxstyle='round', facecolor='white', edgecolor='white'))
     
             
     grid[1].matshow(Image.fromarray(model.output_layer.weight.data.numpy()))
-    grid[1].set_xlabel('MODEL', fontsize=72)
+    grid[1].set_title('MODEL', fontsize=144)
+    grid[1].tick_params(axis='both', which='both', length=0, labelsize=0)
+    grid[1].set_xlabel('25', fontsize=144)
     for (x,y), val in numpy.ndenumerate(model.output_layer.weight.data.numpy()):
          grid[1].text(y, x, '{:0.04f}'.format(val), ha='center', va='center',fontsize=16,
                 bbox=dict(boxstyle='round', facecolor='white', edgecolor='white'))
     
     output = model(Variable(data))
     grid[2].matshow(Image.fromarray(output.data.numpy()))
-    grid[2].set_xlabel('OUTPUT', fontsize=72)
+    grid[2].set_title('OUTPUT', fontsize=144)
+    grid[2].tick_params(axis='both', which='both', length=0, labelsize=0)
+    grid[2].set_xlabel('10', fontsize=144)
+    
     for (x,y), val in numpy.ndenumerate(output.data.numpy()):
          grid[2].text(y, x, '{:0.04f}'.format(val), ha='center', va='center',fontsize=16,
                 bbox=dict(boxstyle='round', facecolor='white', edgecolor='white'))
@@ -462,44 +509,67 @@ and understand what those colors mean.
 
 
 
-.. image::  /images/vanangamudimnist/output_19_0.png
+.. image:: /images/vanangamudimnist/output_20_0.png
 
 
 If you zoom in the picture you will see numbers corresponding to the
 colors - violet means the lowest value, and yellow is the highest
 values. i.e violet does not mean 0 and yellow does not mean 1 as you
-might think from the dataset image. Take look at the following. It shows
-a single row from the output image. Go on pick the darkest square in the
-output above. First row itself has the darkeset one right, corresponding
-to number 0, i.e *data[0]* the least value from that row is **-3.2037**
+might think from the dataset image.
+
+WHAT DOES EACH ROW MEAN?
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+DATASET
+~~~~~~~
+
+numbers, each row is a number. first one is 0 second one is 1 and so on.
+
+MODEL
+~~~~~
+weights corresponding to pixels in the image for a number.
+first row is for 0 and last one is for 9.
+
+OUTPUT
+~~~~~~
+scores of similarity. how similar the input image to all output
+numbers. First row contains scores of 0, how similar it is to all other
+numbers first square in the first row is how simlilar 0 is to 0, second
+square similar it is to 1. Now the scores are not only incorrect but
+stupid. This will become better and clear as we train the network. Lets
+take look at the DATASET-MODEL-OUTPUT trinity once again before training
+
+Take look at the following. It shows a single row from the output image.
+Go on pick the darkest square in the output above. Which row has the
+darkeset one?, it seems like the row corresponding to number 4, i.e
+*data[4]* the least value from that row is **-3.0710**
 
 .. code:: python3
 
-    print(model(Variable(data[0].view(1, -1))))
+    print(model(Variable(data[4].view(1, -1))))
 
 
 .. parsed-literal::
 
     Variable containing:
-    -2.1720 -2.6992 -2.3346 -3.2037 -2.2863 -2.7303 -1.9134 -3.1497 -2.5078 -1.4163
+    -2.2242 -2.0100 -2.4086 -2.2264 -2.3357 -1.9604 -2.5856 -3.0710 -2.0782 -2.5825
     [torch.FloatTensor of size 1x10]
     
 
-
-Similarly the brightest yellow is in the second last row, corresonding
-to number 8 whose value is **-1.3997** you can see below. The reason I
-am stressing about this fact is, this is will influence how we interpret
-the following images.
+Similarly the brightest yellow is in the row corresonding to number 1
+whose value is **-1.9198** you can see below. The reason I am stressing
+about this fact is, this is will influence how we interpret the
+following images.
 
 .. code:: python3
 
-    print(model(Variable(data[8].view(1, -1))))
+    print(model(Variable(data[1].view(1, -1))))
 
 
 .. parsed-literal::
 
     Variable containing:
-    -2.3037 -2.7743 -2.3580 -3.0758 -2.3436 -2.6253 -2.0029 -3.0572 -2.3033 -1.3997
+    -2.9334 -2.5239 -1.9198 -2.3306 -2.3984 -2.1636 -2.2579 -2.3235 -2.1503 -2.3224
     [torch.FloatTensor of size 1x10]
     
 
@@ -507,7 +577,7 @@ the following images.
 .. code:: python3
 
     import numpy
-    def plot_with_values(model, dataset):
+    def plot_with_values(model, dataset, title=''):
         fig = plt.figure(1, (80., 80.))
         grid = ImageGrid(fig, 111,
                              nrows_ncols=(1, 3),
@@ -520,70 +590,50 @@ the following images.
         target = [target.view(-1) for data, target in dataset]
         target = torch.stack(target)
     
-        grid[0].matshow(Image.fromarray(data.numpy()))
-        grid[0].set_xlabel('DATASET', fontsize=144)
-        for (x,y), val in numpy.ndenumerate(data.numpy()):
-             grid[0].text(y, x, '{:d}'.format(int(val)), ha='center', va='center', fontsize=24,
+        plot_data = [data, model.output_layer.weight.data, model(Variable(data)).data]
+        for i, tobeplotted in enumerate(plot_data):
+            grid[i].matshow(Image.fromarray(tobeplotted.numpy()))
+            grid[i].tick_params(axis='both', which='both', length=0, labelsize=0)
+            for (x,y), val in numpy.ndenumerate(tobeplotted.numpy()):
+                if i == 0: spec = '{:d}';  val = int(val)
+                else: spec = '{:0.2f}'
+                grid[i].text(y, x, spec.format(val), ha='center', va='center', fontsize=16,
                     bbox=dict(boxstyle='round', facecolor='white', edgecolor='white'))
+            
+        grid[0].set_title('DATASET', fontsize=144)
+        grid[0].set_ylabel('10', fontsize=144)
+        grid[0].set_xlabel('25', fontsize=144)
     
+        grid[1].set_title('MODEL', fontsize=144)
+        grid[1].set_xlabel('25', fontsize=144)
     
-        grid[1].matshow(Image.fromarray(model.output_layer.weight.data.numpy()))
-        grid[1].set_xlabel('MODEL', fontsize=144)
-        for (x,y), val in numpy.ndenumerate(model.output_layer.weight.data.numpy()):
-             grid[1].text(y, x, '{:0.04f}'.format(val), ha='center', va='center',fontsize=16,
-                    bbox=dict(boxstyle='round', facecolor='white', edgecolor='white'))
-    
-        output = model(Variable(data))
-        grid[2].matshow(Image.fromarray(output.data.numpy()))
-        grid[2].set_xlabel('OUTPUT', fontsize=144)
-        for (x,y), val in numpy.ndenumerate(output.data.numpy()):
-             grid[2].text(y, x, '{:0.04f}'.format(val), ha='center', va='center',fontsize=16,
-                    bbox=dict(boxstyle='round', facecolor='white', edgecolor='white'))
-    
+        grid[2].set_title('OUTPUT', fontsize=144)
+        grid[2].set_xlabel('25', fontsize=144)
     
         plt.show()
 
-What does each row mean?
-~~~~~~~~~~~~~~~~~~~~~~~~
 
-DATASET
-'''''''
-numbers, each row is a number. first one is 0 second one is 1 and so on.
-
-MODEL
-'''''
-weights corresponding to pixels in the image for a number.
-first row is for 0 and last one is for 9.
-
-OUTPUT
-''''''
-scores of similarity. relative resemblance of the input number to all output
-numbers. First row contains scores of 0, how similar it is to all other
-numbers first square in the first row is how simlilar 0 is to 0, second
-square similar it is to 1. Now the scores are not only incorrect but
-stupid. This will become better and clear as we train the network. Lets
-take look at the DATASET-MODEL-OUTPUT trinity once again before training
 
 Before Training
 ~~~~~~~~~~~~~~~
 
 .. code:: python3
 
-    test_and_print(model, dataset)
+    test_and_print(model, dataset, 'sama')
     plot_with_values(model, dataset)
-
-
-
-.. image::  /images/vanangamudimnist/output_27_0.png
 
 
 .. parsed-literal::
 
-    correct: 2/10, loss:5.612292289733887
+    correct: 1/10, loss:2.4236292839050293
 
 
 
-.. image::  /images/vanangamudimnist/output_27_2.png
+.. image:: /images/vanangamudimnist/output_28_1.png
+
+
+
+.. image:: /images/vanangamudimnist/output_28_2.png
 
 
 Training
@@ -625,7 +675,7 @@ Train the model once and see how it works
 
 .. parsed-literal::
 
-    5.025314002856613
+    7.596218156814575
 
 
 
@@ -635,17 +685,17 @@ Train the model once and see how it works
     plot_with_values(model, dataset)
 
 
-
-.. image::  /images/vanangamudimnist/output_33_0.png
-
-
 .. parsed-literal::
 
-    correct: 2/10, loss:4.517192363739014
+    correct: 2/10, loss:5.988691329956055
 
 
 
-.. image::  /images/vanangamudimnist/output_33_2.png
+.. image:: /images/vanangamudimnist/output_34_1.png
+
+
+
+.. image:: /images/vanangamudimnist/output_34_2.png
 
 
 train once again
@@ -660,7 +710,7 @@ train once again
 
 .. parsed-literal::
 
-    6.229383989237249
+    6.19214208945632
 
 
 
@@ -670,17 +720,17 @@ train once again
     plot_with_values(model, dataset)
 
 
-
-.. image::  /images/vanangamudimnist/output_36_0.png
-
-
 .. parsed-literal::
 
-    correct: 2/10, loss:5.612292289733887
+    correct: 2/10, loss:5.175973892211914
 
 
 
-.. image::  /images/vanangamudimnist/output_36_2.png
+.. image:: /images/vanangamudimnist/output_37_1.png
+
+
+
+.. image:: /images/vanangamudimnist/output_37_2.png
 
 
 As you can see the diagonal of the output matrix is getting brighter and
@@ -692,120 +742,6 @@ second row should be the brightest one 2. the third square in third row
 should be the brightest one and so on.
 
 Lets see the numbers directly.
-
-.. code:: python3
-
-    print(data)
-    print(model.output_layer.weight.data)
-    print(output.data)
-
-
-.. parsed-literal::
-
-    
-    
-    Columns 0 to 12 
-        0     0     1     1     1     0     0     1     0     1     0     0     1
-        0     0     0     1     0     0     0     1     1     0     0     0     0
-        0     0     1     1     1     0     0     0     0     1     0     0     1
-        0     0     1     1     1     0     0     0     0     1     0     0     0
-        0     0     1     0     1     0     0     1     0     1     0     0     1
-        0     0     1     1     1     0     0     1     0     0     0     0     1
-        0     0     1     1     1     0     0     1     0     0     0     0     1
-        0     0     1     1     1     0     0     0     0     1     0     0     0
-        0     0     1     1     1     0     0     1     0     1     0     0     1
-        0     0     1     1     1     0     0     1     0     1     0     0     1
-    
-    Columns 13 to 24 
-        0     1     0     0     1     0     1     0     0     1     1     1
-        1     0     0     0     0     1     0     0     0     1     1     1
-        1     1     0     0     1     0     0     0     0     1     1     1
-        1     1     0     0     0     0     1     0     0     1     1     1
-        1     1     0     0     0     0     1     0     0     0     0     1
-        1     1     0     0     0     0     1     0     0     1     1     1
-        1     1     0     0     1     0     1     0     0     1     1     1
-        0     1     0     0     0     0     1     0     0     0     0     1
-        1     1     0     0     1     0     1     0     0     1     1     1
-        1     1     0     0     0     0     1     0     0     1     1     1
-    [torch.FloatTensor of size 10x25]
-    
-    
-    
-    Columns 0 to 5 
-    -2.1409e-02  4.2460e-03 -1.2784e-01 -9.2460e-01  2.2646e-01 -1.6198e-01
-    -1.7675e-01 -1.5970e-01 -5.5067e-01  5.3697e-01 -6.8309e-01 -9.3652e-02
-     1.2107e-01 -3.7729e-03 -1.2085e-01 -2.7483e-01 -1.0604e-01 -2.0264e-02
-    -1.4431e-01  1.8848e-01 -4.8268e-01  1.6243e+00 -4.7103e-01 -1.2424e-01
-    -8.4964e-02  1.3595e-01  8.2023e-02 -2.3063e+00  6.9857e-02 -7.0763e-02
-    -1.8295e-01 -1.3728e-01 -2.6704e-01 -2.1062e-01 -2.4467e-01  4.2020e-02
-    -1.3971e-01 -1.7245e-01 -5.2512e-01 -5.2434e-01 -5.6130e-01  5.2664e-02
-    -2.2362e-05  3.4310e-07  9.5566e-01  1.2486e+00  1.1215e+00  7.6289e-02
-    -5.5967e-02 -2.0803e-02  1.0438e-01  1.4612e-02 -8.5276e-02 -1.2986e-01
-     1.0088e-01 -1.2029e-02  7.5389e-01  7.1461e-01  7.7840e-01  6.5960e-03
-    
-    Columns 6 to 11 
-    -3.1649e-02  1.1384e+00 -1.1480e+00  1.7545e-01  1.7853e-01 -6.7999e-03
-    -6.8279e-02  7.8894e-01  9.4570e-01 -4.1318e-01 -1.0593e-01  1.4646e-01
-     4.0769e-02 -1.0477e-01  1.3396e-01  1.7865e-03 -8.4921e-02 -3.6588e-02
-     1.3825e-01 -2.6876e+00 -1.9398e-01  2.6879e-01 -1.3638e-01  1.4243e-01
-    -1.0103e-01  3.4419e-01 -1.2307e-01  1.4506e+00 -9.0435e-02  1.9610e-01
-     4.1847e-02 -7.2008e-02 -1.5228e-01 -2.7651e-01 -4.1503e-02  1.3833e-01
-    -1.8495e-01  6.0923e-01  4.7509e-02 -2.8791e+00  9.2975e-02 -1.2441e-01
-     1.8534e-01 -9.9896e-01  4.5080e-02  1.1106e+00  1.4632e-01  1.9500e-01
-     9.2784e-02  3.3228e-02  1.6034e-01 -2.1986e-01  1.1957e-01  2.8319e-02
-     7.8399e-02  9.5756e-01 -1.1282e-01  9.0589e-01 -1.6549e-01  1.9607e-01
-    
-    Columns 12 to 17 
-     1.7040e-01 -2.8453e+00 -2.3460e-02 -3.9600e-02  1.9960e-01  3.8225e-01
-    -6.1945e-01  6.5375e-01 -6.4628e-01  1.6838e-01  5.6368e-02 -3.6657e-01
-     2.1246e+00 -1.2438e-01  6.3885e-03  1.9497e-01  1.0285e-01  2.0309e+00
-    -2.6819e+00 -2.8137e-01 -3.0056e-01 -1.4555e-01  4.7257e-02 -1.3722e-01
-     6.0960e-01  4.6798e-01 -2.0350e-01 -1.4253e-01  1.5675e-01 -2.6489e-01
-     7.6892e-02 -4.7542e-02 -2.6124e-01  1.5899e-01  6.9080e-02 -2.1853e+00
-     6.5536e-01  7.3328e-01 -6.0622e-01 -1.8997e-01  4.8286e-02  6.2121e-01
-    -8.1130e-01 -6.0516e-01  1.0741e+00 -1.2013e-01  4.1172e-02 -7.6751e-01
-     9.1453e-02  6.6864e-02 -1.4625e-01 -5.4003e-02  5.9834e-02  2.0818e+00
-     8.9738e-01  2.1355e+00  9.2207e-01  3.1551e-02 -6.6280e-02 -1.3800e+00
-    
-    Columns 18 to 23 
-    -8.9352e-01  2.0858e+00  1.7814e-01  4.8872e-02 -8.2379e-01 -1.0105e+00
-     1.2774e+00 -4.2619e-01  1.1048e-01  1.8686e-02  5.1238e-01  5.1993e-01
-     3.1865e-02 -2.3320e+00 -3.7356e-02 -1.3884e-01 -2.7684e-01 -1.5349e-02
-    -7.1277e-02 -2.7990e-01  1.3008e-01 -3.7282e-02  1.8002e+00  1.6977e+00
-    -6.3949e-02  3.4460e-02  1.7473e-01 -1.7493e-02 -1.6987e+00 -1.6962e+00
-     1.1112e-01  4.3918e-02 -1.0419e-01  1.5245e-02  4.3709e-02 -2.7670e-01
-     1.4553e-01 -7.1268e-01  1.8934e-01 -6.1015e-02  4.4298e-01  4.7727e-01
-    -4.3424e-02  1.1260e+00  7.9789e-02 -1.1804e-01 -8.8973e-01 -7.3535e-01
-     1.3687e-01 -2.0125e-02  1.5918e-01  3.5658e-02  1.5523e-02 -2.8574e-02
-     1.7359e-01  7.8479e-01  2.7161e-02 -1.3845e-01  6.6989e-01  1.0438e+00
-    
-    Columns 24 to 24 
-    -9.7401e-01
-     4.8338e-01
-    -9.6530e-02
-    -4.5731e-01
-     1.0194e-01
-    -7.3102e-02
-    -6.9555e-01
-     1.2106e+00
-    -1.0058e-01
-     8.9773e-01
-    [torch.FloatTensor of size 10x25]
-    
-    
-    -1.8951 -3.0990 -2.4551 -3.0093 -1.7739 -2.6089 -2.5364 -2.0660 -2.1625 -2.2514
-    -2.1781 -2.7517 -2.5426 -2.8550 -2.4796 -2.4915 -2.2114 -2.0888 -1.8542 -2.0388
-    -2.1145 -2.6975 -2.5567 -2.8537 -1.9199 -2.7830 -2.3421 -1.8379 -2.2474 -2.2321
-    -2.1322 -2.8608 -2.4920 -2.5258 -1.8850 -2.8998 -2.5453 -1.8023 -2.3346 -2.1681
-    -1.8469 -2.9699 -2.2015 -3.1667 -2.0084 -2.6576 -2.4082 -2.2481 -2.3704 -1.9320
-    -2.0919 -3.1307 -2.5809 -3.1170 -1.8169 -2.5929 -2.4064 -2.0703 -2.0027 -2.0852
-    -1.9148 -3.0944 -2.6748 -3.1971 -1.8961 -2.4784 -2.3848 -2.0387 -2.0052 -2.2390
-    -2.0944 -2.7722 -2.2755 -2.6268 -1.8789 -2.8344 -2.4311 -1.9023 -2.4157 -2.2898
-    -1.7936 -3.0717 -2.5689 -3.0730 -1.9359 -2.6488 -2.4653 -1.9917 -2.1822 -2.1618
-    -1.9710 -3.1083 -2.4753 -2.9933 -1.8570 -2.7636 -2.4873 -2.0237 -2.1800 -2.0083
-    [torch.FloatTensor of size 10x10]
-    
-
 
 Train over multiple epochs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -821,7 +757,7 @@ means run over the all the samples multiple times.
             if not epoch % print_every:
                 print('\n\n========================================================')
                 print('epoch: {}, loss:{}'.format(epoch, avg_loss/len(dataset)/10))
-                snaps.append(test_and_print(model, dataset))
+                snaps.append(test_and_print(model, dataset, 'epoch:{}'.format(epoch)))
                 
         return snaps
 
@@ -836,11 +772,11 @@ pixels getting darker and darker. It appears to be smoothing over time.
 Also see that after just 10 epochs the network predicts 9/10 correctly
 and then after 20 epochs it mastered the task, predicting 10/10 all the
 time. But we already know that is what we want and we know why. Lets
-focus on the model for while, because that is where the secret lies.
+focus on the model now, because that is where the secret lies.
 
 .. code:: python3
 
-    snaps = train_epochs(30, model, optimizer, dataset, print_every=3)
+    snaps = train_epochs(20, model, optimizer, dataset, print_every=2)
 
 
 .. parsed-literal::
@@ -848,146 +784,142 @@ focus on the model for while, because that is where the secret lies.
     
     
     ========================================================
-    epoch: 0, loss:0.026460402011871338
+    epoch: 0, loss:0.027155441761016846
+    correct: 3/10, loss:2.128438949584961
 
 
 
-.. image::  /images/vanangamudimnist/output_43_1.png
+.. image:: /images/vanangamudimnist/output_43_1.png
 
 
 .. parsed-literal::
 
-    correct: 2/10, loss:2.073272466659546
     
     
     ========================================================
-    epoch: 3, loss:0.021199819922447204
+    epoch: 2, loss:0.023229331612586973
+    correct: 5/10, loss:1.8037703037261963
 
 
 
-.. image::  /images/vanangamudimnist/output_43_3.png
+.. image:: /images/vanangamudimnist/output_43_3.png
 
 
 .. parsed-literal::
 
-    correct: 4/10, loss:1.6355892419815063
     
     
     ========================================================
-    epoch: 6, loss:0.017176918864250185
+    epoch: 4, loss:0.01998117029666901
+    correct: 6/10, loss:1.533529281616211
 
 
 
-.. image::  /images/vanangamudimnist/output_43_5.png
+.. image:: /images/vanangamudimnist/output_43_5.png
 
 
 .. parsed-literal::
 
-    correct: 8/10, loss:1.3098194599151611
     
     
     ========================================================
-    epoch: 9, loss:0.014191543579101563
+    epoch: 6, loss:0.01730852520465851
+    correct: 8/10, loss:1.3195956945419312
 
 
 
-.. image::  /images/vanangamudimnist/output_43_7.png
+.. image:: /images/vanangamudimnist/output_43_7.png
 
 
 .. parsed-literal::
 
-    correct: 9/10, loss:1.0765085220336914
     
     
     ========================================================
-    epoch: 12, loss:0.011957092225551604
+    epoch: 8, loss:0.015147660285234451
+    correct: 9/10, loss:1.150416612625122
 
 
 
-.. image::  /images/vanangamudimnist/output_43_9.png
+.. image:: /images/vanangamudimnist/output_43_9.png
 
 
 .. parsed-literal::
 
-    correct: 10/10, loss:0.906408965587616
     
     
     ========================================================
-    epoch: 15, loss:0.010259300589561463
+    epoch: 10, loss:0.013388317018747329
+    correct: 9/10, loss:1.0151952505111694
 
 
 
-.. image::  /images/vanangamudimnist/output_43_11.png
+.. image:: /images/vanangamudimnist/output_43_11.png
 
 
 .. parsed-literal::
 
-    correct: 10/10, loss:0.7792903184890747
     
     
     ========================================================
-    epoch: 18, loss:0.00894222415983677
+    epoch: 12, loss:0.011944577842950822
+    correct: 10/10, loss:0.9058278799057007
 
 
 
-.. image::  /images/vanangamudimnist/output_43_13.png
+.. image:: /images/vanangamudimnist/output_43_13.png
 
 
 .. parsed-literal::
 
-    correct: 10/10, loss:0.6815679669380188
     
     
     ========================================================
-    epoch: 21, loss:0.007896171763539314
+    epoch: 14, loss:0.010749261453747749
+    correct: 10/10, loss:0.8161996006965637
 
 
 
-.. image::  /images/vanangamudimnist/output_43_15.png
+.. image:: /images/vanangamudimnist/output_43_15.png
 
 
 .. parsed-literal::
 
-    correct: 10/10, loss:0.6043521165847778
     
     
     ========================================================
-    epoch: 24, loss:0.007046647027134896
+    epoch: 16, loss:0.009749157413840293
+    correct: 10/10, loss:0.7417219281196594
 
 
 
-.. image::  /images/vanangamudimnist/output_43_17.png
+.. image:: /images/vanangamudimnist/output_43_17.png
 
 
 .. parsed-literal::
 
-    correct: 10/10, loss:0.5418585538864136
     
     
     ========================================================
-    epoch: 27, loss:0.0063434053510427486
+    epoch: 18, loss:0.008902774766087532
+    correct: 10/10, loss:0.6789848208427429
 
 
 
-.. image::  /images/vanangamudimnist/output_43_19.png
+.. image:: /images/vanangamudimnist/output_43_19.png
 
 
 .. parsed-literal::
 
-    correct: 10/10, loss:0.4902641177177429
     
     
     ========================================================
-    epoch: 30, loss:0.005752057082951069
+    epoch: 20, loss:0.008178293675184248
+    correct: 10/10, loss:0.6254634857177734
 
 
 
-.. image::  /images/vanangamudimnist/output_43_21.png
-
-
-.. parsed-literal::
-
-    correct: 10/10, loss:0.4469718337059021
+.. image:: /images/vanangamudimnist/output_43_21.png
 
 
 Lets put all those picture above into a single one to get a big picture
@@ -1002,6 +934,8 @@ Lets put all those picture above into a single one to get a big picture
     for i, snap in enumerate(snaps):
         for j, image in enumerate(snap):
             grid[i * 3 + j].matshow(image)
+            grid[i * 3 + j].tick_params(axis='both', which='both', length=0, labelsize=0)
+    
             
     grid[i * 3 + 0].set_xlabel('DATASET', fontsize=24)
     grid[i * 3 + 1].set_xlabel('MODEL', fontsize=24)
@@ -1011,11 +945,18 @@ Lets put all those picture above into a single one to get a big picture
 
 
 
-.. image::  /images/vanangamudimnist/output_45_0.png
+.. image:: /images/vanangamudimnist/output_45_0.png
 
 
-But before that, lets train it for few thousand epochs so the network
-get more clear picture of the data :)
+The following animation show the state of the model over 50 epochs.
+
+.. figure:: /images/vanangamudimnist/VanangamudiMNIST_training_animation.gif
+   :alt: Animated view
+
+   Animation
+
+Lets train it for few thousand epochs so the network get more clear
+picture of the data before diving into the model :)
 
 .. code:: python3
 
@@ -1027,86 +968,78 @@ get more clear picture of the data :)
     
     
     ========================================================
-    epoch: 0, loss:1.258878206499503e-06
+    epoch: 0, loss:0.007853959694504737
+    correct: 10/10, loss:0.60155189037323
 
 
 
-.. image::  /images/vanangamudimnist/output_47_1.png
+.. image:: /images/vanangamudimnist/output_49_1.png
 
 
 .. parsed-literal::
 
-    correct: 10/10, loss:0.00012586693628691137
     
     
     ========================================================
-    epoch: 20000, loss:1.0712449220591226e-06
+    epoch: 20000, loss:7.162017085647676e-06
+    correct: 10/10, loss:0.0007155142375268042
 
 
 
-.. image::  /images/vanangamudimnist/output_47_3.png
+.. image:: /images/vanangamudimnist/output_49_3.png
 
 
 .. parsed-literal::
 
-    correct: 10/10, loss:0.00010710894275689498
     
     
     ========================================================
-    epoch: 40000, loss:9.329484500995023e-07
+    epoch: 40000, loss:3.5982332410640085e-06
+    correct: 10/10, loss:0.0003596492169890553
 
 
 
-.. image::  /images/vanangamudimnist/output_47_5.png
+.. image:: /images/vanangamudimnist/output_49_5.png
 
 
 .. parsed-literal::
 
-    correct: 10/10, loss:9.328305895905942e-05
     
     
     ========================================================
-    epoch: 60000, loss:8.258246189143392e-07
+    epoch: 60000, loss:2.403507118287962e-06
+    correct: 10/10, loss:0.00024027279869187623
 
 
 
-.. image::  /images/vanangamudimnist/output_47_7.png
+.. image:: /images/vanangamudimnist/output_49_7.png
 
 
 .. parsed-literal::
 
-    correct: 10/10, loss:8.257329318439588e-05
     
     
     ========================================================
-    epoch: 80000, loss:7.412774466502015e-07
+    epoch: 80000, loss:1.8094693423336138e-06
+    correct: 10/10, loss:0.00018090286175720394
 
 
 
-.. image::  /images/vanangamudimnist/output_47_9.png
+.. image:: /images/vanangamudimnist/output_49_9.png
 
 
 .. parsed-literal::
 
-    correct: 10/10, loss:7.412034028675407e-05
     
     
     ========================================================
-    epoch: 100000, loss:6.743323947375758e-07
+    epoch: 100000, loss:1.4504563605441945e-06
+    correct: 10/10, loss:0.0001450170821044594
 
 
 
-.. image::  /images/vanangamudimnist/output_47_11.png
+.. image:: /images/vanangamudimnist/output_49_11.png
 
-
-.. parsed-literal::
-
-    correct: 10/10, loss:6.74271141178906e-05
-
-
-.. code:: python3
-
-    torch.save(model.state_dict(), 'model_100000.pth')
 
 .. code:: python3
 
@@ -1114,24 +1047,25 @@ get more clear picture of the data :)
     plot_with_values(model, dataset)
 
 
-
-.. image::  /images/vanangamudimnist/output_49_0.png
-
-
 .. parsed-literal::
 
-    correct: 10/10, loss:6.74271141178906e-05
+    correct: 10/10, loss:0.0001450170821044594
 
 
 
-.. image::  /images/vanangamudimnist/output_49_2.png
+.. image:: /images/vanangamudimnist/output_50_1.png
+
+
+
+.. image:: /images/vanangamudimnist/output_50_2.png
 
 
 .. code:: python3
 
     _model = model.output_layer.weight.data.numpy()
     plt.figure(1, (25, 10))
-    plt.matshow(_model)
+    plt.matshow(_model, vmin=-10, vmax = 10)
+    plt.tick_params(axis=u'both', which=u'both',length=0, labelsize=0)
     plt.show()
     
     fig = plt.figure(1,(10., 10.))
@@ -1141,21 +1075,25 @@ get more clear picture of the data :)
     
     for i, (data, target) in enumerate(dataset):
         grid[i].matshow(Image.fromarray(data.numpy()))
+        grid[i].tick_params(axis=u'both', which=u'both',length=0, labelsize=0)
+        #grid[i].locator_params(axis=u'both', tight=None)
+    
     plt.show()
+
 
 
 
 .. parsed-literal::
 
-    <matplotlib.figure.Figure at 0x7f12abf90208>
+    <matplotlib.figure.Figure at 0x7f61c7b2e470>
 
 
 
-.. image::  /images/vanangamudimnist/output_50_1.png
+.. image:: /images/vanangamudimnist/output_51_1.png
 
 
 
-.. image::  /images/vanangamudimnist/output_50_2.png
+.. image:: /images/vanangamudimnist/output_51_2.png
 
 
 Dive into the model
@@ -1170,5 +1108,55 @@ pairs.
 -  Take 5 and 6, the same 17th pixel makes all the difference.
 
 Now you may ask why the rows in model matrix corresponding to 8 and 9
-are exactly same except for that one single pixel. I will let you ponder
-over that point for a while.
+are almost same but NOT exactly same except for that one single pixel. I
+will let you ponder over that point for a while.
+
+Lets reshape the model into the shape of the data. The first rows
+becomes the first image and second row becomes the second one...
+
+.. code:: python3
+
+    plt.figure(1, (25, 10))
+    plt.matshow(_model, vmin=-10, vmax = 10)
+    plt.tick_params(axis=u'both', which=u'both',length=0, labelsize=0)
+    plt.show()
+    
+    fig = plt.figure(1,(10., 10.))
+    grid = ImageGrid(fig, 111,
+                     nrows_ncols=(2 , 5),
+                     axes_pad=0.1)
+    
+    
+    for i, data in enumerate(_model):
+        grid[i].matshow(Image.fromarray(data.reshape(5,5)), vmin=-10, vmax = 10)
+        grid[i].tick_params(axis=u'both', which=u'both',length=0, labelsize=0)
+        #grid[i].locator_params(axis=u'both', tight=None)
+    
+    plt.show()
+
+
+
+.. parsed-literal::
+
+    <matplotlib.figure.Figure at 0x7f61959188d0>
+
+
+
+.. image:: /images/vanangamudimnist/output_53_1.png
+
+
+
+.. image:: /images/vanangamudimnist/output_53_2.png
+
+
+I don't know about you, but now I am gonna admire that picture above and
+wonder how beautiful neural networks are. Thank you and, ### Thanks to
+
+- `Suriyadeepan <http://suriyadeepan.github.io/>`__ for reviewing the article
+
+1. `Show values in the matplot grid by
+   matshow <https://stackoverflow.com/questions/20998083/show-the-values-in-the-grid-using-matplotlib>`__
+2. `How the Backpropogation works by Michael
+   Nielson <http://neuralnetworksanddeeplearning.com/chap2.html>`__
+3. `Controlling the Range of a Color Matrix Plot in
+   Matplotlib <https://stackoverflow.com/questions/19698945/controlling-the-range-of-a-color-matrix-plot-in-matplotlib>`__

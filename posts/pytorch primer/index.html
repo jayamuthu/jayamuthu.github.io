@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PyTorch Primer | vanangamudi</title>
 <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/html4css1.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/nikola_rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
@@ -110,7 +109,7 @@ Lets create some matrices
 
 
             
-        <p class="sourceline"><a href="../pytorch%20primer/index.rst" class="sourcelink">Source</a></p>
+        <p class="sourceline"><a href="../pytorch%20primer/index.rst" id="sourcelink">Source</a></p>
 
         </span></p>
 </div>
@@ -121,634 +120,634 @@ Lets create some matrices
 <p>This is post is inspired by <cite>Numpy Primer &lt;http://suriyadeepan.github.io/2016-06-26-numpy-primer/&gt;</cite></p>
 <div class="section" id="lets-create-some-matrices">
 <h2>Lets create some matrices</h2>
-<pre class="code python3"><a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-1"></a> <span class="kn">import</span> <span class="nn">torch</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-2"></a>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-3"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-4"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-5"></a>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-6"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-7"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-8"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-9"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="n">x3</span><span class="p">]</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-10"></a>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-11"></a>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-12"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-13"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-14"></a>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-15"></a> <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-16"></a> <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-17"></a> <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-18"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="n">x3</span><span class="p">]</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-19"></a>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-20"></a>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-21"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-22"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-23"></a>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-24"></a><span class="o">-</span><span class="mf">0.0008</span> <span class="o">-</span><span class="mf">0.6619</span> <span class="o">-</span><span class="mf">0.6790</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-25"></a> <span class="mf">0.9104</span> <span class="o">-</span><span class="mf">0.1249</span> <span class="o">-</span><span class="mf">0.4044</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-26"></a><span class="o">-</span><span class="mf">1.0516</span> <span class="o">-</span><span class="mf">0.4031</span>  <span class="mf">0.9166</span>
-<a name="rest_code_2880ce3e99ec4706aa987443d0b50da5-27"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="n">x3</span><span class="p">]</span>
+<pre class="code python3"><a name="rest_code_4599392c46714105b7f8da2a7ad2a675-1"></a> <span class="kn">import</span> <span class="nn">torch</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-2"></a>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-3"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-4"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-5"></a>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-6"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-7"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-8"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-9"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="n">x3</span><span class="p">]</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-10"></a>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-11"></a>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-12"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-13"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-14"></a>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-15"></a> <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-16"></a> <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-17"></a> <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-18"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="n">x3</span><span class="p">]</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-19"></a>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-20"></a>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-21"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-22"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-23"></a>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-24"></a><span class="o">-</span><span class="mf">0.0008</span> <span class="o">-</span><span class="mf">0.6619</span> <span class="o">-</span><span class="mf">0.6790</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-25"></a> <span class="mf">0.9104</span> <span class="o">-</span><span class="mf">0.1249</span> <span class="o">-</span><span class="mf">0.4044</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-26"></a><span class="o">-</span><span class="mf">1.0516</span> <span class="o">-</span><span class="mf">0.4031</span>  <span class="mf">0.9166</span>
+<a name="rest_code_4599392c46714105b7f8da2a7ad2a675-27"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="n">x3</span><span class="p">]</span>
 </pre>
 <p>I think now we can understand what the parameters to the above functions mean - the shape of the tensor. Take a look at non square matrices below</p>
-<pre class="code python3"><a name="rest_code_c9f8f535c91e42d7896f581d4ca8d5b2-1"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
-<a name="rest_code_c9f8f535c91e42d7896f581d4ca8d5b2-2"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_c9f8f535c91e42d7896f581d4ca8d5b2-3"></a>
-<a name="rest_code_c9f8f535c91e42d7896f581d4ca8d5b2-4"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_c9f8f535c91e42d7896f581d4ca8d5b2-5"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_c9f8f535c91e42d7896f581d4ca8d5b2-6"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x4</span><span class="p">]</span>
-<a name="rest_code_c9f8f535c91e42d7896f581d4ca8d5b2-7"></a>
-<a name="rest_code_c9f8f535c91e42d7896f581d4ca8d5b2-8"></a>
-<a name="rest_code_c9f8f535c91e42d7896f581d4ca8d5b2-9"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
-<a name="rest_code_c9f8f535c91e42d7896f581d4ca8d5b2-10"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_c9f8f535c91e42d7896f581d4ca8d5b2-11"></a>
-<a name="rest_code_c9f8f535c91e42d7896f581d4ca8d5b2-12"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_c9f8f535c91e42d7896f581d4ca8d5b2-13"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_c9f8f535c91e42d7896f581d4ca8d5b2-14"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_c9f8f535c91e42d7896f581d4ca8d5b2-15"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_c9f8f535c91e42d7896f581d4ca8d5b2-16"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">4</span><span class="n">x3</span><span class="p">]</span>
+<pre class="code python3"><a name="rest_code_ac1e73cb2f744f1b8168658bf48b3882-1"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<a name="rest_code_ac1e73cb2f744f1b8168658bf48b3882-2"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_ac1e73cb2f744f1b8168658bf48b3882-3"></a>
+<a name="rest_code_ac1e73cb2f744f1b8168658bf48b3882-4"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_ac1e73cb2f744f1b8168658bf48b3882-5"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_ac1e73cb2f744f1b8168658bf48b3882-6"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x4</span><span class="p">]</span>
+<a name="rest_code_ac1e73cb2f744f1b8168658bf48b3882-7"></a>
+<a name="rest_code_ac1e73cb2f744f1b8168658bf48b3882-8"></a>
+<a name="rest_code_ac1e73cb2f744f1b8168658bf48b3882-9"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<a name="rest_code_ac1e73cb2f744f1b8168658bf48b3882-10"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_ac1e73cb2f744f1b8168658bf48b3882-11"></a>
+<a name="rest_code_ac1e73cb2f744f1b8168658bf48b3882-12"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_ac1e73cb2f744f1b8168658bf48b3882-13"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_ac1e73cb2f744f1b8168658bf48b3882-14"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_ac1e73cb2f744f1b8168658bf48b3882-15"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_ac1e73cb2f744f1b8168658bf48b3882-16"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">4</span><span class="n">x3</span><span class="p">]</span>
 </pre>
 <p>How about a multidimensional vector - a tensor. Actually tensor is a general term for n-dimensional arrays like in numpy. If you were keen observant, you'd have notices by now that the output of every <strong>print(x)</strong> end with <strong>torch.FloatTensor</strong>. This term became famous with the deep learning storm.</p>
-<pre class="code python3"><a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-1"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-2"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-3"></a>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-4"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-5"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-6"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-7"></a>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-8"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-9"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-10"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-11"></a>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-12"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-13"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-14"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-15"></a>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-16"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-17"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-18"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-19"></a>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-20"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">2</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-21"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-22"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-23"></a>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-24"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">2</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-25"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-26"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-27"></a>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-28"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-29"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-30"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-31"></a>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-32"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-33"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-34"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-35"></a>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-36"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-37"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-38"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-39"></a>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-40"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-41"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-42"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-43"></a>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-44"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">2</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-45"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-46"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-47"></a>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-48"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">2</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-49"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-50"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_bfabd6446a6f479ea8ebc472a955b522-51"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x3x2x2x3</span><span class="p">]</span>
+<pre class="code python3"><a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-1"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-2"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-3"></a>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-4"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-5"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-6"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-7"></a>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-8"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-9"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-10"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-11"></a>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-12"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-13"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-14"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-15"></a>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-16"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-17"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-18"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-19"></a>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-20"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">2</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-21"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-22"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-23"></a>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-24"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">2</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-25"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-26"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-27"></a>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-28"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-29"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-30"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-31"></a>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-32"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-33"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-34"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-35"></a>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-36"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-37"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-38"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-39"></a>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-40"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-41"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-42"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-43"></a>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-44"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">2</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-45"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-46"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-47"></a>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-48"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">2</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-49"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-50"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_f35de2dd2f404b15ab8e90176e809e0a-51"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x3x2x2x3</span><span class="p">]</span>
 </pre>
 <p>Pause for a moment and take a long look into how the tensor is printed.  And then proceed to look for more matrices below.
 The identity matrix - matrix is the keyword.</p>
-<pre class="code python3"><a name="rest_code_df34723867d14a68b7f6a415ba76189f-1"></a><span class="c1"># The identity matrix - max upto two dimensions</span>
-<a name="rest_code_df34723867d14a68b7f6a415ba76189f-2"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<a name="rest_code_df34723867d14a68b7f6a415ba76189f-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_df34723867d14a68b7f6a415ba76189f-4"></a>
-<a name="rest_code_df34723867d14a68b7f6a415ba76189f-5"></a> <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_df34723867d14a68b7f6a415ba76189f-6"></a> <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">0</span>
-<a name="rest_code_df34723867d14a68b7f6a415ba76189f-7"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
-<a name="rest_code_df34723867d14a68b7f6a415ba76189f-8"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="n">x3</span><span class="p">]</span>
-<a name="rest_code_df34723867d14a68b7f6a415ba76189f-9"></a>
-<a name="rest_code_df34723867d14a68b7f6a415ba76189f-10"></a>
-<a name="rest_code_df34723867d14a68b7f6a415ba76189f-11"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
-<a name="rest_code_df34723867d14a68b7f6a415ba76189f-12"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_df34723867d14a68b7f6a415ba76189f-13"></a>
-<a name="rest_code_df34723867d14a68b7f6a415ba76189f-14"></a> <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_df34723867d14a68b7f6a415ba76189f-15"></a> <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span>
-<a name="rest_code_df34723867d14a68b7f6a415ba76189f-16"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">0</span>
-<a name="rest_code_df34723867d14a68b7f6a415ba76189f-17"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="n">x4</span><span class="p">]</span>
+<pre class="code python3"><a name="rest_code_8daae23616b54cdb9cd1f0d2b458c391-1"></a><span class="c1"># The identity matrix - max upto two dimensions</span>
+<a name="rest_code_8daae23616b54cdb9cd1f0d2b458c391-2"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a name="rest_code_8daae23616b54cdb9cd1f0d2b458c391-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_8daae23616b54cdb9cd1f0d2b458c391-4"></a>
+<a name="rest_code_8daae23616b54cdb9cd1f0d2b458c391-5"></a> <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_8daae23616b54cdb9cd1f0d2b458c391-6"></a> <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">0</span>
+<a name="rest_code_8daae23616b54cdb9cd1f0d2b458c391-7"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<a name="rest_code_8daae23616b54cdb9cd1f0d2b458c391-8"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="n">x3</span><span class="p">]</span>
+<a name="rest_code_8daae23616b54cdb9cd1f0d2b458c391-9"></a>
+<a name="rest_code_8daae23616b54cdb9cd1f0d2b458c391-10"></a>
+<a name="rest_code_8daae23616b54cdb9cd1f0d2b458c391-11"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<a name="rest_code_8daae23616b54cdb9cd1f0d2b458c391-12"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_8daae23616b54cdb9cd1f0d2b458c391-13"></a>
+<a name="rest_code_8daae23616b54cdb9cd1f0d2b458c391-14"></a> <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_8daae23616b54cdb9cd1f0d2b458c391-15"></a> <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<a name="rest_code_8daae23616b54cdb9cd1f0d2b458c391-16"></a> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">0</span>
+<a name="rest_code_8daae23616b54cdb9cd1f0d2b458c391-17"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="n">x4</span><span class="p">]</span>
 </pre>
 <p>Alright I get it. Just ones and zeros are boring. Want some more numbers?
 <strong>torch.linspace(start, end, count)</strong> creates a list of numbers starting with <strong>start</strong> to <strong>end</strong> at the interval of  <strong>(end - start)/(count - 1)</strong></p>
-<pre class="code python3"><a name="rest_code_dc4c334af8614981b22c0b89ba592079-1"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<a name="rest_code_dc4c334af8614981b22c0b89ba592079-2"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_dc4c334af8614981b22c0b89ba592079-3"></a>
-<a name="rest_code_dc4c334af8614981b22c0b89ba592079-4"></a> <span class="mf">1.0000</span>
-<a name="rest_code_dc4c334af8614981b22c0b89ba592079-5"></a> <span class="mf">1.5556</span>
-<a name="rest_code_dc4c334af8614981b22c0b89ba592079-6"></a> <span class="mf">2.1111</span>
-<a name="rest_code_dc4c334af8614981b22c0b89ba592079-7"></a> <span class="mf">2.6667</span>
-<a name="rest_code_dc4c334af8614981b22c0b89ba592079-8"></a> <span class="mf">3.2222</span>
-<a name="rest_code_dc4c334af8614981b22c0b89ba592079-9"></a> <span class="mf">3.7778</span>
-<a name="rest_code_dc4c334af8614981b22c0b89ba592079-10"></a> <span class="mf">4.3333</span>
-<a name="rest_code_dc4c334af8614981b22c0b89ba592079-11"></a> <span class="mf">4.8889</span>
-<a name="rest_code_dc4c334af8614981b22c0b89ba592079-12"></a> <span class="mf">5.4444</span>
-<a name="rest_code_dc4c334af8614981b22c0b89ba592079-13"></a> <span class="mf">6.0000</span>
-<a name="rest_code_dc4c334af8614981b22c0b89ba592079-14"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">10</span><span class="p">]</span>
+<pre class="code python3"><a name="rest_code_72fd907dcac74219be6f36b5cff2ef45-1"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<a name="rest_code_72fd907dcac74219be6f36b5cff2ef45-2"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_72fd907dcac74219be6f36b5cff2ef45-3"></a>
+<a name="rest_code_72fd907dcac74219be6f36b5cff2ef45-4"></a> <span class="mf">1.0000</span>
+<a name="rest_code_72fd907dcac74219be6f36b5cff2ef45-5"></a> <span class="mf">1.5556</span>
+<a name="rest_code_72fd907dcac74219be6f36b5cff2ef45-6"></a> <span class="mf">2.1111</span>
+<a name="rest_code_72fd907dcac74219be6f36b5cff2ef45-7"></a> <span class="mf">2.6667</span>
+<a name="rest_code_72fd907dcac74219be6f36b5cff2ef45-8"></a> <span class="mf">3.2222</span>
+<a name="rest_code_72fd907dcac74219be6f36b5cff2ef45-9"></a> <span class="mf">3.7778</span>
+<a name="rest_code_72fd907dcac74219be6f36b5cff2ef45-10"></a> <span class="mf">4.3333</span>
+<a name="rest_code_72fd907dcac74219be6f36b5cff2ef45-11"></a> <span class="mf">4.8889</span>
+<a name="rest_code_72fd907dcac74219be6f36b5cff2ef45-12"></a> <span class="mf">5.4444</span>
+<a name="rest_code_72fd907dcac74219be6f36b5cff2ef45-13"></a> <span class="mf">6.0000</span>
+<a name="rest_code_72fd907dcac74219be6f36b5cff2ef45-14"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">10</span><span class="p">]</span>
 </pre>
 <p><strong>torch.logspace()</strong> is similar to torch.linspace() but in logarthmic steps.</p>
-<pre class="code python3"><a name="rest_code_e85d0b01589f4017a6f6549e686e87de-1"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<a name="rest_code_e85d0b01589f4017a6f6549e686e87de-2"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_e85d0b01589f4017a6f6549e686e87de-3"></a>
-<a name="rest_code_e85d0b01589f4017a6f6549e686e87de-4"></a>  <span class="mf">1.2589</span>
-<a name="rest_code_e85d0b01589f4017a6f6549e686e87de-5"></a>  <span class="mf">2.1135</span>
-<a name="rest_code_e85d0b01589f4017a6f6549e686e87de-6"></a>  <span class="mf">3.5481</span>
-<a name="rest_code_e85d0b01589f4017a6f6549e686e87de-7"></a>  <span class="mf">5.9566</span>
-<a name="rest_code_e85d0b01589f4017a6f6549e686e87de-8"></a> <span class="mf">10.0000</span>
-<a name="rest_code_e85d0b01589f4017a6f6549e686e87de-9"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">5</span><span class="p">]</span>
+<pre class="code python3"><a name="rest_code_80bff6d950ca4beb8c60c7ce4a9a905e-1"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<a name="rest_code_80bff6d950ca4beb8c60c7ce4a9a905e-2"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_80bff6d950ca4beb8c60c7ce4a9a905e-3"></a>
+<a name="rest_code_80bff6d950ca4beb8c60c7ce4a9a905e-4"></a>  <span class="mf">1.2589</span>
+<a name="rest_code_80bff6d950ca4beb8c60c7ce4a9a905e-5"></a>  <span class="mf">2.1135</span>
+<a name="rest_code_80bff6d950ca4beb8c60c7ce4a9a905e-6"></a>  <span class="mf">3.5481</span>
+<a name="rest_code_80bff6d950ca4beb8c60c7ce4a9a905e-7"></a>  <span class="mf">5.9566</span>
+<a name="rest_code_80bff6d950ca4beb8c60c7ce4a9a905e-8"></a> <span class="mf">10.0000</span>
+<a name="rest_code_80bff6d950ca4beb8c60c7ce4a9a905e-9"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">5</span><span class="p">]</span>
 </pre>
 </div>
 <div class="section" id="arithmetics">
 <h2>Arithmetics</h2>
 <p>So what we created bunch of numbers. What is the use? Lets do some arithmetic</p>
 <p>Elementwise addition</p>
-<pre class="code python3"><a name="rest_code_ba7bd45d4a544c3f83fe2d7e9919719e-1"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<a name="rest_code_ba7bd45d4a544c3f83fe2d7e9919719e-2"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_ba7bd45d4a544c3f83fe2d7e9919719e-3"></a>
-<a name="rest_code_ba7bd45d4a544c3f83fe2d7e9919719e-4"></a> <span class="mi">1</span>
-<a name="rest_code_ba7bd45d4a544c3f83fe2d7e9919719e-5"></a> <span class="mi">1</span>
-<a name="rest_code_ba7bd45d4a544c3f83fe2d7e9919719e-6"></a> <span class="mi">1</span>
-<a name="rest_code_ba7bd45d4a544c3f83fe2d7e9919719e-7"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="p">]</span>
-<a name="rest_code_ba7bd45d4a544c3f83fe2d7e9919719e-8"></a>
-<a name="rest_code_ba7bd45d4a544c3f83fe2d7e9919719e-9"></a>
-<a name="rest_code_ba7bd45d4a544c3f83fe2d7e9919719e-10"></a> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">2</span>
-<a name="rest_code_ba7bd45d4a544c3f83fe2d7e9919719e-11"></a> <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<a name="rest_code_ba7bd45d4a544c3f83fe2d7e9919719e-12"></a>
-<a name="rest_code_ba7bd45d4a544c3f83fe2d7e9919719e-13"></a> <span class="mi">3</span>
-<a name="rest_code_ba7bd45d4a544c3f83fe2d7e9919719e-14"></a> <span class="mi">3</span>
-<a name="rest_code_ba7bd45d4a544c3f83fe2d7e9919719e-15"></a> <span class="mi">3</span>
-<a name="rest_code_ba7bd45d4a544c3f83fe2d7e9919719e-16"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="p">]</span>
+<pre class="code python3"><a name="rest_code_2c7a6debb93446f490d51b612c53ae51-1"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a name="rest_code_2c7a6debb93446f490d51b612c53ae51-2"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_2c7a6debb93446f490d51b612c53ae51-3"></a>
+<a name="rest_code_2c7a6debb93446f490d51b612c53ae51-4"></a> <span class="mi">1</span>
+<a name="rest_code_2c7a6debb93446f490d51b612c53ae51-5"></a> <span class="mi">1</span>
+<a name="rest_code_2c7a6debb93446f490d51b612c53ae51-6"></a> <span class="mi">1</span>
+<a name="rest_code_2c7a6debb93446f490d51b612c53ae51-7"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="p">]</span>
+<a name="rest_code_2c7a6debb93446f490d51b612c53ae51-8"></a>
+<a name="rest_code_2c7a6debb93446f490d51b612c53ae51-9"></a>
+<a name="rest_code_2c7a6debb93446f490d51b612c53ae51-10"></a> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">2</span>
+<a name="rest_code_2c7a6debb93446f490d51b612c53ae51-11"></a> <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<a name="rest_code_2c7a6debb93446f490d51b612c53ae51-12"></a>
+<a name="rest_code_2c7a6debb93446f490d51b612c53ae51-13"></a> <span class="mi">3</span>
+<a name="rest_code_2c7a6debb93446f490d51b612c53ae51-14"></a> <span class="mi">3</span>
+<a name="rest_code_2c7a6debb93446f490d51b612c53ae51-15"></a> <span class="mi">3</span>
+<a name="rest_code_2c7a6debb93446f490d51b612c53ae51-16"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="p">]</span>
 </pre>
 <p>Elementwise multiplication</p>
-<pre class="code python3"><a name="rest_code_6075f24a949541b39b4a0826b058be84-1"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-2"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-3"></a>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-4"></a>  <span class="mi">1</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-5"></a>  <span class="mi">2</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-6"></a>  <span class="mi">3</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-7"></a>  <span class="mi">4</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-8"></a>  <span class="mi">5</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-9"></a>  <span class="mi">6</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-10"></a>  <span class="mi">7</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-11"></a>  <span class="mi">8</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-12"></a>  <span class="mi">9</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-13"></a> <span class="mi">10</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-14"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">10</span><span class="p">]</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-15"></a>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-16"></a> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-17"></a> <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-18"></a>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-19"></a>  <span class="mi">2</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-20"></a>  <span class="mi">4</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-21"></a>  <span class="mi">6</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-22"></a>  <span class="mi">8</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-23"></a> <span class="mi">10</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-24"></a> <span class="mi">12</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-25"></a> <span class="mi">14</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-26"></a> <span class="mi">16</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-27"></a> <span class="mi">18</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-28"></a> <span class="mi">20</span>
-<a name="rest_code_6075f24a949541b39b4a0826b058be84-29"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">10</span><span class="p">]</span>
+<pre class="code python3"><a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-1"></a> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-2"></a> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-3"></a>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-4"></a>  <span class="mi">1</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-5"></a>  <span class="mi">2</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-6"></a>  <span class="mi">3</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-7"></a>  <span class="mi">4</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-8"></a>  <span class="mi">5</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-9"></a>  <span class="mi">6</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-10"></a>  <span class="mi">7</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-11"></a>  <span class="mi">8</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-12"></a>  <span class="mi">9</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-13"></a> <span class="mi">10</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-14"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">10</span><span class="p">]</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-15"></a>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-16"></a> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-17"></a> <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-18"></a>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-19"></a>  <span class="mi">2</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-20"></a>  <span class="mi">4</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-21"></a>  <span class="mi">6</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-22"></a>  <span class="mi">8</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-23"></a> <span class="mi">10</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-24"></a> <span class="mi">12</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-25"></a> <span class="mi">14</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-26"></a> <span class="mi">16</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-27"></a> <span class="mi">18</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-28"></a> <span class="mi">20</span>
+<a name="rest_code_334a872e0d1a4911a8bac8d2b7e8512e-29"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">10</span><span class="p">]</span>
 </pre>
 <p>Iterating over the elements and multiplying them by some number</p>
-<pre class="code python3"><a name="rest_code_f742fa12d55c4a4da1294209a6adc99b-1"></a><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-<a name="rest_code_f742fa12d55c4a4da1294209a6adc99b-2"></a>    <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">i</span>
-<a name="rest_code_f742fa12d55c4a4da1294209a6adc99b-3"></a>
-<a name="rest_code_f742fa12d55c4a4da1294209a6adc99b-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<a name="rest_code_f742fa12d55c4a4da1294209a6adc99b-5"></a>
-<a name="rest_code_f742fa12d55c4a4da1294209a6adc99b-6"></a>  <span class="mi">0</span>
-<a name="rest_code_f742fa12d55c4a4da1294209a6adc99b-7"></a>  <span class="mi">2</span>
-<a name="rest_code_f742fa12d55c4a4da1294209a6adc99b-8"></a>  <span class="mi">6</span>
-<a name="rest_code_f742fa12d55c4a4da1294209a6adc99b-9"></a> <span class="mi">12</span>
-<a name="rest_code_f742fa12d55c4a4da1294209a6adc99b-10"></a> <span class="mi">20</span>
-<a name="rest_code_f742fa12d55c4a4da1294209a6adc99b-11"></a> <span class="mi">30</span>
-<a name="rest_code_f742fa12d55c4a4da1294209a6adc99b-12"></a> <span class="mi">42</span>
-<a name="rest_code_f742fa12d55c4a4da1294209a6adc99b-13"></a> <span class="mi">56</span>
-<a name="rest_code_f742fa12d55c4a4da1294209a6adc99b-14"></a> <span class="mi">72</span>
-<a name="rest_code_f742fa12d55c4a4da1294209a6adc99b-15"></a> <span class="mi">90</span>
-<a name="rest_code_f742fa12d55c4a4da1294209a6adc99b-16"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">10</span><span class="p">]</span>
+<pre class="code python3"><a name="rest_code_51d8c4615fca42598ffbf5243bee209e-1"></a><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+<a name="rest_code_51d8c4615fca42598ffbf5243bee209e-2"></a>    <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">i</span>
+<a name="rest_code_51d8c4615fca42598ffbf5243bee209e-3"></a>
+<a name="rest_code_51d8c4615fca42598ffbf5243bee209e-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<a name="rest_code_51d8c4615fca42598ffbf5243bee209e-5"></a>
+<a name="rest_code_51d8c4615fca42598ffbf5243bee209e-6"></a>  <span class="mi">0</span>
+<a name="rest_code_51d8c4615fca42598ffbf5243bee209e-7"></a>  <span class="mi">2</span>
+<a name="rest_code_51d8c4615fca42598ffbf5243bee209e-8"></a>  <span class="mi">6</span>
+<a name="rest_code_51d8c4615fca42598ffbf5243bee209e-9"></a> <span class="mi">12</span>
+<a name="rest_code_51d8c4615fca42598ffbf5243bee209e-10"></a> <span class="mi">20</span>
+<a name="rest_code_51d8c4615fca42598ffbf5243bee209e-11"></a> <span class="mi">30</span>
+<a name="rest_code_51d8c4615fca42598ffbf5243bee209e-12"></a> <span class="mi">42</span>
+<a name="rest_code_51d8c4615fca42598ffbf5243bee209e-13"></a> <span class="mi">56</span>
+<a name="rest_code_51d8c4615fca42598ffbf5243bee209e-14"></a> <span class="mi">72</span>
+<a name="rest_code_51d8c4615fca42598ffbf5243bee209e-15"></a> <span class="mi">90</span>
+<a name="rest_code_51d8c4615fca42598ffbf5243bee209e-16"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">10</span><span class="p">]</span>
 </pre>
 <p>So yes we can multiply the tensors by ordinary numbers, there is no need for 'i' to be a tensor, lets take a larger tensors, and assign its values by hand. So far we have been using the numbers generated by function like <strong>ones(), zeros() and rand()</strong>. In most cases we need our favoruite numbers. How to do this? <strong>torch.Tensor()</strong> to the rescue.</p>
-<pre class="code python3"><a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-1"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">78</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">67</span><span class="p">])</span>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-3"></a>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-4"></a>  <span class="mi">1</span>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-5"></a>  <span class="mi">3</span>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-6"></a>  <span class="mi">5</span>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-7"></a>  <span class="mi">6</span>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-8"></a> <span class="mi">78</span>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-9"></a>  <span class="mi">3</span>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-10"></a> <span class="mi">67</span>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-11"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">7</span><span class="p">]</span>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-12"></a>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-13"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">)])</span>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-14"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-15"></a>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-16"></a>  <span class="mi">0</span>   <span class="mi">2</span>   <span class="mi">4</span>   <span class="mi">6</span>   <span class="mi">8</span>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-17"></a> <span class="mi">10</span>  <span class="mi">12</span>  <span class="mi">14</span>  <span class="mi">16</span>  <span class="mi">18</span>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-18"></a> <span class="mi">20</span>  <span class="mi">21</span>  <span class="mi">22</span>  <span class="mi">23</span>  <span class="mi">24</span>
-<a name="rest_code_2ff55cf2974e4901b89c09c7c5732a00-19"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="n">x5</span><span class="p">]</span>
+<pre class="code python3"><a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-1"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">78</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">67</span><span class="p">])</span>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-3"></a>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-4"></a>  <span class="mi">1</span>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-5"></a>  <span class="mi">3</span>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-6"></a>  <span class="mi">5</span>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-7"></a>  <span class="mi">6</span>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-8"></a> <span class="mi">78</span>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-9"></a>  <span class="mi">3</span>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-10"></a> <span class="mi">67</span>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-11"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">7</span><span class="p">]</span>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-12"></a>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-13"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">)])</span>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-14"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-15"></a>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-16"></a>  <span class="mi">0</span>   <span class="mi">2</span>   <span class="mi">4</span>   <span class="mi">6</span>   <span class="mi">8</span>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-17"></a> <span class="mi">10</span>  <span class="mi">12</span>  <span class="mi">14</span>  <span class="mi">16</span>  <span class="mi">18</span>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-18"></a> <span class="mi">20</span>  <span class="mi">21</span>  <span class="mi">22</span>  <span class="mi">23</span>  <span class="mi">24</span>
+<a name="rest_code_3db93498fb2a4e5c9faf18f36d06699b-19"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="n">x5</span><span class="p">]</span>
 </pre>
 <p>As we can see, the torch.Tensor() takes any iterable or iterables of iterable and makes a tensor out of it</p>
 <p>Broadcasting
 Adding a scalar to a tensor or multiplying a tensor by a scalar is essentially same as adding or multiplying the tensor by another tensor with shape same as the original tensor, with all its elements being the scalar. Too many words.</p>
-<pre class="code python3"><a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-1"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-3"></a>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-4"></a>  <span class="mi">1</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-5"></a>  <span class="mi">2</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-6"></a>  <span class="mi">3</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-7"></a>  <span class="mi">4</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-8"></a>  <span class="mi">5</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-9"></a>  <span class="mi">6</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-10"></a>  <span class="mi">7</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-11"></a>  <span class="mi">8</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-12"></a>  <span class="mi">9</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-13"></a> <span class="mi">10</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-14"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">10</span><span class="p">]</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-15"></a>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-16"></a>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-17"></a><span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">])</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-18"></a><span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-19"></a>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-20"></a> <span class="mi">2</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-21"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">1</span><span class="p">]</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-22"></a>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-23"></a>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-24"></a><span class="c1"># broadcasting  https://discuss.pytorch.org/t/broadcasting-or-alternative-solutions/120</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-25"></a><span class="n">y</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">expand_as</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-26"></a><span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-27"></a>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-28"></a>  <span class="mi">2</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-29"></a>  <span class="mi">4</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-30"></a>  <span class="mi">6</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-31"></a>  <span class="mi">8</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-32"></a> <span class="mi">10</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-33"></a> <span class="mi">12</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-34"></a> <span class="mi">14</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-35"></a> <span class="mi">16</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-36"></a> <span class="mi">18</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-37"></a> <span class="mi">20</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-38"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">10</span><span class="p">]</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-39"></a>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-40"></a>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-41"></a><span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-42"></a><span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-43"></a>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-44"></a> <span class="mi">2</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-45"></a> <span class="mi">3</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-46"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="p">]</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-47"></a>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-48"></a><span class="n">y</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">expand_as</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span>        <span class="c1">#Dont' work</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-49"></a><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-50"></a>  <span class="n">File</span> <span class="s2">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-51"></a>  <span class="n">File</span> <span class="s2">"/home/paarulakan/environments/python/pytorch-py35/lib/python3.5/site-packages/torch/tensor.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">274</span><span class="p">,</span> <span class="ow">in</span> <span class="n">expand_as</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-52"></a>    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-53"></a>  <span class="n">File</span> <span class="s2">"/home/paarulakan/environments/python/pytorch-py35/lib/python3.5/site-packages/torch/tensor.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">261</span><span class="p">,</span> <span class="ow">in</span> <span class="n">expand</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-54"></a>    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'incorrect size: only supporting singleton expansion (size=1)'</span><span class="p">)</span>
-<a name="rest_code_f6bcc487fd0a4fdfa90d675d76bb2aae-55"></a><span class="ne">ValueError</span><span class="p">:</span> <span class="n">incorrect</span> <span class="n">size</span><span class="p">:</span> <span class="n">only</span> <span class="n">supporting</span> <span class="n">singleton</span> <span class="n">expansion</span> <span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<pre class="code python3"><a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-1"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-3"></a>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-4"></a>  <span class="mi">1</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-5"></a>  <span class="mi">2</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-6"></a>  <span class="mi">3</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-7"></a>  <span class="mi">4</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-8"></a>  <span class="mi">5</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-9"></a>  <span class="mi">6</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-10"></a>  <span class="mi">7</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-11"></a>  <span class="mi">8</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-12"></a>  <span class="mi">9</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-13"></a> <span class="mi">10</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-14"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">10</span><span class="p">]</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-15"></a>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-16"></a>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-17"></a><span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">])</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-18"></a><span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-19"></a>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-20"></a> <span class="mi">2</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-21"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">1</span><span class="p">]</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-22"></a>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-23"></a>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-24"></a><span class="c1"># broadcasting  https://discuss.pytorch.org/t/broadcasting-or-alternative-solutions/120</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-25"></a><span class="n">y</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">expand_as</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-26"></a><span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-27"></a>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-28"></a>  <span class="mi">2</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-29"></a>  <span class="mi">4</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-30"></a>  <span class="mi">6</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-31"></a>  <span class="mi">8</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-32"></a> <span class="mi">10</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-33"></a> <span class="mi">12</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-34"></a> <span class="mi">14</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-35"></a> <span class="mi">16</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-36"></a> <span class="mi">18</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-37"></a> <span class="mi">20</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-38"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">10</span><span class="p">]</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-39"></a>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-40"></a>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-41"></a><span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-42"></a><span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-43"></a>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-44"></a> <span class="mi">2</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-45"></a> <span class="mi">3</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-46"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="p">]</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-47"></a>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-48"></a><span class="n">y</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">expand_as</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span>        <span class="c1">#Dont' work</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-49"></a><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-50"></a>  <span class="n">File</span> <span class="s2">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-51"></a>  <span class="n">File</span> <span class="s2">"/home/paarulakan/environments/python/pytorch-py35/lib/python3.5/site-packages/torch/tensor.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">274</span><span class="p">,</span> <span class="ow">in</span> <span class="n">expand_as</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-52"></a>    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-53"></a>  <span class="n">File</span> <span class="s2">"/home/paarulakan/environments/python/pytorch-py35/lib/python3.5/site-packages/torch/tensor.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">261</span><span class="p">,</span> <span class="ow">in</span> <span class="n">expand</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-54"></a>    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'incorrect size: only supporting singleton expansion (size=1)'</span><span class="p">)</span>
+<a name="rest_code_bd1cb1b316d740248f928ab24ab01fa1-55"></a><span class="ne">ValueError</span><span class="p">:</span> <span class="n">incorrect</span> <span class="n">size</span><span class="p">:</span> <span class="n">only</span> <span class="n">supporting</span> <span class="n">singleton</span> <span class="n">expansion</span> <span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre>
 <p>Note that the expand_as() works only for singletons</p>
 <div class="section" id="reshaping-tensors">
 <h3>Reshaping Tensors</h3>
 <p><strong>view()</strong> takes list of number and reshapes the tensor as per the arguments.</p>
 <p>The constrain is for view(a, b, c,....n) a x b x c x ... x n should be equal to the size of the given tensor. If you give <em>'-1'</em> as the last argument to <strong>view()</strong> it will calculate the last dimension by itself.</p>
-<pre class="code python3"><a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-1"></a><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-3"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-4"></a>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">4</span>  <span class="mi">5</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-5"></a>  <span class="mi">6</span>  <span class="mi">7</span>  <span class="mi">8</span>  <span class="mi">9</span>  <span class="mi">10</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-6"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x5</span><span class="p">]</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-7"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-8"></a><span class="c1"># making matrices by hand is hard right?</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-9"></a><span class="n">x</span>  <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-10"></a><span class="n">x_</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-11"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-12"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-13"></a>    <span class="mi">1</span>     <span class="mi">2</span>     <span class="mi">3</span>     <span class="mi">4</span>     <span class="mi">5</span>     <span class="mi">6</span>     <span class="mi">7</span>     <span class="mi">8</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-14"></a>    <span class="mi">9</span>    <span class="mi">10</span>    <span class="mi">11</span>    <span class="mi">12</span>    <span class="mi">13</span>    <span class="mi">14</span>    <span class="mi">15</span>    <span class="mi">16</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-15"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x8</span><span class="p">]</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-16"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-17"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-18"></a><span class="n">x_</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-19"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-20"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-21"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-22"></a>   <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">3</span>   <span class="mi">4</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-23"></a>   <span class="mi">5</span>   <span class="mi">6</span>   <span class="mi">7</span>   <span class="mi">8</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-24"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-25"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-26"></a>   <span class="mi">9</span>  <span class="mi">10</span>  <span class="mi">11</span>  <span class="mi">12</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-27"></a>  <span class="mi">13</span>  <span class="mi">14</span>  <span class="mi">15</span>  <span class="mi">16</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-28"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x2x4</span><span class="p">]</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-29"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-30"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-31"></a><span class="n">x_</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-32"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-33"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-34"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-35"></a>   <span class="mi">1</span>   <span class="mi">2</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-36"></a>   <span class="mi">3</span>   <span class="mi">4</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-37"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-38"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-39"></a>   <span class="mi">5</span>   <span class="mi">6</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-40"></a>   <span class="mi">7</span>   <span class="mi">8</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-41"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-42"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-43"></a>   <span class="mi">9</span>  <span class="mi">10</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-44"></a>  <span class="mi">11</span>  <span class="mi">12</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-45"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-46"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-47"></a>  <span class="mi">13</span>  <span class="mi">14</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-48"></a>  <span class="mi">15</span>  <span class="mi">16</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-49"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x2x2x2</span><span class="p">]</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-50"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-51"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-52"></a><span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-53"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-54"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-55"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-56"></a>   <span class="mi">1</span>   <span class="mi">2</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-57"></a>   <span class="mi">3</span>   <span class="mi">4</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-58"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-59"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-60"></a>   <span class="mi">5</span>  <span class="o">-</span><span class="mi">6</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-61"></a>   <span class="mi">7</span>   <span class="mi">8</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-62"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-63"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-64"></a>   <span class="mi">9</span>  <span class="mi">10</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-65"></a>  <span class="mi">11</span>  <span class="mi">12</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-66"></a>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-67"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-68"></a>  <span class="mi">13</span>  <span class="mi">14</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-69"></a>  <span class="mi">15</span>  <span class="mi">16</span>
-<a name="rest_code_63f7c46186a9422c88cc8038e9e5fbf1-70"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x2x2x2</span><span class="p">]</span>
+<pre class="code python3"><a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-1"></a><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-3"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-4"></a>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">4</span>  <span class="mi">5</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-5"></a>  <span class="mi">6</span>  <span class="mi">7</span>  <span class="mi">8</span>  <span class="mi">9</span>  <span class="mi">10</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-6"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x5</span><span class="p">]</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-7"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-8"></a><span class="c1"># making matrices by hand is hard right?</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-9"></a><span class="n">x</span>  <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-10"></a><span class="n">x_</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-11"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-12"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-13"></a>    <span class="mi">1</span>     <span class="mi">2</span>     <span class="mi">3</span>     <span class="mi">4</span>     <span class="mi">5</span>     <span class="mi">6</span>     <span class="mi">7</span>     <span class="mi">8</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-14"></a>    <span class="mi">9</span>    <span class="mi">10</span>    <span class="mi">11</span>    <span class="mi">12</span>    <span class="mi">13</span>    <span class="mi">14</span>    <span class="mi">15</span>    <span class="mi">16</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-15"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x8</span><span class="p">]</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-16"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-17"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-18"></a><span class="n">x_</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-19"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-20"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-21"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-22"></a>   <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">3</span>   <span class="mi">4</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-23"></a>   <span class="mi">5</span>   <span class="mi">6</span>   <span class="mi">7</span>   <span class="mi">8</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-24"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-25"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-26"></a>   <span class="mi">9</span>  <span class="mi">10</span>  <span class="mi">11</span>  <span class="mi">12</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-27"></a>  <span class="mi">13</span>  <span class="mi">14</span>  <span class="mi">15</span>  <span class="mi">16</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-28"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x2x4</span><span class="p">]</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-29"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-30"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-31"></a><span class="n">x_</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-32"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-33"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-34"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-35"></a>   <span class="mi">1</span>   <span class="mi">2</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-36"></a>   <span class="mi">3</span>   <span class="mi">4</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-37"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-38"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-39"></a>   <span class="mi">5</span>   <span class="mi">6</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-40"></a>   <span class="mi">7</span>   <span class="mi">8</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-41"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-42"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-43"></a>   <span class="mi">9</span>  <span class="mi">10</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-44"></a>  <span class="mi">11</span>  <span class="mi">12</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-45"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-46"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-47"></a>  <span class="mi">13</span>  <span class="mi">14</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-48"></a>  <span class="mi">15</span>  <span class="mi">16</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-49"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x2x2x2</span><span class="p">]</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-50"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-51"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-52"></a><span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-53"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-54"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-55"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-56"></a>   <span class="mi">1</span>   <span class="mi">2</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-57"></a>   <span class="mi">3</span>   <span class="mi">4</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-58"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-59"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-60"></a>   <span class="mi">5</span>  <span class="o">-</span><span class="mi">6</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-61"></a>   <span class="mi">7</span>   <span class="mi">8</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-62"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-63"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-64"></a>   <span class="mi">9</span>  <span class="mi">10</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-65"></a>  <span class="mi">11</span>  <span class="mi">12</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-66"></a>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-67"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-68"></a>  <span class="mi">13</span>  <span class="mi">14</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-69"></a>  <span class="mi">15</span>  <span class="mi">16</span>
+<a name="rest_code_d7f8352a75254b218d7a3b8e898c2300-70"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x2x2x2</span><span class="p">]</span>
 </pre>
 <p>Notice that change in value of an element in <strong>x</strong> reflects in <strong>x_</strong>. It is because view() does exactly what is says it will do. It creates a view of the tensor, the underlying storage is same for <strong>x</strong> and <strong>x_</strong></p>
 </div>
 <div class="section" id="statistics">
 <h3>Statistics</h3>
-<pre class="code python3"><a name="rest_code_4de34378d6924679969a723ecb29617b-1"></a><span class="n">x</span>  <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-2"></a><span class="n">x_</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-4"></a>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-5"></a>  <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">3</span>   <span class="mi">4</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-6"></a>  <span class="mi">5</span>   <span class="mi">6</span>   <span class="mi">7</span>   <span class="mi">8</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-7"></a>  <span class="mi">9</span>  <span class="mi">10</span>  <span class="mi">11</span>  <span class="mi">12</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-8"></a> <span class="mi">13</span>  <span class="mi">14</span>  <span class="mi">15</span>  <span class="mi">16</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-9"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">4</span><span class="n">x4</span><span class="p">]</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-10"></a>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-11"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-12"></a>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-13"></a> <span class="mi">28</span>  <span class="mi">32</span>  <span class="mi">36</span>  <span class="mi">40</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-14"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">1</span><span class="n">x4</span><span class="p">]</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-15"></a>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-16"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-17"></a>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-18"></a> <span class="mi">10</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-19"></a> <span class="mi">26</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-20"></a> <span class="mi">42</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-21"></a> <span class="mi">58</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-22"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">4</span><span class="n">x1</span><span class="p">]</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-23"></a>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-24"></a><span class="n">x_</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-25"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-26"></a>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-27"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-28"></a>   <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">3</span>   <span class="mi">4</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-29"></a>   <span class="mi">5</span>   <span class="mi">6</span>   <span class="mi">7</span>   <span class="mi">8</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-30"></a>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-31"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-32"></a>   <span class="mi">9</span>  <span class="mi">10</span>  <span class="mi">11</span>  <span class="mi">12</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-33"></a>  <span class="mi">13</span>  <span class="mi">14</span>  <span class="mi">15</span>  <span class="mi">16</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-34"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x2x4</span><span class="p">]</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-35"></a>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-36"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-37"></a>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-38"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-39"></a>  <span class="mi">10</span>  <span class="mi">12</span>  <span class="mi">14</span>  <span class="mi">16</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-40"></a>  <span class="mi">18</span>  <span class="mi">20</span>  <span class="mi">22</span>  <span class="mi">24</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-41"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">1</span><span class="n">x2x4</span><span class="p">]</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-42"></a>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-43"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-44"></a>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-45"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-46"></a>   <span class="mi">6</span>   <span class="mi">8</span>  <span class="mi">10</span>  <span class="mi">12</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-47"></a>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-48"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-49"></a>  <span class="mi">22</span>  <span class="mi">24</span>  <span class="mi">26</span>  <span class="mi">28</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-50"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x1x4</span><span class="p">]</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-51"></a>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-52"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span> <span class="o">=</span> <span class="mi">2</span><span class="p">))</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-53"></a>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-54"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-55"></a>  <span class="mi">10</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-56"></a>  <span class="mi">26</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-57"></a>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-58"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-59"></a>  <span class="mi">42</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-60"></a>  <span class="mi">58</span>
-<a name="rest_code_4de34378d6924679969a723ecb29617b-61"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x2x1</span><span class="p">]</span>
+<pre class="code python3"><a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-1"></a><span class="n">x</span>  <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-2"></a><span class="n">x_</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-4"></a>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-5"></a>  <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">3</span>   <span class="mi">4</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-6"></a>  <span class="mi">5</span>   <span class="mi">6</span>   <span class="mi">7</span>   <span class="mi">8</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-7"></a>  <span class="mi">9</span>  <span class="mi">10</span>  <span class="mi">11</span>  <span class="mi">12</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-8"></a> <span class="mi">13</span>  <span class="mi">14</span>  <span class="mi">15</span>  <span class="mi">16</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-9"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">4</span><span class="n">x4</span><span class="p">]</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-10"></a>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-11"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-12"></a>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-13"></a> <span class="mi">28</span>  <span class="mi">32</span>  <span class="mi">36</span>  <span class="mi">40</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-14"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">1</span><span class="n">x4</span><span class="p">]</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-15"></a>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-16"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-17"></a>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-18"></a> <span class="mi">10</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-19"></a> <span class="mi">26</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-20"></a> <span class="mi">42</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-21"></a> <span class="mi">58</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-22"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">4</span><span class="n">x1</span><span class="p">]</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-23"></a>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-24"></a><span class="n">x_</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-25"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-26"></a>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-27"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-28"></a>   <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">3</span>   <span class="mi">4</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-29"></a>   <span class="mi">5</span>   <span class="mi">6</span>   <span class="mi">7</span>   <span class="mi">8</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-30"></a>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-31"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-32"></a>   <span class="mi">9</span>  <span class="mi">10</span>  <span class="mi">11</span>  <span class="mi">12</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-33"></a>  <span class="mi">13</span>  <span class="mi">14</span>  <span class="mi">15</span>  <span class="mi">16</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-34"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x2x4</span><span class="p">]</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-35"></a>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-36"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-37"></a>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-38"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-39"></a>  <span class="mi">10</span>  <span class="mi">12</span>  <span class="mi">14</span>  <span class="mi">16</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-40"></a>  <span class="mi">18</span>  <span class="mi">20</span>  <span class="mi">22</span>  <span class="mi">24</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-41"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">1</span><span class="n">x2x4</span><span class="p">]</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-42"></a>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-43"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-44"></a>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-45"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-46"></a>   <span class="mi">6</span>   <span class="mi">8</span>  <span class="mi">10</span>  <span class="mi">12</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-47"></a>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-48"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-49"></a>  <span class="mi">22</span>  <span class="mi">24</span>  <span class="mi">26</span>  <span class="mi">28</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-50"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x1x4</span><span class="p">]</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-51"></a>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-52"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span> <span class="o">=</span> <span class="mi">2</span><span class="p">))</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-53"></a>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-54"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-55"></a>  <span class="mi">10</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-56"></a>  <span class="mi">26</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-57"></a>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-58"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-59"></a>  <span class="mi">42</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-60"></a>  <span class="mi">58</span>
+<a name="rest_code_0ec04f06dbed4cd2a85e2326a30403ac-61"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x2x1</span><span class="p">]</span>
 </pre>
 </div>
 <div class="section" id="matrix-multiplication">
 <h3>Matrix Multiplication</h3>
 <p><strong>mm()</strong> is name. See how it is different from normal elementwise multiplication, like we used to do in linear algebra class?</p>
-<pre class="code python3"><a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-1"></a><span class="c1">#lets do some matrix multiplications</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-2"></a><span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-3"></a>                  <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]])</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-4"></a>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-5"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-6"></a>                  <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]])</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-7"></a>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-9"></a>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-10"></a>  <span class="mi">70</span>  <span class="mi">100</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-11"></a> <span class="mi">150</span>  <span class="mi">220</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-12"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x2</span><span class="p">]</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-13"></a>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-14"></a><span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-15"></a>                  <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-16"></a>                  <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">]])</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-17"></a>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-18"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-19"></a>                  <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">]])</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-20"></a><span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-21"></a>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-22"></a>  <span class="mi">70</span>  <span class="mi">100</span>  <span class="mi">170</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-23"></a> <span class="mi">150</span>  <span class="mi">220</span>  <span class="mi">390</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-24"></a> <span class="mi">230</span>  <span class="mi">340</span>  <span class="mi">610</span>
-<a name="rest_code_639128e86a934ff1ba6f5b04e88e16da-25"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="n">x3</span><span class="p">]</span>
+<pre class="code python3"><a name="rest_code_01393b5d65cc4581800decda9c38f9ad-1"></a><span class="c1">#lets do some matrix multiplications</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-2"></a><span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-3"></a>                  <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]])</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-4"></a>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-5"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-6"></a>                  <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]])</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-7"></a>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-9"></a>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-10"></a>  <span class="mi">70</span>  <span class="mi">100</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-11"></a> <span class="mi">150</span>  <span class="mi">220</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-12"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">2</span><span class="n">x2</span><span class="p">]</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-13"></a>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-14"></a><span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-15"></a>                  <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-16"></a>                  <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">]])</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-17"></a>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-18"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-19"></a>                  <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">]])</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-20"></a><span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-21"></a>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-22"></a>  <span class="mi">70</span>  <span class="mi">100</span>  <span class="mi">170</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-23"></a> <span class="mi">150</span>  <span class="mi">220</span>  <span class="mi">390</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-24"></a> <span class="mi">230</span>  <span class="mi">340</span>  <span class="mi">610</span>
+<a name="rest_code_01393b5d65cc4581800decda9c38f9ad-25"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span><span class="n">x3</span><span class="p">]</span>
 </pre>
 </div>
 <div class="section" id="indexing-and-slicing">
 <h3>Indexing and slicing</h3>
-<pre class="code python3"><a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-1"></a><span class="c1">#Indexing and slicing</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-2"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-4"></a>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-5"></a>  <span class="mi">1</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-6"></a>  <span class="mi">2</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-7"></a>  <span class="mi">3</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-8"></a>  <span class="mi">4</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-9"></a>  <span class="mi">5</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-10"></a>  <span class="o">.</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-11"></a>  <span class="o">.</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-12"></a>  <span class="o">.</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-13"></a> <span class="mi">61</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-14"></a> <span class="mi">62</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-15"></a> <span class="mi">63</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-16"></a> <span class="mi">64</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-17"></a>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-18"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">64</span><span class="p">]</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-19"></a>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-20"></a>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-21"></a><span class="n">x_</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-22"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-23"></a>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-24"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-25"></a>   <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">3</span>   <span class="mi">4</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-26"></a>   <span class="mi">5</span>   <span class="mi">6</span>   <span class="mi">7</span>   <span class="mi">8</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-27"></a>   <span class="mi">9</span>  <span class="mi">10</span>  <span class="mi">11</span>  <span class="mi">12</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-28"></a>  <span class="mi">13</span>  <span class="mi">14</span>  <span class="mi">15</span>  <span class="mi">16</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-29"></a>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-30"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-31"></a>  <span class="mi">17</span>  <span class="mi">18</span>  <span class="mi">19</span>  <span class="mi">20</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-32"></a>  <span class="mi">21</span>  <span class="mi">22</span>  <span class="mi">23</span>  <span class="mi">24</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-33"></a>  <span class="mi">25</span>  <span class="mi">26</span>  <span class="mi">27</span>  <span class="mi">28</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-34"></a>  <span class="mi">29</span>  <span class="mi">30</span>  <span class="mi">31</span>  <span class="mi">32</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-35"></a>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-36"></a><span class="p">(</span><span class="mi">2</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-37"></a>  <span class="mi">33</span>  <span class="mi">34</span>  <span class="mi">35</span>  <span class="mi">36</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-38"></a>  <span class="mi">37</span>  <span class="mi">38</span>  <span class="mi">39</span>  <span class="mi">40</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-39"></a>  <span class="mi">41</span>  <span class="mi">42</span>  <span class="mi">43</span>  <span class="mi">44</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-40"></a>  <span class="mi">45</span>  <span class="mi">46</span>  <span class="mi">47</span>  <span class="mi">48</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-41"></a>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-42"></a><span class="p">(</span><span class="mi">3</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-43"></a>  <span class="mi">49</span>  <span class="mi">50</span>  <span class="mi">51</span>  <span class="mi">52</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-44"></a>  <span class="mi">53</span>  <span class="mi">54</span>  <span class="mi">55</span>  <span class="mi">56</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-45"></a>  <span class="mi">57</span>  <span class="mi">58</span>  <span class="mi">59</span>  <span class="mi">60</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-46"></a>  <span class="mi">61</span>  <span class="mi">62</span>  <span class="mi">63</span>  <span class="mi">64</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-47"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">4</span><span class="n">x4x4</span><span class="p">]</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-48"></a>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-49"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:])</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-50"></a>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-51"></a> <span class="mi">21</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-52"></a> <span class="mi">22</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-53"></a> <span class="mi">23</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-54"></a> <span class="mi">24</span>
-<a name="rest_code_feec54587135480fa3ab5b2a81d1df4b-55"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">4</span><span class="p">]</span>
+<pre class="code python3"><a name="rest_code_4446398a1233448286d1b11e9ae28dcd-1"></a><span class="c1">#Indexing and slicing</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-2"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-4"></a>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-5"></a>  <span class="mi">1</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-6"></a>  <span class="mi">2</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-7"></a>  <span class="mi">3</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-8"></a>  <span class="mi">4</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-9"></a>  <span class="mi">5</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-10"></a>  <span class="o">.</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-11"></a>  <span class="o">.</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-12"></a>  <span class="o">.</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-13"></a> <span class="mi">61</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-14"></a> <span class="mi">62</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-15"></a> <span class="mi">63</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-16"></a> <span class="mi">64</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-17"></a>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-18"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">64</span><span class="p">]</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-19"></a>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-20"></a>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-21"></a><span class="n">x_</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-22"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-23"></a>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-24"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-25"></a>   <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">3</span>   <span class="mi">4</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-26"></a>   <span class="mi">5</span>   <span class="mi">6</span>   <span class="mi">7</span>   <span class="mi">8</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-27"></a>   <span class="mi">9</span>  <span class="mi">10</span>  <span class="mi">11</span>  <span class="mi">12</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-28"></a>  <span class="mi">13</span>  <span class="mi">14</span>  <span class="mi">15</span>  <span class="mi">16</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-29"></a>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-30"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-31"></a>  <span class="mi">17</span>  <span class="mi">18</span>  <span class="mi">19</span>  <span class="mi">20</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-32"></a>  <span class="mi">21</span>  <span class="mi">22</span>  <span class="mi">23</span>  <span class="mi">24</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-33"></a>  <span class="mi">25</span>  <span class="mi">26</span>  <span class="mi">27</span>  <span class="mi">28</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-34"></a>  <span class="mi">29</span>  <span class="mi">30</span>  <span class="mi">31</span>  <span class="mi">32</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-35"></a>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-36"></a><span class="p">(</span><span class="mi">2</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-37"></a>  <span class="mi">33</span>  <span class="mi">34</span>  <span class="mi">35</span>  <span class="mi">36</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-38"></a>  <span class="mi">37</span>  <span class="mi">38</span>  <span class="mi">39</span>  <span class="mi">40</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-39"></a>  <span class="mi">41</span>  <span class="mi">42</span>  <span class="mi">43</span>  <span class="mi">44</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-40"></a>  <span class="mi">45</span>  <span class="mi">46</span>  <span class="mi">47</span>  <span class="mi">48</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-41"></a>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-42"></a><span class="p">(</span><span class="mi">3</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-43"></a>  <span class="mi">49</span>  <span class="mi">50</span>  <span class="mi">51</span>  <span class="mi">52</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-44"></a>  <span class="mi">53</span>  <span class="mi">54</span>  <span class="mi">55</span>  <span class="mi">56</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-45"></a>  <span class="mi">57</span>  <span class="mi">58</span>  <span class="mi">59</span>  <span class="mi">60</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-46"></a>  <span class="mi">61</span>  <span class="mi">62</span>  <span class="mi">63</span>  <span class="mi">64</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-47"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">4</span><span class="n">x4x4</span><span class="p">]</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-48"></a>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-49"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:])</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-50"></a>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-51"></a> <span class="mi">21</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-52"></a> <span class="mi">22</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-53"></a> <span class="mi">23</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-54"></a> <span class="mi">24</span>
+<a name="rest_code_4446398a1233448286d1b11e9ae28dcd-55"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">4</span><span class="p">]</span>
 </pre>
 </div>
 <div class="section" id="masking">
 <h3>Masking</h3>
-<pre class="code python3"><a name="rest_code_37dd9794b7114563a2e0011ef990b6db-1"></a><span class="c1">#the expression 'x_ % 4 == 0' creates a mask</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-3"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-4"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-5"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-6"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-7"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-8"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-9"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-10"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-11"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-12"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-13"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-14"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-15"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-16"></a><span class="p">(</span><span class="mi">2</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-17"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-18"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-19"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-20"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-21"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-22"></a><span class="p">(</span><span class="mi">3</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-23"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-24"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-25"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-26"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-27"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">ByteTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">4</span><span class="n">x4x4</span><span class="p">]</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-28"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-29"></a><span class="c1"># Use the mask to extract just those elements</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-30"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-31"></a><span class="n">x_</span><span class="p">[</span><span class="mi">0</span><span class="p">][(</span><span class="n">x_</span><span class="o">%</span><span class="mi">4</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-32"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-33"></a>  <span class="mi">4</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-34"></a>  <span class="mi">8</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-35"></a> <span class="mi">12</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-36"></a> <span class="mi">16</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-37"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">4</span><span class="p">]</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-38"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-39"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-40"></a><span class="c1">#more grander masking example</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-41"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-42"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-43"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-44"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-45"></a>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-46"></a>  <span class="mi">2</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-47"></a>  <span class="mi">3</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-48"></a>  <span class="mi">4</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-49"></a>  <span class="mi">5</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-50"></a>  <span class="o">.</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-51"></a>  <span class="o">.</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-52"></a>  <span class="o">.</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-53"></a> <span class="mi">61</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-54"></a> <span class="mi">62</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-55"></a> <span class="mi">63</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-56"></a> <span class="mi">64</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-57"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-58"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">64</span><span class="p">]</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-59"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-60"></a><span class="n">x_</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-61"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-62"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-63"></a>    <span class="mi">1</span>     <span class="mi">2</span>     <span class="mi">3</span>     <span class="mi">4</span>     <span class="mi">5</span>     <span class="mi">6</span>     <span class="mi">7</span>     <span class="mi">8</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-64"></a>    <span class="mi">9</span>    <span class="mi">10</span>    <span class="mi">11</span>    <span class="mi">12</span>    <span class="mi">13</span>    <span class="mi">14</span>    <span class="mi">15</span>    <span class="mi">16</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-65"></a>   <span class="mi">17</span>    <span class="mi">18</span>    <span class="mi">19</span>    <span class="mi">20</span>    <span class="mi">21</span>    <span class="mi">22</span>    <span class="mi">23</span>    <span class="mi">24</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-66"></a>   <span class="mi">25</span>    <span class="mi">26</span>    <span class="mi">27</span>    <span class="mi">28</span>    <span class="mi">29</span>    <span class="mi">30</span>    <span class="mi">31</span>    <span class="mi">32</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-67"></a>   <span class="mi">33</span>    <span class="mi">34</span>    <span class="mi">35</span>    <span class="mi">36</span>    <span class="mi">37</span>    <span class="mi">38</span>    <span class="mi">39</span>    <span class="mi">40</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-68"></a>   <span class="mi">41</span>    <span class="mi">42</span>    <span class="mi">43</span>    <span class="mi">44</span>    <span class="mi">45</span>    <span class="mi">46</span>    <span class="mi">47</span>    <span class="mi">48</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-69"></a>   <span class="mi">49</span>    <span class="mi">50</span>    <span class="mi">51</span>    <span class="mi">52</span>    <span class="mi">53</span>    <span class="mi">54</span>    <span class="mi">55</span>    <span class="mi">56</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-70"></a>   <span class="mi">57</span>    <span class="mi">58</span>    <span class="mi">59</span>    <span class="mi">60</span>    <span class="mi">61</span>    <span class="mi">62</span>    <span class="mi">63</span>    <span class="mi">64</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-71"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">8</span><span class="n">x8</span><span class="p">]</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-72"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-73"></a><span class="n">x_ind</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">byte</span><span class="p">()</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-74"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_ind</span><span class="p">)</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-75"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-76"></a>    <span class="mi">1</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-77"></a>    <span class="mi">0</span>     <span class="mi">1</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-78"></a>    <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">1</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-79"></a>    <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">1</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-80"></a>    <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">1</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-81"></a>    <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">1</span>     <span class="mi">0</span>     <span class="mi">0</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-82"></a>    <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">1</span>     <span class="mi">0</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-83"></a>    <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-84"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">ByteTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">8</span><span class="n">x8</span><span class="p">]</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-85"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-86"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">x_ind</span><span class="p">])</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-87"></a>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-88"></a>  <span class="mi">1</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-89"></a> <span class="mi">10</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-90"></a> <span class="mi">19</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-91"></a> <span class="mi">28</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-92"></a> <span class="mi">37</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-93"></a> <span class="mi">46</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-94"></a> <span class="mi">55</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-95"></a> <span class="mi">64</span>
-<a name="rest_code_37dd9794b7114563a2e0011ef990b6db-96"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">8</span><span class="p">]</span>
+<pre class="code python3"><a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-1"></a><span class="c1">#the expression 'x_ % 4 == 0' creates a mask</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-3"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-4"></a><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-5"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-6"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-7"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-8"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-9"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-10"></a><span class="p">(</span><span class="mi">1</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-11"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-12"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-13"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-14"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-15"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-16"></a><span class="p">(</span><span class="mi">2</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-17"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-18"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-19"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-20"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-21"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-22"></a><span class="p">(</span><span class="mi">3</span> <span class="p">,</span><span class="o">.</span><span class="p">,</span><span class="o">.</span><span class="p">)</span> <span class="o">=</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-23"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-24"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-25"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-26"></a>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-27"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">ByteTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">4</span><span class="n">x4x4</span><span class="p">]</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-28"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-29"></a><span class="c1"># Use the mask to extract just those elements</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-30"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-31"></a><span class="n">x_</span><span class="p">[</span><span class="mi">0</span><span class="p">][(</span><span class="n">x_</span><span class="o">%</span><span class="mi">4</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-32"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-33"></a>  <span class="mi">4</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-34"></a>  <span class="mi">8</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-35"></a> <span class="mi">12</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-36"></a> <span class="mi">16</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-37"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">4</span><span class="p">]</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-38"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-39"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-40"></a><span class="c1">#more grander masking example</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-41"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-42"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-43"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-44"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-45"></a>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-46"></a>  <span class="mi">2</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-47"></a>  <span class="mi">3</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-48"></a>  <span class="mi">4</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-49"></a>  <span class="mi">5</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-50"></a>  <span class="o">.</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-51"></a>  <span class="o">.</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-52"></a>  <span class="o">.</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-53"></a> <span class="mi">61</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-54"></a> <span class="mi">62</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-55"></a> <span class="mi">63</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-56"></a> <span class="mi">64</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-57"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-58"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">64</span><span class="p">]</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-59"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-60"></a><span class="n">x_</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-61"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-62"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-63"></a>    <span class="mi">1</span>     <span class="mi">2</span>     <span class="mi">3</span>     <span class="mi">4</span>     <span class="mi">5</span>     <span class="mi">6</span>     <span class="mi">7</span>     <span class="mi">8</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-64"></a>    <span class="mi">9</span>    <span class="mi">10</span>    <span class="mi">11</span>    <span class="mi">12</span>    <span class="mi">13</span>    <span class="mi">14</span>    <span class="mi">15</span>    <span class="mi">16</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-65"></a>   <span class="mi">17</span>    <span class="mi">18</span>    <span class="mi">19</span>    <span class="mi">20</span>    <span class="mi">21</span>    <span class="mi">22</span>    <span class="mi">23</span>    <span class="mi">24</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-66"></a>   <span class="mi">25</span>    <span class="mi">26</span>    <span class="mi">27</span>    <span class="mi">28</span>    <span class="mi">29</span>    <span class="mi">30</span>    <span class="mi">31</span>    <span class="mi">32</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-67"></a>   <span class="mi">33</span>    <span class="mi">34</span>    <span class="mi">35</span>    <span class="mi">36</span>    <span class="mi">37</span>    <span class="mi">38</span>    <span class="mi">39</span>    <span class="mi">40</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-68"></a>   <span class="mi">41</span>    <span class="mi">42</span>    <span class="mi">43</span>    <span class="mi">44</span>    <span class="mi">45</span>    <span class="mi">46</span>    <span class="mi">47</span>    <span class="mi">48</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-69"></a>   <span class="mi">49</span>    <span class="mi">50</span>    <span class="mi">51</span>    <span class="mi">52</span>    <span class="mi">53</span>    <span class="mi">54</span>    <span class="mi">55</span>    <span class="mi">56</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-70"></a>   <span class="mi">57</span>    <span class="mi">58</span>    <span class="mi">59</span>    <span class="mi">60</span>    <span class="mi">61</span>    <span class="mi">62</span>    <span class="mi">63</span>    <span class="mi">64</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-71"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">8</span><span class="n">x8</span><span class="p">]</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-72"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-73"></a><span class="n">x_ind</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">byte</span><span class="p">()</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-74"></a><span class="nb">print</span><span class="p">(</span><span class="n">x_ind</span><span class="p">)</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-75"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-76"></a>    <span class="mi">1</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-77"></a>    <span class="mi">0</span>     <span class="mi">1</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-78"></a>    <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">1</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-79"></a>    <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">1</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-80"></a>    <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">1</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-81"></a>    <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">1</span>     <span class="mi">0</span>     <span class="mi">0</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-82"></a>    <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">1</span>     <span class="mi">0</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-83"></a>    <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-84"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">ByteTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">8</span><span class="n">x8</span><span class="p">]</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-85"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-86"></a><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">x_ind</span><span class="p">])</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-87"></a>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-88"></a>  <span class="mi">1</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-89"></a> <span class="mi">10</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-90"></a> <span class="mi">19</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-91"></a> <span class="mi">28</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-92"></a> <span class="mi">37</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-93"></a> <span class="mi">46</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-94"></a> <span class="mi">55</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-95"></a> <span class="mi">64</span>
+<a name="rest_code_381a8016529a4cbe82d31e5000c7bf7e-96"></a><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">8</span><span class="p">]</span>
 </pre>
 <p>Please leave your comments below.</p>
 </div>

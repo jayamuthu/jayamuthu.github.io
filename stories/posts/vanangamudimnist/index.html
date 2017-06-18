@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# fb: http://ogp.me/ns/fb# " lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VanangamudiMNIST | vanangamudi</title>
+<link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="https://vanangamudi.gitlab.io/posts/vanangamudimnist/">
+<meta property="fb:app_id" content="selvakumar.v2.x">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="vanangamudi">
+<meta name="robots" content="noindex">
+<meta property="og:site_name" content="vanangamudi">
+<meta property="og:title" content="VanangamudiMNIST">
+<meta property="og:url" content="https://vanangamudi.gitlab.io/posts/vanangamudimnist/">
+<meta property="og:description" content="The problem I designed for this post came to me when I was trying to
+explain neural network to my friend who is just getting started on it.
+The hello world of deep learning is MNIST, but the size of t">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2017-04-27T23:00:00-03:00">
+<meta property="article:tag" content="deep learning">
+<meta property="article:tag" content="intro">
+<meta property="article:tag" content="mnist">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://vanangamudi.gitlab.io/">
+
+                <span id="blog-title">vanangamudi</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../../categories/">Tags</a>
+                </li>
+<li>
+<a href="../../rss.xml">RSS feed</a>
+                </li>
+<li>
+<a href="../../stories/aboutme">About me</a>
+                </li>
+<li>
+<a href="https://twitter.com/paarulakan">Twitter</a>
+                </li>
+<li>
+<a href="https://github.com/vanangamudi">Github</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.rst" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">VanangamudiMNIST</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                    vanangamudi
+            </span></p>
+            <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2017-04-27T23:00:00-03:00" itemprop="datePublished" title="2017-04-27 23:00">2017-04-27 23:00</time></a></p>
+                <p class="commentline">
+        
+<span class="fb-comments-count" data-url="/posts/vanangamudimnist/">
+
+
+            
+        <p class="sourceline"><a href="index.rst" id="sourcelink">Source</a></p>
+
+        </span></p>
+</div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>The problem I designed for this post came to me when I was trying to
+explain neural network to my friend who is just getting started on it.
+The hello world of deep learning is MNIST, but the size of the MNIST
+images is 28x28 which is too large to help us understand the ideas in
+terms of observable concrete computations and visualizations. So here
+you go.</p>
+<p><em>Note: It is not my intention for you to read the code. I advice against
+it. I include the code in the post for the reason that, if anyone
+interested in trying it out in their desktop or laptop, they should be
+able to. Please don't read the code, focus on the concepts and
+computations :)</em></p>
+<pre class="code ipython3"><a name="rest_code_a867921e444a4d70a0662dfdd2b5aef8-1"></a><span class="kn">import</span> <span class="nn">torch</span>
+<a name="rest_code_a867921e444a4d70a0662dfdd2b5aef8-2"></a><span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="k">import</span> <span class="n">Variable</span>
+</pre>
+<div class="section" id="dataset">
+<h2>DATASET</h2>
+<p>Dataset is a collection of data. What is in a dataset and why we need
+it?</p>
+<pre class="code ipython3"><a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-1"></a><span class="n">dataset</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#list of tuples (image, label)</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-2"></a>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-3"></a><span class="n">zer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-4"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-5"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-6"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-7"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-8"></a>                   <span class="p">])</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-9"></a>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-10"></a><span class="n">one</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-11"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-12"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-13"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-14"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-15"></a>                   <span class="p">])</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-16"></a>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-17"></a><span class="n">two</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-18"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-19"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-20"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-21"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-22"></a>                   <span class="p">])</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-23"></a>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-24"></a><span class="n">thr</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-25"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-26"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-27"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-28"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-29"></a>                   <span class="p">])</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-30"></a>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-31"></a><span class="n">fou</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-32"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-33"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-34"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-35"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-36"></a>                   <span class="p">])</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-37"></a>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-38"></a><span class="n">fiv</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-39"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-40"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-41"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-42"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-43"></a>                   <span class="p">])</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-44"></a>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-45"></a><span class="n">six</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-46"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-47"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-48"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-49"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-50"></a>                   <span class="p">])</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-51"></a>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-52"></a><span class="n">sev</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-53"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-54"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-55"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-56"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-57"></a>                   <span class="p">])</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-58"></a>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-59"></a><span class="n">eig</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-60"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-61"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-62"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-63"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-64"></a>                   <span class="p">])</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-65"></a>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-66"></a><span class="n">nin</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-67"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-68"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-69"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-70"></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-71"></a>                   <span class="p">])</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-72"></a>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-73"></a><span class="n">dataset</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">zer</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">])))</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-74"></a><span class="n">dataset</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">one</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">])))</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-75"></a><span class="n">dataset</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">two</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">])))</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-76"></a><span class="n">dataset</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">thr</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">3</span><span class="p">])))</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-77"></a><span class="n">dataset</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">fou</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">4</span><span class="p">])))</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-78"></a><span class="n">dataset</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">fiv</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">5</span><span class="p">])))</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-79"></a><span class="n">dataset</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">six</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">6</span><span class="p">])))</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-80"></a><span class="n">dataset</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">sev</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">7</span><span class="p">])))</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-81"></a><span class="n">dataset</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">eig</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">8</span><span class="p">])))</span>
+<a name="rest_code_7e8ebc99a0e74fe38c985c981503ec6f-82"></a><span class="n">dataset</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">nin</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">9</span><span class="p">])))</span>
+</pre>
+<div class="section" id="take-a-look-into-how-the-data-looks-like">
+<h3>Take a look into how the data looks like</h3>
+<pre class="code ipython3"><a name="rest_code_6648b5d67c4b416e98e2f7ecb0083b73-1"></a><span class="o">%</span><span class="k">matplotlib</span> inline
+<a name="rest_code_6648b5d67c4b416e98e2f7ecb0083b73-2"></a><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<a name="rest_code_6648b5d67c4b416e98e2f7ecb0083b73-3"></a><span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1</span> <span class="k">import</span> <span class="n">ImageGrid</span>
+<a name="rest_code_6648b5d67c4b416e98e2f7ecb0083b73-4"></a><span class="kn">from</span> <span class="nn">PIL</span> <span class="k">import</span> <span class="n">Image</span>
+<a name="rest_code_6648b5d67c4b416e98e2f7ecb0083b73-5"></a>
+<a name="rest_code_6648b5d67c4b416e98e2f7ecb0083b73-6"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">,(</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">50.</span><span class="p">))</span>
+<a name="rest_code_6648b5d67c4b416e98e2f7ecb0083b73-7"></a><span class="n">grid</span> <span class="o">=</span> <span class="n">ImageGrid</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span>
+<a name="rest_code_6648b5d67c4b416e98e2f7ecb0083b73-8"></a>                 <span class="n">nrows_ncols</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span> <span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+<a name="rest_code_6648b5d67c4b416e98e2f7ecb0083b73-9"></a>                 <span class="n">axes_pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<a name="rest_code_6648b5d67c4b416e98e2f7ecb0083b73-10"></a>
+<a name="rest_code_6648b5d67c4b416e98e2f7ecb0083b73-11"></a><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
+<a name="rest_code_6648b5d67c4b416e98e2f7ecb0083b73-12"></a>    <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+<a name="rest_code_6648b5d67c4b416e98e2f7ecb0083b73-13"></a>    <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_6648b5d67c4b416e98e2f7ecb0083b73-14"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre>
+<img alt="/images/vanangamudimnist/output_5_0.png" src="../../images/vanangamudimnist/output_5_0.png"><p>We have a set of 10 images of numbers 0..9. We want to make a neural
+network to predict what is the number on the image.</p>
+</div>
+</div>
+<div class="section" id="model">
+<h2>MODEL</h2>
+<p>Model is the term we use to refer to the network. Our model is a simple
+<strong>25</strong>x<strong>10</strong> matrix. Don't get startled by the class and the
+imports. It just does matrix multiplication. For now assume
+<strong>*model()*</strong> is a function which will take in a matrix of size (AxB) as
+input and mutiply it with the network weight matrix of size (BxC), to
+produce another matrix as output of size (AxC).</p>
+<pre class="code ipython3"><a name="rest_code_c3e92c93721a4762b3fdbc15d1530e37-1"></a><span class="kn">from</span> <span class="nn">torch</span> <span class="k">import</span> <span class="n">nn</span>
+<a name="rest_code_c3e92c93721a4762b3fdbc15d1530e37-2"></a><span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<a name="rest_code_c3e92c93721a4762b3fdbc15d1530e37-3"></a><span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+<a name="rest_code_c3e92c93721a4762b3fdbc15d1530e37-4"></a>
+<a name="rest_code_c3e92c93721a4762b3fdbc15d1530e37-5"></a><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<a name="rest_code_c3e92c93721a4762b3fdbc15d1530e37-6"></a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a name="rest_code_c3e92c93721a4762b3fdbc15d1530e37-7"></a>        <span class="nb">super</span><span class="p">(</span><span class="n">Model</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<a name="rest_code_c3e92c93721a4762b3fdbc15d1530e37-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">output_layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<a name="rest_code_c3e92c93721a4762b3fdbc15d1530e37-9"></a>
+<a name="rest_code_c3e92c93721a4762b3fdbc15d1530e37-10"></a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<a name="rest_code_c3e92c93721a4762b3fdbc15d1530e37-11"></a>        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_layer</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="rest_code_c3e92c93721a4762b3fdbc15d1530e37-12"></a>        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre>
+<pre class="code ipython3"><a name="rest_code_5ebbfe94933f475bb54946d1f9968bce-1"></a><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+<a name="rest_code_5ebbfe94933f475bb54946d1f9968bce-2"></a><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre>
+<div class="section" id="dataset-model-output">
+<h3>DATASET - MODEL - OUTPUT</h3>
+<p>To understand the network and its training process, it is helpful to see
+the holy trinity INPUT-MODEL-OUTPUT</p>
+<pre class="code ipython3"><a name="rest_code_af3c358efa05459180c1cab7c9ea2787-1"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mf">16.</span><span class="p">,</span> <span class="mf">16.</span><span class="p">))</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-2"></a><span class="n">grid</span> <span class="o">=</span> <span class="n">ImageGrid</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-3"></a>                     <span class="n">nrows_ncols</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-4"></a>                     <span class="n">axes_pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-5"></a>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-6"></a>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-7"></a><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">]</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-8"></a><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-9"></a>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-10"></a><span class="n">target</span> <span class="o">=</span> <span class="p">[</span><span class="n">target</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">]</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-11"></a><span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-12"></a><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-13"></a><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'DATASET'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-14"></a><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'10'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-15"></a><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'25'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-16"></a><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-17"></a>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-18"></a><span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">output_layer</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-19"></a><span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'MODEL'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-20"></a><span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'25'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-21"></a><span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-22"></a>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-23"></a>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-24"></a><span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">Variable</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-25"></a><span class="n">grid</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-26"></a><span class="n">grid</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'OUTPUT'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-27"></a><span class="n">grid</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'10'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-28"></a><span class="n">grid</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-29"></a>
+<a name="rest_code_af3c358efa05459180c1cab7c9ea2787-30"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre>
+<img alt="/images/vanangamudimnist/output_11_0.png" src="../../images/vanangamudimnist/output_11_0.png"><p>Lets try to understand what is in the picture above.</p>
+<p>The first one is the collection of all the data that we have. The second
+one is the matrix of weights connecting the input of 25 input neurons to
+10 output neurons. And the last one we will get to it little later.</p>
+<p>What is special about 25 and 10 here?</p>
+<p>Nothing. Our dataset is a set of images of numbers each having a size of
+5x5 ==&gt; 25. And we have how many different numbers a hand? 0,1,2...9 ==&gt;
+10 numbers or 10 different classes of output(this will become clear in
+the next post)</p>
+<p>What is that weird picture on the left, having weird</p>
+<ul class="simple">
+<li>zero in the  top-left,</li>
+<li>and three on the bottom-right</li>
+<li>and some messed up fours and eights in the middle.</li>
+</ul>
+<p>Let get to it. Look the picture below.</p>
+<pre class="code ipython3"><a name="rest_code_83fcac854b344800bb2ebf495ad6848c-1"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">,(</span><span class="mf">12.</span><span class="p">,</span> <span class="mf">12.</span><span class="p">))</span>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-2"></a><span class="n">grid</span> <span class="o">=</span> <span class="n">ImageGrid</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-3"></a>                 <span class="n">nrows_ncols</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span> <span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-4"></a>                 <span class="n">axes_pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-5"></a>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-6"></a><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-7"></a>    <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-8"></a>    <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-9"></a>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-10"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-11"></a>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-12"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mf">100.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">))</span>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-13"></a><span class="n">grid</span> <span class="o">=</span> <span class="n">ImageGrid</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-14"></a>                     <span class="n">nrows_ncols</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-15"></a>                     <span class="n">axes_pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-16"></a>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-17"></a>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-18"></a><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">]</span>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-19"></a>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-20"></a><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-21"></a>    <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-22"></a>    <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">36</span><span class="p">)</span>
+<a name="rest_code_83fcac854b344800bb2ebf495ad6848c-23"></a>    <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre>
+<img alt="/images/vanangamudimnist/output_13_0.png" src="../../images/vanangamudimnist/output_13_0.png"><img alt="/images/vanangamudimnist/output_13_1.png" src="../../images/vanangamudimnist/output_13_1.png"><p>Voila!! We have just arranged the image matrix into a vector. TODO why?</p>
+<p>This is important to remember, <strong>a simple neural network looks at the
+input and try to figure out which class does this input belong to</strong></p>
+<p>In our case inputs are the images of numbers, and outputs are how
+similar are the classes to the input. The output neuron with highest
+value is closer(very similar) to the input and the output neuron with
+least value is very NOT similar to the input. <strong>The inputs are real
+valued - it can take any numerical value but the output is discrete, a
+whole number corresponding to index of the neuron with largest numerical
+value.</strong> Also note that output of the network does not mean output of
+neurons.</p>
+<p>For example after training, if we feed the image of number 3, the output
+neurons corresponding to 3, 8, 9 and probably 7 will have larger values
+and the output neurons corresponding to 1 and 6 will have the least
+value. Don't worry if you don't understand why, it will become clearer
+as we go on.</p>
+</div>
+<div class="section" id="how-many-correct-predictions-without-any-training">
+<h3>How many correct predictions without any training</h3>
+<p>Too much theory, lets get our hands dirty. Let see how many numbers did
+our model predicted correctly.</p>
+<pre class="code ipython3"><a name="rest_code_6fb753bc9aff484e84983208ab859f75-1"></a><span class="c1"># Remember that output = model(Variable(data))</span>
+<a name="rest_code_6fb753bc9aff484e84983208ab859f75-2"></a><span class="n">pred</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+<a name="rest_code_6fb753bc9aff484e84983208ab859f75-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">pred</span><span class="o">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">target</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+<a name="rest_code_6fb753bc9aff484e84983208ab859f75-4"></a><span class="n">correct</span> <span class="o">=</span> <span class="n">pred</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">long</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<a name="rest_code_6fb753bc9aff484e84983208ab859f75-5"></a><span class="nb">print</span><span class="p">(</span><span class="s1">'correct: </span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">correct</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)))</span>
+</pre>
+<pre class="literal-block">
+torch.Size([10]) torch.Size([10])
+correct: 1/10
+</pre>
+</div>
+<div class="section" id="n-one-out-of-ten">
+<h3>(N)ONE out of TEN</h3>
+<p>That is right it predicted none out of ten. We feeded our network with
+all of our data and asked it to figure what is the number that is in the
+image. Remember what we learned earlier about output neurons. The neural
+network tell us which number is present in the image by lighting up that
+corresponding neuron. Lets say if gave 6, the network will light up the
+6th neuron will be the brightest, i.e the 6th neurons value will be the
+highest compared to all other neurons.</p>
+<p>But our network above lit up wrong bulbs, for all the output. None out
+of ten. But why? Isn't neural network are supposed to smarter? Well yes
+and no. That is the difference between traditional image processing
+algorithms and neural networks.</p>
+<p>Wait, let me tell you a story, that I heard. During the second world
+war, there were skilled flight spotter. Their job was to spot and report
+if any air craft was approaching. As the war got intense, there was need
+for more spotters and there were lot of volunteers even from schools and
+colleges but there was very little time to train them. So the skilled
+spotters, listed out a set of things to look for in the enemy flights
+and asked the new volunteers to memorize them as part of the training.
+But the volunteers never got good at spotting. Ooosh, we will continue
+the story later, lets get back to the point.</p>
+<p>In classical image processing systems, we humans think, think and think
+and think a lot more and come up a set of rules or instructions, just
+like those skilled spotters. We give those instructions to the system,
+to make it understand how to process the images to extract
+information(called features - things to look for in the enemy flight)
+from them, and then use that information to make further decisions, such
+predicting what number is in the image. We feed that system with
+knowledge first before asking it to do anything for us.</p>
+<p>But did we feed any knowledge to network? We just told it the input size
+is 25 and output size is 10. How can you expect someone to guess what is
+in your hand, by just telling them its size. That is rude of you. Shame
+on you. Okay okay. How do we make the system more knowledgable about the
+input? Training. The holy grail of deep learning.</p>
+</div>
+<div class="section" id="what-is-training">
+<h3>What is training?</h3>
+<p>We know that the knowledge of the neural network is in the weights of
+the connections - represented as matrix above. We also know that by
+multiplying this matrix by an input image vector we will get an output
+which is a set of scores that describes, how similar the input is to the
+output neurons.</p>
+<p>Imagine giving random values to the weights and feed the network with
+our data and see whether it predicts all our numbers correctly. If it
+did, fine and dandy, but if not give random values to the weights again
+and repeat the process until our network predicts all the numbers
+correctly. That is training in most simple form.</p>
+<p>But think about how long will it take to find such random magical values
+for every weight in the network to make it work as expected. We don't
+know that for sure. right? You wanna continue the story. don't you?
+Alright.</p>
+<p>The skilled people tried as much as they can to identify the
+distinguishing features of the home and enemy air crafts and tried to
+make the volunteers understand them. It never worked. Then they changes
+the strategy. They put them on the job and made them learn themselves.
+i.e every skilled spotter will have ten volunteers and whenever an
+aircraft is seen, the volunteers will shout the kind of the plane, say
+'german'. Then the skilled one, will reveal the correct answer. This
+technique was extrememly sucessful, a spotter sent in an emergency
+message not only identifying it as a German aircraft, but also the
+correct make and
+model..<a class="reference external" href="http://www.colebrookhistoricalsociety.org/PDF%20Images/Air%20Spotters%20of%20WWII.pdf">more</a></p>
+<p>Hey, why don't we try the same with our network? Lets feed the images
+into it and shout the answer into its tiny little output neurons so that
+it can update its weights by itself. Now I know you're asking how can we
+expect, a dumb network which cannot even predict a number in an image to
+train itself? Well that is where it gets interesting. We can't.
+Backpropgation to the rescue. It is the algorithm to update the weights
+of the network on our behalf.</p>
+<p>It looks at how difference between output of network and desired output,
+changes with respect to the weights, and then it modifies the weights
+based on it. [2]</p>
+<p>So now you understand why it predicted none out of ten correctly.</p>
+<pre class="code ipython3"><a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-1"></a><span class="kn">import</span> <span class="nn">sys</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-2"></a><span class="k">def</span> <span class="nf">test_and_print</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-3"></a>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-4"></a>    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">]</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-5"></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-6"></a>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-7"></a>    <span class="n">target</span> <span class="o">=</span> <span class="p">[</span><span class="n">target</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">]</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-8"></a>    <span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-9"></a>    <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">Variable</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-10"></a>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-11"></a>    <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">nll_loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">Variable</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">long</span><span class="p">()))</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-12"></a>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-13"></a>    <span class="n">dataset_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-14"></a>    <span class="n">model_img</span>   <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">output_layer</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-15"></a>    <span class="n">output_img</span>  <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-16"></a>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-17"></a>    <span class="n">pred</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-18"></a>    <span class="n">correct</span> <span class="o">=</span> <span class="n">pred</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">long</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-19"></a>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-20"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">'correct: </span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">, loss:</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">correct</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">),</span> <span class="n">loss</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-21"></a>    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-22"></a>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-23"></a>    <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-24"></a>        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">,(</span><span class="mf">16.</span><span class="p">,</span> <span class="mf">16.</span><span class="p">))</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-25"></a>        <span class="n">grid</span> <span class="o">=</span> <span class="n">ImageGrid</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-26"></a>                         <span class="n">nrows_ncols</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span> <span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-27"></a>                         <span class="n">axes_pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-28"></a>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-29"></a>        <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">dataset_img</span><span class="p">)</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-30"></a>        <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'DATASET'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-31"></a>        <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-32"></a>        <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'10'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-33"></a>        <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'25'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-34"></a>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-35"></a>        <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">model_img</span><span class="p">)</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-36"></a>        <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'MODEL'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-37"></a>        <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-38"></a>        <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'25'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-39"></a>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-40"></a>        <span class="n">grid</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">output_img</span><span class="p">)</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-41"></a>        <span class="n">grid</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'OUTPUT'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-42"></a>        <span class="n">grid</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-43"></a>        <span class="n">grid</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'10'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-44"></a>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-45"></a>        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-46"></a>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-47"></a>
+<a name="rest_code_4cb470308ac94e41a5d2a5a89c2246e3-48"></a>    <span class="k">return</span> <span class="n">dataset_img</span><span class="p">,</span> <span class="n">model_img</span><span class="p">,</span> <span class="n">output_img</span>
+</pre>
+</div>
+<div class="section" id="lets-take-a-closer-look-at-dataset-model-output">
+<h3>Lets take a closer look at DATASET - MODEL - OUTPUT</h3>
+<p>and understand what those colors mean.[1]</p>
+<pre class="code ipython3"><a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-1"></a><span class="kn">import</span> <span class="nn">numpy</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-2"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mf">80.</span><span class="p">,</span> <span class="mf">80.</span><span class="p">))</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-3"></a><span class="n">grid</span> <span class="o">=</span> <span class="n">ImageGrid</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-4"></a>                     <span class="n">nrows_ncols</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-5"></a>                     <span class="n">axes_pad</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-6"></a>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-7"></a>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-8"></a><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">]</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-9"></a><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-10"></a>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-11"></a><span class="n">target</span> <span class="o">=</span> <span class="p">[</span><span class="n">target</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">]</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-12"></a><span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-13"></a>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-14"></a><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-15"></a><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'DATASET'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">144</span><span class="p">)</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-16"></a><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-17"></a><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'10'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">144</span><span class="p">)</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-18"></a><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'25'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">144</span><span class="p">)</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-19"></a><span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">),</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()):</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-20"></a>     <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s1">'</span><span class="si">{:d}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">)),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">'center'</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">'center'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-21"></a>            <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s1">'round'</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">'white'</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">'white'</span><span class="p">))</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-22"></a>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-23"></a>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-24"></a><span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">output_layer</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-25"></a><span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'MODEL'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">144</span><span class="p">)</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-26"></a><span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-27"></a><span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'25'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">144</span><span class="p">)</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-28"></a><span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">),</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">output_layer</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()):</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-29"></a>     <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s1">'</span><span class="si">{:0.04f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">val</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">'center'</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">'center'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-30"></a>            <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s1">'round'</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">'white'</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">'white'</span><span class="p">))</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-31"></a>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-32"></a><span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">Variable</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-33"></a><span class="n">grid</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-34"></a><span class="n">grid</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'OUTPUT'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">144</span><span class="p">)</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-35"></a><span class="n">grid</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-36"></a><span class="n">grid</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'10'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">144</span><span class="p">)</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-37"></a>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-38"></a><span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">),</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()):</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-39"></a>     <span class="n">grid</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s1">'</span><span class="si">{:0.04f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">val</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">'center'</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">'center'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-40"></a>            <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s1">'round'</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">'white'</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">'white'</span><span class="p">))</span>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-41"></a>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-42"></a>
+<a name="rest_code_4983d13cf20546b99b3bc5deaa50eb37-43"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre>
+<img alt="/images/vanangamudimnist/output_20_0.png" src="../../images/vanangamudimnist/output_20_0.png"><p>If you zoom in the picture you will see numbers corresponding to the
+colors - violet means the lowest value, and yellow is the highest
+values. i.e violet does not mean 0 and yellow does not mean 1 as you
+might think from the dataset image.</p>
+</div>
+<div class="section" id="what-does-each-row-mean">
+<h3>WHAT DOES EACH ROW MEAN?</h3>
+</div>
+<div class="section" id="id1">
+<h3>DATASET</h3>
+<p>numbers, each row is a number. first one is 0 second one is 1 and so on.</p>
+</div>
+<div class="section" id="id2">
+<h3>MODEL</h3>
+<p>weights corresponding to pixels in the image for a number.
+first row is for 0 and last one is for 9.</p>
+</div>
+<div class="section" id="output">
+<h3>OUTPUT</h3>
+<p>scores of similarity. how similar the input image to all output
+numbers. First row contains scores of 0, how similar it is to all other
+numbers first square in the first row is how simlilar 0 is to 0, second
+square similar it is to 1. Now the scores are not only incorrect but
+stupid. This will become better and clear as we train the network. Lets
+take look at the DATASET-MODEL-OUTPUT trinity once again before training</p>
+<p>Take look at the following. It shows a single row from the output image.
+Go on pick the darkest square in the output above. Which row has the
+darkeset one?, it seems like the row corresponding to number 4, i.e
+<em>data[4]</em> the least value from that row is <strong>-3.0710</strong></p>
+<pre class="code ipython3"><a name="rest_code_323d023d926f45d598de36ae75c171be-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">Variable</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))))</span>
+</pre>
+<pre class="literal-block">
+Variable containing:
+-2.2242 -2.0100 -2.4086 -2.2264 -2.3357 -1.9604 -2.5856 -3.0710 -2.0782 -2.5825
+[torch.FloatTensor of size 1x10]
+</pre>
+<p>Similarly the brightest yellow is in the row corresonding to number 1
+whose value is <strong>-1.9198</strong> you can see below. The reason I am stressing
+about this fact is, this is will influence how we interpret the
+following images.</p>
+<pre class="code ipython3"><a name="rest_code_3847189f047e45acb9706bc2f171958c-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">Variable</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))))</span>
+</pre>
+<pre class="literal-block">
+Variable containing:
+-2.9334 -2.5239 -1.9198 -2.3306 -2.3984 -2.1636 -2.2579 -2.3235 -2.1503 -2.3224
+[torch.FloatTensor of size 1x10]
+</pre>
+<pre class="code ipython3"><a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-1"></a><span class="kn">import</span> <span class="nn">numpy</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-2"></a><span class="k">def</span> <span class="nf">plot_with_values</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-3"></a>    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mf">80.</span><span class="p">,</span> <span class="mf">80.</span><span class="p">))</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-4"></a>    <span class="n">grid</span> <span class="o">=</span> <span class="n">ImageGrid</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-5"></a>                         <span class="n">nrows_ncols</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-6"></a>                         <span class="n">axes_pad</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-7"></a>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-8"></a>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-9"></a>    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">]</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-10"></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-11"></a>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-12"></a>    <span class="n">target</span> <span class="o">=</span> <span class="p">[</span><span class="n">target</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">]</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-13"></a>    <span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-14"></a>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-15"></a>    <span class="n">plot_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">output_layer</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">model</span><span class="p">(</span><span class="n">Variable</span><span class="p">(</span><span class="n">data</span><span class="p">))</span><span class="o">.</span><span class="n">data</span><span class="p">]</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-16"></a>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tobeplotted</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">plot_data</span><span class="p">):</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-17"></a>        <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">tobeplotted</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-18"></a>        <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-19"></a>        <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">),</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">tobeplotted</span><span class="o">.</span><span class="n">numpy</span><span class="p">()):</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-20"></a>            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="n">spec</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{:d}</span><span class="s1">'</span><span class="p">;</span>  <span class="n">val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-21"></a>            <span class="k">else</span><span class="p">:</span> <span class="n">spec</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{:0.2f}</span><span class="s1">'</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-22"></a>            <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">spec</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">val</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">'center'</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">'center'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-23"></a>                <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s1">'round'</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">'white'</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">'white'</span><span class="p">))</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-24"></a>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-25"></a>    <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'DATASET'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">144</span><span class="p">)</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-26"></a>    <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'10'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">144</span><span class="p">)</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-27"></a>    <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'25'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">144</span><span class="p">)</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-28"></a>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-29"></a>    <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'MODEL'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">144</span><span class="p">)</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-30"></a>    <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'25'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">144</span><span class="p">)</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-31"></a>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-32"></a>    <span class="n">grid</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'OUTPUT'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">144</span><span class="p">)</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-33"></a>    <span class="n">grid</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'25'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">144</span><span class="p">)</span>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-34"></a>
+<a name="rest_code_0d543f9f3bd84b5d86bdae362412ddb6-35"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre>
+</div>
+<div class="section" id="before-training">
+<h3>Before Training</h3>
+<pre class="code ipython3"><a name="rest_code_1cf94949b0e04fff871e105d1039a390-1"></a><span class="n">test_and_print</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="s1">'sama'</span><span class="p">)</span>
+<a name="rest_code_1cf94949b0e04fff871e105d1039a390-2"></a><span class="n">plot_with_values</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+</pre>
+<pre class="literal-block">
+correct: 1/10, loss:2.4236292839050293
+</pre>
+<img alt="/images/vanangamudimnist/output_28_1.png" src="../../images/vanangamudimnist/output_28_1.png"><img alt="/images/vanangamudimnist/output_28_2.png" src="../../images/vanangamudimnist/output_28_2.png">
+</div>
+</div>
+<div class="section" id="training">
+<h2>Training</h2>
+<div class="section" id="train-for-a-single-epoch">
+<h3>Train for a single epoch</h3>
+<p>Training for a single epoch means run over all the ten images we have
+now.</p>
+<pre class="code ipython3"><a name="rest_code_37ad764160b14aa98ddd50b8a4ca90df-1"></a><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optim</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
+<a name="rest_code_37ad764160b14aa98ddd50b8a4ca90df-2"></a>    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<a name="rest_code_37ad764160b14aa98ddd50b8a4ca90df-3"></a>    <span class="n">avg_loss</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="rest_code_37ad764160b14aa98ddd50b8a4ca90df-4"></a>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
+<a name="rest_code_37ad764160b14aa98ddd50b8a4ca90df-5"></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a name="rest_code_37ad764160b14aa98ddd50b8a4ca90df-6"></a>        <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">Variable</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">long</span><span class="p">())</span>
+<a name="rest_code_37ad764160b14aa98ddd50b8a4ca90df-7"></a>        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+<a name="rest_code_37ad764160b14aa98ddd50b8a4ca90df-8"></a>        <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<a name="rest_code_37ad764160b14aa98ddd50b8a4ca90df-9"></a>
+<a name="rest_code_37ad764160b14aa98ddd50b8a4ca90df-10"></a>        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">nll_loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<a name="rest_code_37ad764160b14aa98ddd50b8a4ca90df-11"></a>        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<a name="rest_code_37ad764160b14aa98ddd50b8a4ca90df-12"></a>        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+<a name="rest_code_37ad764160b14aa98ddd50b8a4ca90df-13"></a>        <span class="n">avg_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a name="rest_code_37ad764160b14aa98ddd50b8a4ca90df-14"></a>
+<a name="rest_code_37ad764160b14aa98ddd50b8a4ca90df-15"></a>    <span class="k">return</span> <span class="n">avg_loss</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+</pre>
+</div>
+<div class="section" id="train-the-model-once-and-see-how-it-works">
+<h3>Train the model once and see how it works</h3>
+<pre class="code ipython3"><a name="rest_code_5adff385a16944c8872ce447c3e9a764-1"></a><span class="n">train</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+</pre>
+<pre class="literal-block">
+7.596218156814575
+</pre>
+<pre class="code ipython3"><a name="rest_code_e9c9ce58e2fc45a1b8c5037388346a54-1"></a><span class="n">test_and_print</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+<a name="rest_code_e9c9ce58e2fc45a1b8c5037388346a54-2"></a><span class="n">plot_with_values</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+</pre>
+<pre class="literal-block">
+correct: 2/10, loss:5.988691329956055
+</pre>
+<img alt="/images/vanangamudimnist/output_34_1.png" src="../../images/vanangamudimnist/output_34_1.png"><img alt="/images/vanangamudimnist/output_34_2.png" src="../../images/vanangamudimnist/output_34_2.png">
+</div>
+<div class="section" id="train-once-again">
+<h3>train once again</h3>
+<pre class="code ipython3"><a name="rest_code_c03f3ea819524137a663b0db9d01ab89-1"></a><span class="n">train</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+</pre>
+<pre class="literal-block">
+6.19214208945632
+</pre>
+<pre class="code ipython3"><a name="rest_code_347814be924a48edae56ffbf7963c1ec-1"></a><span class="n">test_and_print</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+<a name="rest_code_347814be924a48edae56ffbf7963c1ec-2"></a><span class="n">plot_with_values</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+</pre>
+<pre class="literal-block">
+correct: 2/10, loss:5.175973892211914
+</pre>
+<img alt="/images/vanangamudimnist/output_37_1.png" src="../../images/vanangamudimnist/output_37_1.png"><img alt="/images/vanangamudimnist/output_37_2.png" src="../../images/vanangamudimnist/output_37_2.png"><p>As you can see the diagonal of the output matrix is getting brighter and
+brighter.</p>
+<p>That is what we want right? For each number, say for number 0. the first
+square in first row should be the brightest one. 1. the second square in
+second row should be the brightest one 2. the third square in third row
+should be the brightest one and so on.</p>
+<p>Lets see the numbers directly.</p>
+</div>
+<div class="section" id="train-over-multiple-epochs">
+<h3>Train over multiple epochs</h3>
+<p>means run over the all the samples multiple times.</p>
+<pre class="code ipython3"><a name="rest_code_c2ec70e54d664a0e911424819b473ba7-1"></a><span class="k">def</span> <span class="nf">train_epochs</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">optim</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">print_every</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<a name="rest_code_c2ec70e54d664a0e911424819b473ba7-2"></a>    <span class="n">snaps</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_c2ec70e54d664a0e911424819b473ba7-3"></a>    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+<a name="rest_code_c2ec70e54d664a0e911424819b473ba7-4"></a>        <span class="n">avg_loss</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optim</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+<a name="rest_code_c2ec70e54d664a0e911424819b473ba7-5"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">epoch</span> <span class="o">%</span> <span class="n">print_every</span><span class="p">:</span>
+<a name="rest_code_c2ec70e54d664a0e911424819b473ba7-6"></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n\n</span><span class="s1">========================================================'</span><span class="p">)</span>
+<a name="rest_code_c2ec70e54d664a0e911424819b473ba7-7"></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">'epoch: </span><span class="si">{}</span><span class="s1">, loss:</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">avg_loss</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span><span class="p">))</span>
+<a name="rest_code_c2ec70e54d664a0e911424819b473ba7-8"></a>            <span class="n">snaps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_and_print</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="s1">'epoch:</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">)))</span>
+<a name="rest_code_c2ec70e54d664a0e911424819b473ba7-9"></a>
+<a name="rest_code_c2ec70e54d664a0e911424819b473ba7-10"></a>    <span class="k">return</span> <span class="n">snaps</span>
+</pre>
+<pre class="code ipython3"><a name="rest_code_c441d72afbb74b28aa4da76ef79be8a7-1"></a><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+<a name="rest_code_c441d72afbb74b28aa4da76ef79be8a7-2"></a><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre>
+<p>Lets train for 100 epochs and see how the model evolves. We see that in
+the output image, the diagonal get brigher and brighter and some other
+pixels getting darker and darker. It appears to be smoothing over time.
+Also see that after just 10 epochs the network predicts 9/10 correctly
+and then after 20 epochs it mastered the task, predicting 10/10 all the
+time. But we already know that is what we want and we know why. Lets
+focus on the model now, because that is where the secret lies.</p>
+<pre class="code ipython3"><a name="rest_code_852bf4c818b642a7ac549af1dc698f7f-1"></a><span class="n">snaps</span> <span class="o">=</span> <span class="n">train_epochs</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">print_every</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre>
+<pre class="literal-block">
+========================================================
+epoch: 0, loss:0.027155441761016846
+correct: 3/10, loss:2.128438949584961
+</pre>
+<img alt="/images/vanangamudimnist/output_43_1.png" src="../../images/vanangamudimnist/output_43_1.png"><pre class="literal-block">
+========================================================
+epoch: 2, loss:0.023229331612586973
+correct: 5/10, loss:1.8037703037261963
+</pre>
+<img alt="/images/vanangamudimnist/output_43_3.png" src="../../images/vanangamudimnist/output_43_3.png"><pre class="literal-block">
+========================================================
+epoch: 4, loss:0.01998117029666901
+correct: 6/10, loss:1.533529281616211
+</pre>
+<img alt="/images/vanangamudimnist/output_43_5.png" src="../../images/vanangamudimnist/output_43_5.png"><pre class="literal-block">
+========================================================
+epoch: 6, loss:0.01730852520465851
+correct: 8/10, loss:1.3195956945419312
+</pre>
+<img alt="/images/vanangamudimnist/output_43_7.png" src="../../images/vanangamudimnist/output_43_7.png"><pre class="literal-block">
+========================================================
+epoch: 8, loss:0.015147660285234451
+correct: 9/10, loss:1.150416612625122
+</pre>
+<img alt="/images/vanangamudimnist/output_43_9.png" src="../../images/vanangamudimnist/output_43_9.png"><pre class="literal-block">
+========================================================
+epoch: 10, loss:0.013388317018747329
+correct: 9/10, loss:1.0151952505111694
+</pre>
+<img alt="/images/vanangamudimnist/output_43_11.png" src="../../images/vanangamudimnist/output_43_11.png"><pre class="literal-block">
+========================================================
+epoch: 12, loss:0.011944577842950822
+correct: 10/10, loss:0.9058278799057007
+</pre>
+<img alt="/images/vanangamudimnist/output_43_13.png" src="../../images/vanangamudimnist/output_43_13.png"><pre class="literal-block">
+========================================================
+epoch: 14, loss:0.010749261453747749
+correct: 10/10, loss:0.8161996006965637
+</pre>
+<img alt="/images/vanangamudimnist/output_43_15.png" src="../../images/vanangamudimnist/output_43_15.png"><pre class="literal-block">
+========================================================
+epoch: 16, loss:0.009749157413840293
+correct: 10/10, loss:0.7417219281196594
+</pre>
+<img alt="/images/vanangamudimnist/output_43_17.png" src="../../images/vanangamudimnist/output_43_17.png"><pre class="literal-block">
+========================================================
+epoch: 18, loss:0.008902774766087532
+correct: 10/10, loss:0.6789848208427429
+</pre>
+<img alt="/images/vanangamudimnist/output_43_19.png" src="../../images/vanangamudimnist/output_43_19.png"><pre class="literal-block">
+========================================================
+epoch: 20, loss:0.008178293675184248
+correct: 10/10, loss:0.6254634857177734
+</pre>
+<img alt="/images/vanangamudimnist/output_43_21.png" src="../../images/vanangamudimnist/output_43_21.png"><p>Lets put all those picture above into a single one to get a big picture</p>
+<pre class="code ipython3"><a name="rest_code_993128e865834e329d2d8d59bd70fd2d-1"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mf">16.</span><span class="p">,</span> <span class="mf">16.</span><span class="p">))</span>
+<a name="rest_code_993128e865834e329d2d8d59bd70fd2d-2"></a><span class="n">grid</span> <span class="o">=</span> <span class="n">ImageGrid</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span>
+<a name="rest_code_993128e865834e329d2d8d59bd70fd2d-3"></a>                     <span class="n">nrows_ncols</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">snaps</span><span class="p">)</span> <span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+<a name="rest_code_993128e865834e329d2d8d59bd70fd2d-4"></a>                     <span class="n">axes_pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<a name="rest_code_993128e865834e329d2d8d59bd70fd2d-5"></a>
+<a name="rest_code_993128e865834e329d2d8d59bd70fd2d-6"></a><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">snap</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">snaps</span><span class="p">):</span>
+<a name="rest_code_993128e865834e329d2d8d59bd70fd2d-7"></a>    <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">image</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">snap</span><span class="p">):</span>
+<a name="rest_code_993128e865834e329d2d8d59bd70fd2d-8"></a>        <span class="n">grid</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+<a name="rest_code_993128e865834e329d2d8d59bd70fd2d-9"></a>        <span class="n">grid</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_993128e865834e329d2d8d59bd70fd2d-10"></a>
+<a name="rest_code_993128e865834e329d2d8d59bd70fd2d-11"></a>
+<a name="rest_code_993128e865834e329d2d8d59bd70fd2d-12"></a><span class="n">grid</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'DATASET'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a name="rest_code_993128e865834e329d2d8d59bd70fd2d-13"></a><span class="n">grid</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'MODEL'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a name="rest_code_993128e865834e329d2d8d59bd70fd2d-14"></a><span class="n">grid</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'OUTPUT'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a name="rest_code_993128e865834e329d2d8d59bd70fd2d-15"></a>
+<a name="rest_code_993128e865834e329d2d8d59bd70fd2d-16"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre>
+<img alt="/images/vanangamudimnist/output_45_0.png" src="../../images/vanangamudimnist/output_45_0.png"><p>The following animation show the state of the model over 50 epochs.</p>
+<div class="figure">
+<img alt="Animated view" src="../../images/vanangamudimnist/VanangamudiMNIST_training_animation.gif"><p class="caption">Animation</p>
+</div>
+<p>Lets train it for few thousand epochs so the network get more clear
+picture of the data before diving into the model :)</p>
+<pre class="code ipython3"><a name="rest_code_0b79ff91c93f49f6b84671436ee61dc5-1"></a><span class="n">snaps</span> <span class="o">=</span> <span class="n">train_epochs</span><span class="p">(</span><span class="mi">100000</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">print_every</span><span class="o">=</span><span class="mi">20000</span><span class="p">)</span>
+</pre>
+<pre class="literal-block">
+========================================================
+epoch: 0, loss:0.007853959694504737
+correct: 10/10, loss:0.60155189037323
+</pre>
+<img alt="/images/vanangamudimnist/output_49_1.png" src="../../images/vanangamudimnist/output_49_1.png"><pre class="literal-block">
+========================================================
+epoch: 20000, loss:7.162017085647676e-06
+correct: 10/10, loss:0.0007155142375268042
+</pre>
+<img alt="/images/vanangamudimnist/output_49_3.png" src="../../images/vanangamudimnist/output_49_3.png"><pre class="literal-block">
+========================================================
+epoch: 40000, loss:3.5982332410640085e-06
+correct: 10/10, loss:0.0003596492169890553
+</pre>
+<img alt="/images/vanangamudimnist/output_49_5.png" src="../../images/vanangamudimnist/output_49_5.png"><pre class="literal-block">
+========================================================
+epoch: 60000, loss:2.403507118287962e-06
+correct: 10/10, loss:0.00024027279869187623
+</pre>
+<img alt="/images/vanangamudimnist/output_49_7.png" src="../../images/vanangamudimnist/output_49_7.png"><pre class="literal-block">
+========================================================
+epoch: 80000, loss:1.8094693423336138e-06
+correct: 10/10, loss:0.00018090286175720394
+</pre>
+<img alt="/images/vanangamudimnist/output_49_9.png" src="../../images/vanangamudimnist/output_49_9.png"><pre class="literal-block">
+========================================================
+epoch: 100000, loss:1.4504563605441945e-06
+correct: 10/10, loss:0.0001450170821044594
+</pre>
+<img alt="/images/vanangamudimnist/output_49_11.png" src="../../images/vanangamudimnist/output_49_11.png"><pre class="code ipython3"><a name="rest_code_5198884893de452086c5ae06020ce308-1"></a><span class="n">test_and_print</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+<a name="rest_code_5198884893de452086c5ae06020ce308-2"></a><span class="n">plot_with_values</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+</pre>
+<pre class="literal-block">
+correct: 10/10, loss:0.0001450170821044594
+</pre>
+<img alt="/images/vanangamudimnist/output_50_1.png" src="../../images/vanangamudimnist/output_50_1.png"><img alt="/images/vanangamudimnist/output_50_2.png" src="../../images/vanangamudimnist/output_50_2.png"><pre class="code ipython3"><a name="rest_code_b09b31cc09dd4906be6a3efa5f9528ea-1"></a><span class="n">_model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">output_layer</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<a name="rest_code_b09b31cc09dd4906be6a3efa5f9528ea-2"></a><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<a name="rest_code_b09b31cc09dd4906be6a3efa5f9528ea-3"></a><span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">_model</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+<a name="rest_code_b09b31cc09dd4906be6a3efa5f9528ea-4"></a><span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="sa">u</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="sa">u</span><span class="s1">'both'</span><span class="p">,</span><span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_b09b31cc09dd4906be6a3efa5f9528ea-5"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a name="rest_code_b09b31cc09dd4906be6a3efa5f9528ea-6"></a>
+<a name="rest_code_b09b31cc09dd4906be6a3efa5f9528ea-7"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">,(</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">))</span>
+<a name="rest_code_b09b31cc09dd4906be6a3efa5f9528ea-8"></a><span class="n">grid</span> <span class="o">=</span> <span class="n">ImageGrid</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span>
+<a name="rest_code_b09b31cc09dd4906be6a3efa5f9528ea-9"></a>                 <span class="n">nrows_ncols</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span> <span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+<a name="rest_code_b09b31cc09dd4906be6a3efa5f9528ea-10"></a>                 <span class="n">axes_pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<a name="rest_code_b09b31cc09dd4906be6a3efa5f9528ea-11"></a>
+<a name="rest_code_b09b31cc09dd4906be6a3efa5f9528ea-12"></a><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
+<a name="rest_code_b09b31cc09dd4906be6a3efa5f9528ea-13"></a>    <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+<a name="rest_code_b09b31cc09dd4906be6a3efa5f9528ea-14"></a>    <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="sa">u</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="sa">u</span><span class="s1">'both'</span><span class="p">,</span><span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_b09b31cc09dd4906be6a3efa5f9528ea-15"></a>    <span class="c1">#grid[i].locator_params(axis=u'both', tight=None)</span>
+<a name="rest_code_b09b31cc09dd4906be6a3efa5f9528ea-16"></a>
+<a name="rest_code_b09b31cc09dd4906be6a3efa5f9528ea-17"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre>
+<pre class="literal-block">
+&lt;matplotlib.figure.Figure at 0x7f61c7b2e470&gt;
+</pre>
+<img alt="/images/vanangamudimnist/output_51_1.png" src="../../images/vanangamudimnist/output_51_1.png"><img alt="/images/vanangamudimnist/output_51_2.png" src="../../images/vanangamudimnist/output_51_2.png">
+</div>
+</div>
+<div class="section" id="dive-into-the-model">
+<h2>Dive into the model</h2>
+<p>At first look, the bright differentiating spots belongs to 5, 6 and 8, 9
+pairs.</p>
+<ul class="simple">
+<li>Take 8 and 9, the last two rows, the squares at index 17 are clearly
+at extremes. To understand why look at the 17th pixel in images of 8
+and 9. That is the only pixel distinguishing 8 and 9.</li>
+<li>Take 5 and 6, the same 17th pixel makes all the difference.</li>
+</ul>
+<p>Now you may ask why the rows in model matrix corresponding to 8 and 9
+are almost same but NOT exactly same except for that one single pixel. I
+will let you ponder over that point for a while.</p>
+<p>Lets reshape the model into the shape of the data. The first rows
+becomes the first image and second row becomes the second one...</p>
+<pre class="code ipython3"><a name="rest_code_49c4f93f65e54b5a85f9cb0a94a75b68-1"></a><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<a name="rest_code_49c4f93f65e54b5a85f9cb0a94a75b68-2"></a><span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">_model</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+<a name="rest_code_49c4f93f65e54b5a85f9cb0a94a75b68-3"></a><span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="sa">u</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="sa">u</span><span class="s1">'both'</span><span class="p">,</span><span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_49c4f93f65e54b5a85f9cb0a94a75b68-4"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a name="rest_code_49c4f93f65e54b5a85f9cb0a94a75b68-5"></a>
+<a name="rest_code_49c4f93f65e54b5a85f9cb0a94a75b68-6"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">,(</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">))</span>
+<a name="rest_code_49c4f93f65e54b5a85f9cb0a94a75b68-7"></a><span class="n">grid</span> <span class="o">=</span> <span class="n">ImageGrid</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span>
+<a name="rest_code_49c4f93f65e54b5a85f9cb0a94a75b68-8"></a>                 <span class="n">nrows_ncols</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span> <span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+<a name="rest_code_49c4f93f65e54b5a85f9cb0a94a75b68-9"></a>                 <span class="n">axes_pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<a name="rest_code_49c4f93f65e54b5a85f9cb0a94a75b68-10"></a>
+<a name="rest_code_49c4f93f65e54b5a85f9cb0a94a75b68-11"></a>
+<a name="rest_code_49c4f93f65e54b5a85f9cb0a94a75b68-12"></a><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">_model</span><span class="p">):</span>
+<a name="rest_code_49c4f93f65e54b5a85f9cb0a94a75b68-13"></a>    <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)),</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+<a name="rest_code_49c4f93f65e54b5a85f9cb0a94a75b68-14"></a>    <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="sa">u</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="sa">u</span><span class="s1">'both'</span><span class="p">,</span><span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_49c4f93f65e54b5a85f9cb0a94a75b68-15"></a>    <span class="c1">#grid[i].locator_params(axis=u'both', tight=None)</span>
+<a name="rest_code_49c4f93f65e54b5a85f9cb0a94a75b68-16"></a>
+<a name="rest_code_49c4f93f65e54b5a85f9cb0a94a75b68-17"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre>
+<pre class="literal-block">
+&lt;matplotlib.figure.Figure at 0x7f61959188d0&gt;
+</pre>
+<img alt="/images/vanangamudimnist/output_53_1.png" src="../../images/vanangamudimnist/output_53_1.png"><img alt="/images/vanangamudimnist/output_53_2.png" src="../../images/vanangamudimnist/output_53_2.png"><p>I don't know about you, but now I am gonna admire that picture above and
+wonder how beautiful neural networks are. Thank you and, ### Thanks to</p>
+<ul class="simple">
+<li>
+<a class="reference external" href="http://suriyadeepan.github.io/">Suriyadeepan</a> for reviewing the</li>
+</ul>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;string&gt;</tt>, line 1148)</p>
+Bullet list ends without a blank line; unexpected unindent.</div>
+<p>article</p>
+<ol class="arabic simple">
+<li><a class="reference external" href="https://stackoverflow.com/questions/20998083/show-the-values-in-the-grid-using-matplotlib">Show values in the matplot grid by
+matshow</a></li>
+<li><a class="reference external" href="http://neuralnetworksanddeeplearning.com/chap2.html">How the Backpropogation works by Michael
+Nielson</a></li>
+<li><a class="reference external" href="https://stackoverflow.com/questions/19698945/controlling-the-range-of-a-color-matrix-plot-in-matplotlib">Controlling the Range of a Color Matrix Plot in
+Matplotlib</a></li>
+</ol>
+</div>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/deep-learning/" rel="tag">deep learning</a></li>
+            <li><a class="tag p-category" href="../../categories/intro/" rel="tag">intro</a></li>
+            <li><a class="tag p-category" href="../../categories/mnist/" rel="tag">mnist</a></li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+      appId      : 'selvakumar.v2.x',
+      status     : true,
+      xfbml      : true
+    });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script><div class="fb-comments" data-href="https://vanangamudi.gitlab.io/posts/vanangamudimnist/" data-width="470"></div>
+
+
+        </section></article><div id="fb-root"></div>
+<script>
+    // thank lxml for this
+    $('.fb-comments-count').each(function(i, obj) {
+        var url = obj.attributes['data-url'].value;
+        // change here if you dislike the default way of displaying
+        // this
+        obj.innerHTML = '<fb:comments-count href="' + url + '"></fb:comments-count> comments';
+    });
+
+  window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+      appId      : 'selvakumar.v2.x',
+      status     : true,
+      xfbml      : true
+    });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2017         <a href="mailto:selva.developer@gmail.com">vanangamudi</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../assets/js/jquery.min.js"></script><script src="../../assets/js/bootstrap.min.js"></script><script src="../../assets/js/moment-with-locales.min.js"></script><script src="../../assets/js/fancydates.js"></script><script src="../../assets/js/jquery.colorbox-min.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>
