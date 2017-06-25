@@ -1,4 +1,0 @@
-Sitemap: https://vanangamudi.gitlab.io/sitemapindex.xml
-
-User-Agent: *
-Host: vanangamudi.gitlab.io

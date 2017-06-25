@@ -6,6 +6,8 @@
 .. category: neural networks
 .. section: neural networks
 
+WORK IN PROGRESS
+   
 The problem I designed for this post came to me when I was trying to
 explain neural network to my friend who is just getting started on it.
 The hello world of deep learning is MNIST, but the size of the MNIST
