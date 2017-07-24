@@ -6,6 +6,14 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
+  <loc>https://vanangamudi.github.io/categories/basics.xml</loc>
+  <lastmod>2017-07-24T15:14:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://vanangamudi.github.io/categories/cat_mathematics.xml</loc>
+  <lastmod>2017-07-24T15:14:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://vanangamudi.github.io/categories/cat_neural-networks.xml</loc>
   <lastmod>2017-06-25T17:54:00Z</lastmod>
  </sitemap>
@@ -16,6 +24,10 @@
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/intro.xml</loc>
   <lastmod>2017-06-25T17:54:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://vanangamudi.github.io/categories/mathematics.xml</loc>
+  <lastmod>2017-07-24T15:14:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/mnist.xml</loc>
@@ -31,14 +43,14 @@
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/rss.xml</loc>
-  <lastmod>2017-07-24T13:36:00Z</lastmod>
+  <lastmod>2017-07-24T15:14:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/sitemap.xml</loc>
-  <lastmod>2017-07-24T13:36:00Z</lastmod>
+  <lastmod>2017-07-24T15:14:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/uncategorized/rss.xml</loc>
-  <lastmod>2017-07-24T13:36:00Z</lastmod>
+  <lastmod>2017-07-24T15:14:00Z</lastmod>
  </sitemap>
 </sitemapindex>
