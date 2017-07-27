@@ -7,94 +7,70 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://vanangamudi.github.io/</loc>
-  <lastmod>2017-07-16T08:54:00Z</lastmod>
+  <lastmod>2017-07-27T17:10:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/2017/</loc>
-  <lastmod>2017-06-25T17:54:00Z</lastmod>
+  <lastmod>2017-07-27T17:07:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/archive.html</loc>
-  <lastmod>2017-07-24T13:53:00Z</lastmod>
+  <lastmod>2017-07-27T17:11:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/categories/</loc>
-  <lastmod>2017-07-24T13:51:00Z</lastmod>
+  <lastmod>2017-07-27T17:07:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/categories/basics/</loc>
-  <lastmod>2017-07-24T13:51:00Z</lastmod>
+  <lastmod>2017-07-27T17:07:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/categories/cat_mathematics/</loc>
-  <lastmod>2017-07-24T13:51:00Z</lastmod>
+  <lastmod>2017-07-27T17:07:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/categories/cat_neural-networks/</loc>
-  <lastmod>2017-06-25T17:54:00Z</lastmod>
+  <lastmod>2017-07-13T20:03:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/categories/deep-learning/</loc>
-  <lastmod>2017-06-25T17:54:00Z</lastmod>
+  <lastmod>2017-07-13T20:03:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/categories/intro/</loc>
-  <lastmod>2017-06-25T17:54:00Z</lastmod>
+  <lastmod>2017-07-13T20:03:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/categories/mathematics/</loc>
-  <lastmod>2017-07-24T13:51:00Z</lastmod>
+  <lastmod>2017-07-27T17:07:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/categories/mnist/</loc>
-  <lastmod>2017-06-25T17:54:00Z</lastmod>
+  <lastmod>2017-07-13T20:03:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/categories/pytorch/</loc>
-  <lastmod>2017-06-25T17:54:00Z</lastmod>
- </url>
- <url>
-  <loc>https://vanangamudi.github.io/neural-networks/</loc>
-  <lastmod>2017-07-14T19:37:00Z</lastmod>
- </url>
- <url>
-  <loc>https://vanangamudi.github.io/posts/linear-and-non-linear/</loc>
-  <lastmod>2017-07-24T15:13:00Z</lastmod>
- </url>
- <url>
-  <loc>https://vanangamudi.github.io/posts/logistic-regression/</loc>
-  <lastmod>2017-07-14T19:37:00Z</lastmod>
- </url>
- <url>
-  <loc>https://vanangamudi.github.io/posts/logistic-regression/index.src.html</loc>
-  <lastmod>2017-07-16T20:18:00Z</lastmod>
+  <lastmod>2017-07-13T20:03:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/posts/mnist%20study%20in%20pytorch/</loc>
-  <lastmod>2017-06-25T17:54:00Z</lastmod>
+  <lastmod>2017-07-27T17:07:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/posts/pytorch%20primer/</loc>
-  <lastmod>2017-06-25T17:54:00Z</lastmod>
+  <lastmod>2017-07-13T20:03:00Z</lastmod>
  </url>
  <url>
-  <loc>https://vanangamudi.github.io/posts/%E0%AE%A8%E0%AF%87%E0%AE%B0%E0%AF%81%E0%AE%AE%E0%AF%8D%20%E0%AE%B5%E0%AE%B0%E0%AE%BF%E0%AE%AF%E0%AF%81%E0%AE%AE%E0%AF%8D%20%28Linear%20and%20Non-linear%29/</loc>
-  <lastmod>2017-07-24T13:58:00Z</lastmod>
- </url>
- <url>
-  <loc>https://vanangamudi.github.io/posts/%E0%AE%A8%E0%AF%87%E0%AE%B0%E0%AF%81%E0%AE%AE%E0%AF%8D%20%E0%AE%B5%E0%AE%B0%E0%AE%BF%E0%AE%AF%E0%AF%81%E0%AE%AE%E0%AF%8D%20%28Linear%20and%20Non-linear%29/index.src.html</loc>
-  <lastmod>2017-07-24T13:58:00Z</lastmod>
+  <loc>https://vanangamudi.github.io/posts/vanangamudimnist/</loc>
+  <lastmod>2017-07-13T20:03:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/stories/aboutme/</loc>
-  <lastmod>2017-06-25T17:54:00Z</lastmod>
+  <lastmod>2017-07-13T20:03:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/stories/deep-learning-study-roadmap/</loc>
-  <lastmod>2017-06-25T17:54:00Z</lastmod>
- </url>
- <url>
-  <loc>https://vanangamudi.github.io/uncategorized/</loc>
-  <lastmod>2017-07-14T19:37:00Z</lastmod>
+  <lastmod>2017-07-13T20:03:00Z</lastmod>
  </url>
 </urlset>

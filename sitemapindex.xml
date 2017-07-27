@@ -7,50 +7,42 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/basics.xml</loc>
-  <lastmod>2017-07-24T15:14:00Z</lastmod>
+  <lastmod>2017-07-27T17:07:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/cat_mathematics.xml</loc>
-  <lastmod>2017-07-24T15:14:00Z</lastmod>
+  <lastmod>2017-07-27T17:07:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/cat_neural-networks.xml</loc>
-  <lastmod>2017-06-25T17:54:00Z</lastmod>
+  <lastmod>2017-07-27T17:11:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/deep-learning.xml</loc>
-  <lastmod>2017-06-25T17:54:00Z</lastmod>
+  <lastmod>2017-07-27T17:11:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/intro.xml</loc>
-  <lastmod>2017-06-25T17:54:00Z</lastmod>
+  <lastmod>2017-07-27T17:11:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/mathematics.xml</loc>
-  <lastmod>2017-07-24T15:14:00Z</lastmod>
+  <lastmod>2017-07-27T17:07:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/mnist.xml</loc>
-  <lastmod>2017-06-25T17:54:00Z</lastmod>
+  <lastmod>2017-07-27T17:11:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/pytorch.xml</loc>
-  <lastmod>2017-06-25T17:54:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>https://vanangamudi.github.io/neural-networks/rss.xml</loc>
-  <lastmod>2017-07-14T19:37:00Z</lastmod>
+  <lastmod>2017-07-27T17:10:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/rss.xml</loc>
-  <lastmod>2017-07-24T15:14:00Z</lastmod>
+  <lastmod>2017-07-27T17:11:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/sitemap.xml</loc>
-  <lastmod>2017-07-24T15:14:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>https://vanangamudi.github.io/uncategorized/rss.xml</loc>
-  <lastmod>2017-07-24T15:14:00Z</lastmod>
+  <lastmod>2017-07-27T17:11:00Z</lastmod>
  </sitemap>
 </sitemapindex>
