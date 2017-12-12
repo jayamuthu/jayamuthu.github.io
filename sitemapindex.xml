@@ -7,66 +7,74 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/basics.xml</loc>
-  <lastmod>2017-12-12T08:37:00Z</lastmod>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/cat_cheru.xml</loc>
-  <lastmod>2017-12-12T08:37:00Z</lastmod>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/cat_mathematics.xml</loc>
-  <lastmod>2017-12-12T08:37:00Z</lastmod>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/cat_neural-networks.xml</loc>
-  <lastmod>2017-12-12T08:42:00Z</lastmod>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/cheru.xml</loc>
-  <lastmod>2017-12-12T08:37:00Z</lastmod>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/deep-learning.xml</loc>
-  <lastmod>2017-12-12T08:42:00Z</lastmod>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/ideas.xml</loc>
-  <lastmod>2017-12-12T08:37:00Z</lastmod>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/intro.xml</loc>
-  <lastmod>2017-12-12T08:42:00Z</lastmod>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/mathematics.xml</loc>
-  <lastmod>2017-12-12T08:37:00Z</lastmod>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://vanangamudi.github.io/categories/mathjax.xml</loc>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/mnist.xml</loc>
-  <lastmod>2017-12-12T08:42:00Z</lastmod>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://vanangamudi.github.io/categories/neural-networks.xml</loc>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/organizing.xml</loc>
-  <lastmod>2017-12-12T08:37:00Z</lastmod>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/pytorch.xml</loc>
-  <lastmod>2017-12-12T08:37:00Z</lastmod>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/neural-networks/rss.xml</loc>
-  <lastmod>2017-12-12T08:42:00Z</lastmod>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/rss.xml</loc>
-  <lastmod>2017-12-12T08:42:00Z</lastmod>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/sitemap.xml</loc>
-  <lastmod>2017-12-12T08:42:00Z</lastmod>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/uncategorized/rss.xml</loc>
-  <lastmod>2017-12-12T08:37:00Z</lastmod>
+  <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
 </sitemapindex>
