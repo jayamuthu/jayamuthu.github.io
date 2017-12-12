@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://vanangamudi.github.io/</loc>
-  <lastmod>2017-07-16T08:54:00Z</lastmod>
+  <lastmod>2017-12-12T07:56:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/2017/</loc>
@@ -15,15 +15,19 @@
  </url>
  <url>
   <loc>https://vanangamudi.github.io/archive.html</loc>
-  <lastmod>2017-07-24T13:53:00Z</lastmod>
+  <lastmod>2017-12-12T08:18:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/categories/</loc>
-  <lastmod>2017-07-24T13:51:00Z</lastmod>
+  <lastmod>2017-12-12T08:18:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/categories/basics/</loc>
   <lastmod>2017-07-24T13:51:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://vanangamudi.github.io/categories/cat_cheru/</loc>
+  <lastmod>2017-12-12T08:18:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/categories/cat_mathematics/</loc>
@@ -34,8 +38,16 @@
   <lastmod>2017-06-25T17:54:00Z</lastmod>
  </url>
  <url>
+  <loc>https://vanangamudi.github.io/categories/cheru/</loc>
+  <lastmod>2017-12-12T08:18:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://vanangamudi.github.io/categories/deep-learning/</loc>
   <lastmod>2017-06-25T17:54:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://vanangamudi.github.io/categories/ideas/</loc>
+  <lastmod>2017-12-12T08:18:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/categories/intro/</loc>
@@ -50,12 +62,32 @@
   <lastmod>2017-06-25T17:54:00Z</lastmod>
  </url>
  <url>
+  <loc>https://vanangamudi.github.io/categories/organizing/</loc>
+  <lastmod>2017-12-12T08:18:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://vanangamudi.github.io/categories/pytorch/</loc>
   <lastmod>2017-06-25T17:54:00Z</lastmod>
  </url>
  <url>
+  <loc>https://vanangamudi.github.io/dependent-and-independent-variables/post.html</loc>
+  <lastmod>2017-11-12T14:31:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://vanangamudi.github.io/linear-and-non-linear/post.html</loc>
+  <lastmod>2017-07-26T10:29:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://vanangamudi.github.io/linear-and-non-linear/post.odt.html</loc>
+  <lastmod>2017-07-26T11:18:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://vanangamudi.github.io/neural-networks/</loc>
   <lastmod>2017-07-14T19:37:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://vanangamudi.github.io/posts/cheru-secondary-brain-intro/</loc>
+  <lastmod>2017-12-12T08:18:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/posts/linear-and-non-linear/</loc>
@@ -67,7 +99,7 @@
  </url>
  <url>
   <loc>https://vanangamudi.github.io/posts/logistic-regression/index.src.html</loc>
-  <lastmod>2017-07-16T20:18:00Z</lastmod>
+  <lastmod>2017-08-12T16:15:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/posts/mnist%20study%20in%20pytorch/</loc>
@@ -76,6 +108,10 @@
  <url>
   <loc>https://vanangamudi.github.io/posts/pytorch%20primer/</loc>
   <lastmod>2017-06-25T17:54:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://vanangamudi.github.io/posts/replace-algorithms-with-nn/</loc>
+  <lastmod>2017-12-12T07:56:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/posts/%E0%AE%A8%E0%AF%87%E0%AE%B0%E0%AF%81%E0%AE%AE%E0%AF%8D%20%E0%AE%B5%E0%AE%B0%E0%AE%BF%E0%AE%AF%E0%AF%81%E0%AE%AE%E0%AF%8D%20%28Linear%20and%20Non-linear%29/</loc>
