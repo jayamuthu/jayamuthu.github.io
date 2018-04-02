@@ -23,7 +23,11 @@
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/cat_nlu-nlp-deep-learning.xml</loc>
-  <lastmod>2018-04-02T17:16:00Z</lastmod>
+  <lastmod>2018-04-02T17:18:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://vanangamudi.github.io/categories/cat_nlu.xml</loc>
+  <lastmod>2018-04-02T17:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/cheru.xml</loc>
@@ -31,7 +35,7 @@
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/deep-learning.xml</loc>
-  <lastmod>2018-04-02T17:16:00Z</lastmod>
+  <lastmod>2018-04-02T17:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/ideas.xml</loc>
@@ -43,7 +47,11 @@
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/language-understand.xml</loc>
-  <lastmod>2018-04-02T17:16:00Z</lastmod>
+  <lastmod>2018-04-02T17:18:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://vanangamudi.github.io/categories/language-understanding.xml</loc>
+  <lastmod>2018-04-02T17:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/mathematics.xml</loc>
@@ -63,11 +71,11 @@
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/nlp.xml</loc>
-  <lastmod>2018-04-02T17:16:00Z</lastmod>
+  <lastmod>2018-04-02T17:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/nlu.xml</loc>
-  <lastmod>2018-04-02T17:16:00Z</lastmod>
+  <lastmod>2018-04-02T17:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/organizing.xml</loc>
@@ -79,7 +87,7 @@
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/questions.xml</loc>
-  <lastmod>2018-04-02T17:16:00Z</lastmod>
+  <lastmod>2018-04-02T17:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/neural-networks/rss.xml</loc>
@@ -87,14 +95,14 @@
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/rss.xml</loc>
-  <lastmod>2018-04-02T17:16:00Z</lastmod>
+  <lastmod>2018-04-02T17:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/sitemap.xml</loc>
-  <lastmod>2018-04-02T17:16:00Z</lastmod>
+  <lastmod>2018-04-02T17:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/uncategorized/rss.xml</loc>
-  <lastmod>2018-04-02T17:16:00Z</lastmod>
+  <lastmod>2018-04-02T17:26:00Z</lastmod>
  </sitemap>
 </sitemapindex>

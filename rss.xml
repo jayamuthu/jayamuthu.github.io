@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>vanangamudi</title><link>https://vanangamudi.github.io</link><description>interpretations of my observations</description><atom:link type="application/rss+xml" href="https://vanangamudi.github.io/rss.xml" rel="self"></atom:link><language>en</language><lastBuildDate>Mon, 02 Apr 2018 17:18:18 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Language Understanding and Deep learning</title><link>https://vanangamudi.github.io/posts/language-understanding-and-deep-learning/</link><dc:creator>vanangamudi</dc:creator><description>&lt;!--
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>vanangamudi</title><link>https://vanangamudi.github.io</link><description>interpretations of my observations</description><atom:link rel="self" type="application/rss+xml" href="https://vanangamudi.github.io/rss.xml"></atom:link><language>en</language><lastBuildDate>Mon, 02 Apr 2018 17:26:28 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Language Understanding and Deep learning</title><link>https://vanangamudi.github.io/posts/language-understanding-and-deep-learning/</link><dc:creator>vanangamudi</dc:creator><description>&lt;!--
 .. title: Language Understanding and Deep learning
 .. slug: language-understanding-and-deep-learning
 .. date: 2018-04-02 22:40:30 UTC+05:30
-.. tags: deep learning, nlp, language understand, nlu, questions
-.. category: NLU, NLP, Deep learning
+.. tags: deep learning, nlp, language understanding, nlu, questions
+.. category: NLU
 .. link: 
 .. description: 
 .. type: text
@@ -39,7 +39,7 @@
       &lt;p&gt;
         The neural network, all it does it mapping between two
         higher-dimensional spaces deterministically. To explain what I mean, I
-        will use the &amp;gt;OpAmp vs Microcontroller analogy. In an OpAmp circuitry, the output is
+        will use the OpAmp vs Microcontroller analogy. In an OpAmp circuitry, the output is
         completly based on the input and the relationship causal. Very similar
         to mechanical devices, it just the medium is different, electrons in
         circuitry. There is no arbitraryness . But I can, make a microcontroller
@@ -94,7 +94,7 @@
         word spaces? I don't know the answer to that. (May be multimodal
         learning might help?) &lt;/p&gt;
     &lt;/div&gt;
-  </description><category>deep learning</category><category>language understand</category><category>nlp</category><category>nlu</category><category>questions</category><guid>https://vanangamudi.github.io/posts/language-understanding-and-deep-learning/</guid><pubDate>Mon, 02 Apr 2018 17:10:30 GMT</pubDate></item><item><title>Replace algorithms with NN</title><link>https://vanangamudi.github.io/posts/replace-algorithms-with-nn/</link><dc:creator>vanangamudi</dc:creator><description>&lt;!-- 
+  </description><category>deep learning</category><category>language understanding</category><category>nlp</category><category>nlu</category><category>questions</category><guid>https://vanangamudi.github.io/posts/language-understanding-and-deep-learning/</guid><pubDate>Mon, 02 Apr 2018 17:10:30 GMT</pubDate></item><item><title>Replace algorithms with NN</title><link>https://vanangamudi.github.io/posts/replace-algorithms-with-nn/</link><dc:creator>vanangamudi</dc:creator><description>&lt;!-- 
 .. title: Replace algorithms with NN
 .. slug: replace-algorithms-with-nn
 .. date: 2017-12-12 01:02:52 UTC+05:30
