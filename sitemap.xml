@@ -7,19 +7,23 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://vanangamudi.github.io/</loc>
-  <lastmod>2017-12-12T19:54:00Z</lastmod>
+  <lastmod>2018-04-02T17:11:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/2017/</loc>
   <lastmod>2017-12-12T19:54:00Z</lastmod>
  </url>
  <url>
+  <loc>https://vanangamudi.github.io/2018/</loc>
+  <lastmod>2018-04-02T17:11:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://vanangamudi.github.io/archive.html</loc>
-  <lastmod>2017-12-12T19:54:00Z</lastmod>
+  <lastmod>2018-04-02T17:11:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/categories/</loc>
-  <lastmod>2017-12-12T19:54:00Z</lastmod>
+  <lastmod>2018-04-02T17:16:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/categories/basics/</loc>
@@ -38,6 +42,10 @@
   <lastmod>2017-12-12T19:54:00Z</lastmod>
  </url>
  <url>
+  <loc>https://vanangamudi.github.io/categories/cat_nlu-nlp-deep-learning/</loc>
+  <lastmod>2018-04-02T17:16:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://vanangamudi.github.io/categories/cheru/</loc>
   <lastmod>2017-12-12T19:54:00Z</lastmod>
  </url>
@@ -52,6 +60,10 @@
  <url>
   <loc>https://vanangamudi.github.io/categories/intro/</loc>
   <lastmod>2017-12-12T19:54:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://vanangamudi.github.io/categories/language-understand/</loc>
+  <lastmod>2018-04-02T17:16:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/categories/mathematics/</loc>
@@ -70,12 +82,24 @@
   <lastmod>2017-12-12T19:54:00Z</lastmod>
  </url>
  <url>
+  <loc>https://vanangamudi.github.io/categories/nlp/</loc>
+  <lastmod>2018-04-02T17:16:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://vanangamudi.github.io/categories/nlu/</loc>
+  <lastmod>2018-04-02T17:16:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://vanangamudi.github.io/categories/organizing/</loc>
   <lastmod>2017-12-12T19:54:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/categories/pytorch/</loc>
   <lastmod>2017-12-12T19:54:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://vanangamudi.github.io/categories/questions/</loc>
+  <lastmod>2018-04-02T17:16:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/dependent-and-independent-variables/post.html</loc>
@@ -96,6 +120,10 @@
  <url>
   <loc>https://vanangamudi.github.io/posts/cheru-secondary-brain-intro/</loc>
   <lastmod>2017-12-12T19:54:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://vanangamudi.github.io/posts/language-understanding-and-deep-learning/</loc>
+  <lastmod>2018-04-02T17:11:00Z</lastmod>
  </url>
  <url>
   <loc>https://vanangamudi.github.io/posts/linear-and-non-linear/</loc>

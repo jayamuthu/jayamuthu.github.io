@@ -22,12 +22,16 @@
   <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://vanangamudi.github.io/categories/cat_nlu-nlp-deep-learning.xml</loc>
+  <lastmod>2018-04-02T17:16:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://vanangamudi.github.io/categories/cheru.xml</loc>
   <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/deep-learning.xml</loc>
-  <lastmod>2017-12-12T19:54:00Z</lastmod>
+  <lastmod>2018-04-02T17:16:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/ideas.xml</loc>
@@ -36,6 +40,10 @@
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/intro.xml</loc>
   <lastmod>2017-12-12T19:54:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://vanangamudi.github.io/categories/language-understand.xml</loc>
+  <lastmod>2018-04-02T17:16:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/categories/mathematics.xml</loc>
@@ -54,6 +62,14 @@
   <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://vanangamudi.github.io/categories/nlp.xml</loc>
+  <lastmod>2018-04-02T17:16:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://vanangamudi.github.io/categories/nlu.xml</loc>
+  <lastmod>2018-04-02T17:16:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://vanangamudi.github.io/categories/organizing.xml</loc>
   <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
@@ -62,19 +78,23 @@
   <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://vanangamudi.github.io/categories/questions.xml</loc>
+  <lastmod>2018-04-02T17:16:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://vanangamudi.github.io/neural-networks/rss.xml</loc>
   <lastmod>2017-12-12T19:54:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/rss.xml</loc>
-  <lastmod>2017-12-12T19:54:00Z</lastmod>
+  <lastmod>2018-04-02T17:16:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/sitemap.xml</loc>
-  <lastmod>2017-12-12T19:54:00Z</lastmod>
+  <lastmod>2018-04-02T17:16:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://vanangamudi.github.io/uncategorized/rss.xml</loc>
-  <lastmod>2017-12-12T19:54:00Z</lastmod>
+  <lastmod>2018-04-02T17:16:00Z</lastmod>
  </sitemap>
 </sitemapindex>

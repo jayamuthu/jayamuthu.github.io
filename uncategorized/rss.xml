@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>vanangamudi (Uncategorized)</title><link>https://vanangamudi.github.io</link><description></description><atom:link type="application/rss+xml" href="https://vanangamudi.github.io/uncategorized/rss.xml" rel="self"></atom:link><language>en</language><lastBuildDate>Mon, 02 Apr 2018 17:18:18 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Language Understanding and Deep learning</title><link>https://vanangamudi.github.io/posts/language-understanding-and-deep-learning/</link><dc:creator>vanangamudi</dc:creator><description>&lt;!--
+.. title: Language Understanding and Deep learning
+.. slug: language-understanding-and-deep-learning
+.. date: 2018-04-02 22:40:30 UTC+05:30
+.. tags: deep learning, nlp, language understand, nlu, questions
+.. category: NLU, NLP, Deep learning
+.. link: 
+.. description: 
+.. type: text
+  --&gt;
+  
+    &lt;div&gt;[WIP]  Created Monday 02 April 2018 &lt;/div&gt;
+    &lt;div&gt;&lt;br&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;p&gt;&lt;/p&gt;
+      &lt;h4&gt;
+        &lt;b&gt;Problems with word-embedding :-&lt;/b&gt; &lt;/h4&gt;
+      &lt;p&gt;
+        Word embeddings are flat and do not capture hierarchies. number space vs
+        word space, for example, the similarity between '8' and 'eight' should
+        be captured. Intrinstic and extrinsic properties of words are still
+        cannot be captured by word-embeddings alone. Sure we can use character
+        embedding and mix/concat them with word-embeddings, but that doesn't
+        seem to improve the performance by far. &lt;/p&gt;
+      &lt;p&gt;
+        Meaning of a word is influenced by a lot of factors which can be
+        categorised into at least three. &lt;br&gt;
+        Syntax - character order, &lt;br&gt;
+        Semantics - what are the words that are seen together, &lt;br&gt;
+        Pragmatics - we don't know how to handle this so far, because it depends
+        upon lot of things like history, culture, contemporary styles of use and
+        so on.
+      &lt;/p&gt;
+      &lt;p&gt;&lt;/p&gt;
+      &lt;h4&gt;
+        &lt;b&gt;Too deterministic - all the output are probability distributions.&lt;/b&gt;&lt;/h4&gt;
+      &lt;p&gt;
+        The neural network, all it does it mapping between two
+        higher-dimensional spaces deterministically. To explain what I mean, I
+        will use the &amp;gt;OpAmp vs Microcontroller analogy. In an OpAmp circuitry, the output is
+        completly based on the input and the relationship causal. Very similar
+        to mechanical devices, it just the medium is different, electrons in
+        circuitry. There is no arbitraryness . But I can, make a microcontroller
+        to light up an LED regardless of what is on the input side. &lt;/p&gt;
+      &lt;p&gt;
+        I intentionally chose not use the phrase, 'program the microcontroller'.
+        Programs is set of rules operating over data structured in, well... a
+        structure. No shortcuts. But that is also a curse. Take NLP for example,
+        we cannot completely specify language in a set of rules. Although
+        link-grammar, dependency-grammar, and recent construction-grammars have
+        evolved to more powerful and expressive, NLP is still an unsolved
+        problem. &lt;/p&gt;
+      &lt;p&gt;
+        Neural networks tend to perform well on a subset of language
+        defined-by/confined-to a text-corpus, because it tries to figure out the
+        rules by themselves. But that is not an easy job. It is like watching a
+        suspense-thriller. The story is intentionally crafted to make us
+        infer/predict something to be true, say the movie, Mulholland Drive is
+        about, Diane Selwyn is trying to help Camilla Rhodes figure who was she
+        before the car accident, only to break that prediction, like revealing
+        that all the damn is a dream, and make us feel like cheated and
+        astonished at the same time, so that we are kept invested in the story.
+        The movie is actually more complex and there can be more than one
+        interpretation other than the one I chose to present here, exactly like
+        there are many ways to interpret a sentence. &lt;/p&gt;
+      &lt;p&gt;
+        It is safe to say the that kind of reactions are the after-effects of
+        the order in which the events in the story are presented to us. That is
+        exactly the reason why beural networks perform well on one dataset and
+        not on another and at times not even on the same dataset if the order of
+        the samples are shuffled. The reason why our prediction of the hero or
+        the anti-hero fails miserably is, we are trying to capture meaningful
+        structures of the story from and confined to the events presented, i.e
+        from the incomplete information. &lt;/p&gt;
+      &lt;p&gt;
+        We are connecting dots which may or may not be actually connected in the
+        story, and we won't know it until we are provided with the full
+        information. Similarly the neural networks creates shortcuts and
+        believes that is the actual structure of the content in NLP case the
+        syntax, semantics and even pragmatics of the language. And believe the
+        datasets we currently have cannot capture all of three of them, in their
+        entirety. So what the neural networks ends up learning are mere
+        shortcuts, unless we provide them all sorts of combinations of meaning
+        sentences. &lt;/p&gt;
+      &lt;p&gt;
+        For example to establish the similarity between word 'eight' and number
+        '8' we need to provide the neural network enough examples where 'eight'
+        and '8' exemplify similar meanings. In context of word-embeddings,
+        duplicating samples with 'eight' replaced with '8' and vice-versa should
+        capture that similarity, but how to make the neural network understand
+        that '1' and '8' are from number spaces and 'one' and 'eight' are from
+        word spaces? I don't know the answer to that. (May be multimodal
+        learning might help?) &lt;/p&gt;
+    &lt;/div&gt;
+  </description><category>deep learning</category><category>language understand</category><category>nlp</category><category>nlu</category><category>questions</category><guid>https://vanangamudi.github.io/posts/language-understanding-and-deep-learning/</guid><pubDate>Mon, 02 Apr 2018 17:10:30 GMT</pubDate></item><item><title>Replace algorithms with NN</title><link>https://vanangamudi.github.io/posts/replace-algorithms-with-nn/</link><dc:creator>vanangamudi</dc:creator><description>&lt;!-- 
+.. title: Replace algorithms with NN
+.. slug: replace-algorithms-with-nn
+.. date: 2017-12-12 01:02:52 UTC+05:30
+.. tags: mathematics, basics
+.. category: mathematics
+.. link:
+.. description:
+.. type: text--&gt;
+  
+    &lt;div&gt;
+      &lt;h1&gt;Replace algorithms with NN &lt;/h1&gt;
+      &lt;div&gt;This idea of replacing software components with neural networks comes
+        to us, or atleast me quite a few times. I remember now the very first
+        time I thought about this. At that time, I did not know anything about
+        neural networks other than that they are a part of Aritifcial
+        Intelligece. I and my friend Suriya were experimenting with lots of
+        stuff that we can get our hands on. Arduino, OpenCV, Matlab, Linux,
+        device drivers, etc. Yes it was five years ago when we came up with the
+        &lt;a href="https://groups.google.com/forum/#%21forum/project-adhi" target="_blank"&gt;project&lt;/a&gt;
+        "Adhi"(means beggining). It was about intergraing AI, NN specifically
+        into linux kernel to make it kernel smarter. &lt;/div&gt;
+      &lt;div&gt;&lt;br&gt;
+      &lt;/div&gt;
+      &lt;div&gt;There is another one,where I imagined a symbolic AI and nerual
+        network will compete to become better than each other. This came to me,
+        when thinking of how to adjust what a network learns. Symbolic AI are
+        easier to tweak. &lt;/div&gt;
+      &lt;div&gt;&lt;br&gt;
+      &lt;/div&gt;
+      &lt;div&gt;Like this one, most of the ideas presented below are old and may be
+        useless, and I admit, these are all just vague phrases and I never made
+        an attempt to implement them. But I hope this time I will get my hands
+        dirty and this  would at least serve as a reference.
+        &lt;div&gt;&lt;/div&gt;
+        &lt;h4&gt;Why am I writing about this now?&lt;/h4&gt;
+        &lt;div&gt;One. I have been planning to write a software to help with
+          tamil-linguitics. There is a lot to discuss in it, But I will limit
+          myself to one particular area - WordNet. Two. few months ago I wrote
+          about how computers can be more useful that being just a data storing
+          searching devices. In that post I tried to explain how we are
+          underutilising out computers. I always try to organize the directories
+          I have on my computers to aid the way I work. And there are some more
+          idea, and a combination of those things led me to write this.&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;div&gt;&lt;br&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div&gt;In this post, lets discuss a specific algorithm - indexing. Why? No
+        reason. It is way more easier to explain, I guess.&lt;/div&gt;
+      &lt;div&gt;
+        &lt;h3&gt;What is an index?&lt;/h3&gt;
+      &lt;/div&gt;
+      &lt;div&gt;Let's say you own stationery store, which sells, papers, notebooks
+        and pens. They way you place those items your shop is essential for
+        business. Pens are almost always placed at the front. Notebooks are
+        placed in wooden or iron racks and are organized interms of their
+        attributes - ruled/unruled, long/short, number of pages,
+        hard-bound/paperback and etc., and other items which are not frequently
+        sold will be kept somewhere in the back. Basically, we keep the
+        frequently sold items closer and the others farther. We can think of
+        this, as an indexing problem can't we?. The next time we buy notebooks
+        to sell, we place them accordingly.&lt;/div&gt;
+      &lt;div&gt;
+        &lt;h4&gt;Indexing and related data-structures:&lt;/h4&gt;
+      &lt;/div&gt;
+      &lt;div&gt;Binary-tree can be thought of as decision tree, but it is not as
+        sophisticated a decision tree.We, humans out of our lessons came up with
+        B-tree. TODO&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div&gt;&lt;br&gt;
+    &lt;/div&gt;
+    &lt;div&gt;We can think of programming in general as way to give structure to
+      information/data.That is what we do right? We take in bunch of data and do
+      something with it. Before doing with it we need a idea of what it is.&lt;/div&gt;
+    &lt;div&gt;
+      &lt;h4&gt;&lt;strong&gt;A remotely relevant example: Games&lt;/strong&gt;&lt;/h4&gt;
+    &lt;/div&gt;
+    &lt;div&gt;Let's take games. Games are one of the crucial softwares. They are
+      complex and compuationally intensive and some time they look incredibly
+      real. The more real they look, the more computations it has to perform.
+      The real world has structure. A computer sits on a table. The table mostly
+      stays inside the building. Our hands holds items. Bikes and cards rides on
+      the roads. There are numeraous relationships between objects in the real
+      world. And there is always more in the real world that what meets the eye.
+      But we cannot afford to make the computer build an entire world inside.
+      The real world is too rich in complexity to be fit in 32Gb RAM, and the
+      physicsal laws are too intense to calculated with a quad core processor. &lt;/div&gt;
+    &lt;div&gt;&lt;br&gt;
+    &lt;/div&gt;
+    &lt;div&gt;So what do we do? We cull off the things that don't meet the eyes and
+      display only what is necessary on the screen. How do we do it? Similar to
+      real world we simulate a small scale world inside the computer with help
+      of 'relationships between items'. Scene graph it is called. It is the data
+      structure that contains the objects and their relationships, including the
+      player from whose POV we see the world inside the game. So that the
+      computer can evaluate what object falls under our view, and only act upon
+      them, i.e apply physics over the objects in the view so that we feel
+      immersed in the game. To make it more closer to real world. The people who
+      create games optimize the game and its engines to run as fast as it can in
+      as many hardware platform as possible. &lt;/div&gt;
+    &lt;div&gt;&lt;br&gt;
+    &lt;/div&gt;
+    &lt;div&gt;Different kinds of games build different kind of worlds. GTA Vicecity
+      was one of the first open world games I played.But mostgames are of closed
+      world nature. i.e you cannot move around freely.There are only a set of
+      paths you can go and only a set of things you can do. This in a way
+      reduces the complexity in the computation. &lt;/div&gt;
+    &lt;div&gt;&lt;br&gt;
+    &lt;/div&gt;
+    &lt;div&gt;Have you ever wondered why some games are fast even at high graphical
+      quality settings and some games suck even atlow quality settings. That
+      depends upon whatoptimization havebeen done and whohasdone it.Naturally a
+      game programmer with good experience can optimize their games better than
+      one with lesser experience.&lt;/div&gt;
+    &lt;div&gt;
+      &lt;h4&gt;A extrememly remotely relevant example: Software&lt;/h4&gt;
+      &lt;div&gt;The sotware we use,  Microsoft word or Libre office Writer, are
+        general purpose software. Almost every one will have some use for it.
+        There is a set of usual things we do with a computer. Write docs, paint
+        pictures, watch videos and such. But there are also specialised
+        softwares designed for specific purpose. For example banks use custom
+        designed software. The functionality of software is tailored its
+        industry. You need measurements to tailor stuff.&lt;/div&gt;
+      &lt;div&gt;
+        &lt;h4&gt;A relevant example: Out stationery store&lt;/h4&gt;
+      &lt;/div&gt;
+      &lt;div&gt;The way you store items in you shop will differ from other shop, even
+        if it was a stationery store right next to yours or right opposite. Why
+        it dependsupon so many factors. The kind of items you sell, the number
+        of items in each kind, the amount of space you have etc. i,e how you
+        store, depends heavily on what you have. Index is a function of data.&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div&gt;&lt;br&gt;
+    &lt;/div&gt;
+    &lt;div&gt;Let's think about, database coders specifically people who code the
+      indexers. They cannot make any predictions about what kind data would be
+      stored in the databases other than few bare essentials like integers and
+      string. They cannot know what kind of data that I am going to store. It is
+      this disconnect which penalises performance.&lt;/div&gt;
+    &lt;div&gt;
+      &lt;h4&gt;Coming back to WordNet&lt;/h4&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;div&gt;Wordnet is like a thesaurus but richer in information. Building a
+        wordnet is no simple task. It is not exaggerating, when I say it might
+        take one's lifetime to build one. How can we make use of computer in
+        this endevour? This is a crude example and by no means intended to be
+        comprehesive implementaion note.&lt;/div&gt;
+      &lt;div&gt;&lt;br&gt;
+      &lt;/div&gt;
+      &lt;div&gt;Let's say you have software, you lookup a word and it shows some
+        information regarding that word. Its meanings, etymology, different of
+        forms of use in sentences, etc. What if it can suggest a list of words
+        and you can edit the relationship between them, i.e if the suggested
+        list of words are closer to this word in some sense? Wouldn't it be
+        awesome?&lt;/div&gt;
+      &lt;div&gt;&lt;br&gt;
+      &lt;/div&gt;
+      &lt;div&gt;But how can we pick a list of words from million words closer to the
+        one that we are reading? Well what if we can store the words in database
+        based on their similarity and relationships with other words? i.e store
+        the words closer in meaning, closer in memory.You mayask how can we know
+        what words are similar and what are not? &lt;/div&gt;
+      &lt;div&gt;&lt;br&gt;
+      &lt;/div&gt;
+      &lt;div&gt;That is where machine learning comes in. There are machine learning
+        methods, word embedding for example can be used to come with a
+        similarity metric. And manual contributions via this linguistic software
+        inturn can be used to make it more accurate. Remember the meaning of the
+        words are always changing, and there is not absolute meaning and
+        relationship between a word and the meaning it represents. So this
+        process will always be incremental and iterative. &lt;/div&gt;
+      &lt;div&gt;&lt;br&gt;
+      &lt;/div&gt;
+      &lt;div&gt;The point is, neural networks and other machine learning methods can
+        be use to determine where and how to store words.Unlike a general
+        purpose database, the neural network will learn what is in the data so
+        that it can store the data more efficiently and effectively.&lt;/div&gt;
+      &lt;div&gt;&lt;br&gt;
+      &lt;/div&gt;
+      &lt;div&gt;I imagine a bunch of AI agents talking to each other can do a better
+        job at this than a handful of coders.&lt;/div&gt;
+    &lt;/div&gt;
+  </description><category>basics</category><category>mathematics</category><guid>https://vanangamudi.github.io/posts/replace-algorithms-with-nn/</guid><pubDate>Mon, 11 Dec 2017 19:32:52 GMT</pubDate></item><item><title>Neural Networks Basics</title><link>https://vanangamudi.github.io/posts/neural-networks-basics/</link><dc:creator>vanangamudi</dc:creator><description>&lt;div&gt;&lt;p&gt;WORK IN PROGRESS&lt;/p&gt;
+&lt;div class="section" id="what-is-neural-network"&gt;
+&lt;h2&gt;What is neural network?&lt;/h2&gt;
+&lt;p&gt;Neural network was designed long long ago as a tool to explain how brain works in terms of computation. The infamous Pitts and McCulloch model was the first of this kind.&lt;/p&gt;
+&lt;p&gt;Roughly basic model of an artificial neuron is that, it connects to other neurons and collects inputs from all of them and once it think it has collected enough, it lights up, traditionally called firing of a neuron. The neural network that we are gonna discuss is similar to that but mathematical.&lt;/p&gt;
+&lt;p&gt;You remember that the computers were not made of transistor based CPU's till mid 20th century. Before that we used thermionic valves, and even before that we used electrical and mechanical parts like rotating shaft for doing computation, which is the principal thing to do in computers - computation.&lt;/p&gt;
+&lt;p&gt;Neural networks have a long history and they have been implemented in various forms throughout it. They were implemented in calculators, and later in 1950s and in parallel distributed computers in 1980's and most recently in GPUs. We are the luckiest, we live in an era, where you can build neural networks in our laptops at home and make them do some impressive stuff.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="how-exactly-gpu-s-help-build-the-neural-networks"&gt;
+&lt;h2&gt;How exactly GPU's help build the neural networks&lt;/h2&gt;
+&lt;p&gt;To understand that, we need to look into the details of how a simple neural network works. Lets take one.&lt;/p&gt;
+&lt;object data="https://vanangamudi.github.io/images/neural-networks-basics/2x1.svg" style="width: 360pt;" type="image/svg+xml"&gt;
+/images/neural-networks-basics/2x1.svg&lt;/object&gt;
+&lt;p&gt;From the look of it, we can understand that this network can be used to evaluate the equation of form &lt;strong&gt;ax + by&lt;/strong&gt; where a,b and x,y can take any values. Why are we calculating a math expression when neural networks can do much more awesome stuff? Take baby steps. From that expression we can understand that a neuron always adds up what it receives and the connecting link multipies the input. In the following example, the link connect to x,y,z and the link p,q,r produce px, qy, rz and the neuron eats it all up and spit px + qy + rz.&lt;/p&gt;
+&lt;object data="https://vanangamudi.github.io/images/neural-networks-basics/3x1.svg" style="width: 360pt;" type="image/svg+xml"&gt;
+/images/neural-networks-basics/3x1.svg&lt;/object&gt;
+&lt;p&gt;That is all fine. But how do we build the network in our computers? We go in reverse. We know that the result of evaluating that expression and output of the neuron are same. It is safe to say that the expression is the mathematical model of the neuron. We have been told again and again that our numbers are good at crunching numbers, right? What does it actually mean? Now you get it. Anyway that is a toy example.&lt;/p&gt;
+&lt;p&gt;In real world applications, the neural networks are employed for things which computers are not very good.&lt;/p&gt;
+&lt;p&gt;We mentioned something called firing in our very first section. What is firing? That depends on our interpretation. Lets take another example.&lt;/p&gt;
+&lt;object data="https://vanangamudi.github.io/images/neural-networks-basics/2x2_01.svg" style="width: 360pt;" type="image/svg+xml"&gt;
+/images/neural-networks-basics/2x2_01.svg&lt;/object&gt;
+&lt;p&gt;In our last example there was only one neuron, but here there are two. How can function produce two different output? That is absurd. No wait. In the last example, the output of the network is the output of the last neuron. But here the output is little different. We consider, which neuron produces the larger value and take is position as the output. MNIST for example has ten output neurons, each to signify a which is the number in the picture. Lets rewrite the names in the picture for a better workflow.&lt;/p&gt;
+&lt;object data="https://vanangamudi.github.io/images/neural-networks-basics/2x2_02.svg" style="width: 360pt;" type="image/svg+xml"&gt;
+/images/neural-networks-basics/2x2_02.svg&lt;/object&gt;
+&lt;p&gt;I left out one more important thing. There is something called bias. Alright lets take a moment to try out a real example. Behold the AND gate.&lt;/p&gt;
+&lt;object data="https://vanangamudi.github.io/images/neural-networks-basics/2x2_02_with_bias.svg" style="width: 360pt;" type="image/svg+xml"&gt;
+/images/neural-networks-basics/2x2_02_with_bias.svg&lt;/object&gt;
+&lt;object data="https://vanangamudi.github.io/images/neural-networks-basics/2x2_02_with_bias_AND_gate.svg" style="width: 360pt;" type="image/svg+xml"&gt;
+/images/neural-networks-basics/2x2_02_with_bias_AND_gate.svg&lt;/object&gt;
+&lt;div class="section" id="and-gate-truth-table"&gt;
+&lt;h3&gt;AND gate truth table&lt;/h3&gt;
+&lt;table border="1" class="docutils"&gt;
+&lt;colgroup&gt;
+&lt;col width="12%"&gt;
+&lt;col width="12%"&gt;
+&lt;col width="23%"&gt;
+&lt;col width="23%"&gt;
+&lt;col width="31%"&gt;
+&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;y&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;winner&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;-2.7&lt;/td&gt;
+&lt;td&gt;2.8&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;2.6&lt;/td&gt;
+&lt;td&gt;-3.3&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;3.4&lt;/td&gt;
+&lt;td&gt;-2.5&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;8.8&lt;/td&gt;
+&lt;td&gt;-8.7&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;You can see from the table that except for 1,1 the output of the neuron 1 is lesser than that of neuron 0. So now we understand that, the firing of neuron mostly mean means produing a larger value. Remember we are talking in terms of numbers crunched inside computers. If we had built, neural network with electrical components and use light bulbs as output devices - which bulb glows brighter would have been the winner.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="linear-algebra"&gt;
+&lt;h2&gt;Linear Algebra&lt;/h2&gt;
+&lt;p&gt;if we carefully look at the last image of AND network, we can see that the expression can be written in matrix form. Lets take a closer look and rewrite the names once again to a decent form,  we have only 26 letters in english.&lt;/p&gt;
+&lt;object data="https://vanangamudi.github.io/images/neural-networks-basics/2x2_02.svg" style="width: 360pt;" type="image/svg+xml"&gt;
+/images/neural-networks-basics/2x2_02.svg&lt;/object&gt;
+&lt;object data="https://vanangamudi.github.io/images/neural-networks-basics/2x2_02_with_bias.svg" style="width: 320pt;" type="image/svg+xml"&gt;
+/images/neural-networks-basics/2x2_02_with_bias.svg&lt;/object&gt;
+&lt;p&gt;Just one more time. &lt;strong&gt;W&lt;/strong&gt; ij means it connects the j-th neuron from input side to i-th neuron on the output side.&lt;/p&gt;
+&lt;object data="https://vanangamudi.github.io/images/neural-networks-basics/2x2_03.svg" style="width: 360pt;" type="image/svg+xml"&gt;
+/images/neural-networks-basics/2x2_03.svg&lt;/object&gt;
+&lt;object data="https://vanangamudi.github.io/images/neural-networks-basics/2x2_03_with_bias.svg" style="width: 360pt;" type="image/svg+xml"&gt;
+/images/neural-networks-basics/2x2_03_with_bias.svg&lt;/object&gt;
+&lt;p&gt;So if we rewrite the output equation into a matrix form, this is what we get&lt;/p&gt;
+&lt;img alt="/images/neural-networks-basics/2x2_03_equation.png" src="https://vanangamudi.github.io/images/neural-networks-basics/2x2_03_equation.png" style="width: 240pt;"&gt;
+&lt;p&gt;with bias&lt;/p&gt;
+&lt;img alt="/images/neural-networks-basics/2x2_03_equation_with_bias.png" src="https://vanangamudi.github.io/images/neural-networks-basics/2x2_03_equation_with_bias.png" style="width: 240pt;"&gt;
+&lt;p&gt;This is where linear algebra comes in. We have implemented many linear algebra operations, like matrix multiplication to run on computers, and using those set of functions, we can emulate neural networks in our desktops and laptops. These libraries such as BLAS, ATLAS are as old as I am. What has changed in the last decade is that, these libraries are rewritten to  be ran on GPU's. cuBLAS and clBLAS are few examples. What is so special about GPU? GPU can do a simple operation on large amount of data at a time and CPU are good at doing complex sequential operation over small pieces of data. Neural networks like other machine learning stuff&amp;lt;better word&amp;gt;, need to process large amount of data.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;</description><category>basics</category><category>mathjax</category><category>neural networks</category><guid>https://vanangamudi.github.io/posts/neural-networks-basics/</guid><pubDate>Mon, 22 May 2017 17:14:46 GMT</pubDate></item><item><title>Cheru::SecondaryBrain</title><link>https://vanangamudi.github.io/posts/cheru-secondary-brain-intro/</link><dc:creator>vanangamudi</dc:creator><description>&lt;!-- 
+.. title: Cheru::SecondaryBrain
+.. slug: cheru-secondary-brain-intro
+.. date: 2017-03-25 01:02:52 UTC+05:30
+.. tags: ideas, cheru, organizing
+.. category: cheru
+.. link:
+.. description:
+.. type: text--&gt;
+  
+    &lt;div class="post-header"&gt;
+      &lt;div class="post-header-line-1"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    What are the common activities that we do on the computer?
+    
+    &lt;ul data-key="1784"&gt;
+      &lt;li class="ListItemNode"&gt;
+        &lt;div class="ListItem-Content" data-key="1774"&gt;
+          &lt;div data-key="1773" style="position: relative;"&gt; &lt;span data-key="1772"&gt;&lt;span data-offset-key="1772-0"&gt;Read articles, books&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/li&gt;
+      &lt;li class="ListItemNode"&gt;
+        &lt;div class="ListItem-Content" data-key="1777"&gt;
+          &lt;div data-key="1776" style="position: relative;"&gt; &lt;span data-key="1775"&gt;&lt;span data-offset-key="1775-0"&gt;Listen to music and watch videos&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/li&gt;
+      &lt;li class="ListItemNode"&gt;
+        &lt;div class="ListItem-Content" data-key="1780"&gt;
+          &lt;div data-key="1779" style="position: relative;"&gt; &lt;span data-key="1778"&gt;&lt;span data-offset-key="1778-0"&gt;Write blogs, opinions&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/li&gt;
+      &lt;li class="ListItemNode"&gt;
+        &lt;div class="ListItem-Content" data-key="1783"&gt;
+          &lt;div data-key="1782" style="position: relative;"&gt; &lt;span data-key="1781"&gt;&lt;span data-offset-key="1781-0"&gt;Use Internet to communicate with other
+                people or other computers&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div data-key="1786"&gt; &lt;span data-key="1785"&gt;&lt;span data-offset-key="1785-0"&gt;But
+          where do we keep all the information consumed? Our brain. But at the
+          rate we consume the information, it becomes impossible to verify
+          whether the information is true, retain all the information in our
+          memory. No you might say, we do store documents like PDFs, pictures
+          and docs in computer. Yes we do, but there is a huge difference in the
+          way how our brain store and how we store the information in computer.&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;div data-key="1786"&gt;&lt;span data-key="1785"&gt;&lt;span data-offset-key="1785-0"&gt;&lt;br&gt;
+        &lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;div data-key="1788"&gt; &lt;/div&gt;
+    &lt;div data-key="1788"&gt; &lt;span data-key="1787"&gt;&lt;span data-offset-key="1787-0"&gt;I
+          said 'how we store the information in computer', because the computer
+          does not store information by itself. What do I mean by this? The way
+          our brain stores the information is in the form of network of linked
+          concepts, unlike the computers where we store the information in the
+          form of documents and images. Because of the difference between the
+          organization of contents by our brain and the computers, we are
+          redundantly storing information. We are under utilising the
+          facitlities offered by the computer. The computer can do much more
+          than what it is doing for us now. The computer can act as a secondary
+          brain. Let me illustrate the idea with a paper instead of computer,
+          and explain why it is uniquely suited for acting as secondary brain.&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;div data-key="1788"&gt;&lt;span data-key="1787"&gt;&lt;span data-offset-key="1787-0"&gt;&lt;br&gt;
+        &lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;div data-key="1790"&gt; &lt;/div&gt;
+    &lt;div data-key="1790"&gt; &lt;span data-key="1789"&gt;&lt;span data-offset-key="1789-0"&gt;Let
+          us say we are going for shopping long list of groceries. What do we
+          do? We list down the items in a paper. Because it is little difficult
+          to remember all the items in memory. I admit that, some of us can
+          remember all the items and with some memory exercises almost all of us
+          are capable of doing the same. But is there any use in remembering
+          those list of groceries in memory? Or is there a point in spending
+          time on memorising that list?&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;div data-key="1790"&gt;&lt;span data-key="1789"&gt;&lt;span data-offset-key="1789-0"&gt;&lt;br&gt;
+        &lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;div data-key="1790"&gt; &lt;/div&gt;
+    &lt;div data-key="1792"&gt; &lt;span data-key="1791"&gt;&lt;span data-offset-key="1791-0"&gt;Let
+          us take a complex example. In blindfold chess, the players are
+          blindfolded and they say aloud the pieces to move and where to move.
+          There is a third person who actually carryout the moves. No think
+          about how players have to keep track of the piece positions and
+          simulate the moves before shouting out the next move. Compare that
+          with how easy it would be to look at the board and carry out the
+          calculations of moves.&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;div data-key="1792"&gt;&lt;span data-key="1791"&gt;&lt;span data-offset-key="1791-0"&gt;&lt;br&gt;
+        &lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;div data-key="1792"&gt; &lt;/div&gt;
+    &lt;div data-key="1798"&gt; &lt;span data-key="1793"&gt;&lt;span data-offset-key="1793-0"&gt;In
+          the above examples, we offload the unnecessary things onto outside
+          elements like paper and chess board. leaving room for more important
+          things in brain. I think it is safe to assume that now you might have
+          understood the usefullness of very simple tools like papers and chess
+          boards. Imagine what computer can do, and what we can do with
+          computers. Unlike papers and chess boards, the computer can carry out
+          calculations on their own(computer play chess too), be as simple as
+          they seem when compared to our brain. This makes it an effective tool
+          to act as a secondary brain. What I mean by secondary brain will
+          become apparent as we travel along.&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;div data-key="1798"&gt; &lt;/div&gt;
+    &lt;div data-key="1798"&gt; &lt;span data-key="1793"&gt;&lt;span data-offset-key="1793-0"&gt;This
+          document will serve as an informal specification of how I image the
+          secondary brain might work.  See you on next post.&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;div data-key="1798"&gt; &lt;span data-key="1793"&gt;&lt;span data-offset-key="1793-0"&gt;&lt;br&gt;
+        &lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;div data-key="1798"&gt; &lt;span data-key="1793"&gt;&lt;span data-offset-key="1793-0"&gt;#CHERU::SecondaryBrain&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;p&gt;&lt;/p&gt;
+  </description><category>cheru</category><category>ideas</category><category>organizing</category><guid>https://vanangamudi.github.io/posts/cheru-secondary-brain-intro/</guid><pubDate>Fri, 24 Mar 2017 19:32:52 GMT</pubDate></item></channel></rss>
