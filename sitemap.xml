@@ -7,15 +7,23 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://jayamuthu.github.io/</loc>
-  <lastmod>2018-09-02T16:11:00Z</lastmod>
+  <lastmod>2018-09-02T16:14:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://jayamuthu.github.io/2018/</loc>
+  <lastmod>2018-09-02T16:14:00Z</lastmod>
  </url>
  <url>
   <loc>https://jayamuthu.github.io/archive.html</loc>
-  <lastmod>2018-09-02T16:11:00Z</lastmod>
+  <lastmod>2018-09-02T16:14:00Z</lastmod>
  </url>
  <url>
   <loc>https://jayamuthu.github.io/categories/</loc>
   <lastmod>2018-09-02T16:11:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://jayamuthu.github.io/posts/first-one/</loc>
+  <lastmod>2018-09-02T16:14:00Z</lastmod>
  </url>
  <url>
   <loc>https://jayamuthu.github.io/stories/aboutme/</loc>
