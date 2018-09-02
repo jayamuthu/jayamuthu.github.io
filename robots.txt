@@ -1,4 +1,4 @@
-Sitemap: https://vanangamudi.github.io/sitemapindex.xml
+Sitemap: https://jayamuthu.github.io/sitemapindex.xml
 
 User-Agent: *
-Host: vanangamudi.github.io
+Host: jayamuthu.github.io
