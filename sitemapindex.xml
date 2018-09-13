@@ -6,11 +6,27 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
+  <loc>https://jayamuthu.github.io/categories/cat_nn.xml</loc>
+  <lastmod>2018-09-13T19:16:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://jayamuthu.github.io/categories/cnn.xml</loc>
+  <lastmod>2018-09-13T19:16:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://jayamuthu.github.io/categories/introduction.xml</loc>
+  <lastmod>2018-09-13T19:16:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://jayamuthu.github.io/categories/neural-networks.xml</loc>
+  <lastmod>2018-09-13T19:16:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://jayamuthu.github.io/rss.xml</loc>
-  <lastmod>2018-09-02T16:14:00Z</lastmod>
+  <lastmod>2018-09-13T19:16:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jayamuthu.github.io/sitemap.xml</loc>
-  <lastmod>2018-09-02T16:14:00Z</lastmod>
+  <lastmod>2018-09-13T19:16:00Z</lastmod>
  </sitemap>
 </sitemapindex>

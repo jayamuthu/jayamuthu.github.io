@@ -2,20 +2,43 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# fb: http://ogp.me/ns/fb# " lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="interpretations of my observations">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>jayamuthu</title>
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="assets/css/rst.css" rel="stylesheet" type="text/css">
-<link href="assets/css/code.css" rel="stylesheet" type="text/css">
-<link href="assets/css/colorbox.css" rel="stylesheet" type="text/css">
-<link href="assets/css/theme.css" rel="stylesheet" type="text/css">
+<title>Convolutional Neural Networks | jayamuthu</title>
+<link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
 <meta name="theme-color" content="#5670d4">
 <meta name="generator" content="Nikola (getnikola.com)">
-<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
-<link rel="canonical" href="https://jayamuthu.github.io/">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="https://jayamuthu.github.io/posts/cnn/">
 <meta property="fb:app_id" content="selvakumar.v2.x">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/cnn/" type="text/html">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="jayamuthu">
+<link rel="prev" href="../../posts/first-one/" title="First One" type="text/html">
+<meta property="og:site_name" content="jayamuthu">
+<meta property="og:title" content="Convolutional Neural Networks">
+<meta property="og:url" content="https://jayamuthu.github.io/posts/cnn/">
+<meta property="og:description" content="font-size:20px;
+  text-align:center;
+display: block;
+    margin-left: auto;
+    margin-right: auto;
+  
+}
+div.convolutional {
+    text-indent: 100px;
+
+}
+.center{
+display: block;
+    margin-left: auto;
+">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2018-09-02T21:43:40+05:30">
+<meta property="article:tag" content="CNN">
+<meta property="article:tag" content="Introduction">
+<meta property="article:tag" content="Neural networks">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -40,16 +63,16 @@
         <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
             <ul class="nav navbar-nav">
 <li>
-<a href="archive.html">Archive</a>
+<a href="../../archive.html">Archive</a>
                 </li>
 <li>
-<a href="categories/">Tags</a>
+<a href="../../categories/">Tags</a>
                 </li>
 <li>
-<a href="rss.xml">RSS feed</a>
+<a href="../../rss.xml">RSS feed</a>
                 </li>
 <li>
-<a href="stories/aboutme">About me</a>
+<a href="../../stories/aboutme">About me</a>
                 </li>
 <li>
 <a href="https://github.com/jayamuthu">Github</a>
@@ -57,7 +80,13 @@
                 
             </li>
 </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="../../posts/cnn/index.src.html" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
 </div>
 <!-- /.navbar-collapse -->
     </div>
@@ -68,23 +97,26 @@
         <div class="row">
             
             
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="../../posts/cnn/" class="u-url">Convolutional Neural Networks</a></h1>
 
-    
-<div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/cnn/" class="u-url">Convolutional Neural Networks</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                jayamuthu
+                    jayamuthu
             </span></p>
-            <p class="dateline"><a href="posts/cnn/" rel="bookmark"><time class="published dt-published" datetime="2018-09-02T21:43:40+05:30" title="2018-09-02 21:43">2018-09-02 21:43</time></a></p>
+            <p class="dateline"><a href="../../posts/cnn/" rel="bookmark"><time class="published dt-published" datetime="2018-09-02T21:43:40+05:30" itemprop="datePublished" title="2018-09-02 21:43">2018-09-02 21:43</time></a></p>
                 <p class="commentline">
         
 <span class="fb-comments-count" data-url="/posts/cnn/">
 
 
+            
+        <p class="sourceline"><a href="../../posts/cnn/index.src.html" id="sourcelink">Source</a></p>
+
         </span></p>
 </div>
-    </header><div class="p-summary entry-summary">
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
     font-size:20px;
   text-align:center;
 display: block;
@@ -119,7 +151,7 @@ div.convnet{
 <div class="convnet">
 <h1>WHAT IS CONVOLUTIONAL NEURAL NETWORK</h1>
 <p>
-<img src="images/cnn/how%20human%20sees.jpeg" class="humansees"></p>
+<img src="../../images/cnn/how%20human%20sees.jpeg" class="humansees"></p>
 
 
 <div class="paragraph">
@@ -132,7 +164,7 @@ to detect objects of an images and various position in images. CNN's are one of 
 For instance, the first layer might detect edges and curves in the image, the second layer might detect object body-parts(e.g., hands or paws or ears), the third layer might detect the whole object, etc</p>
 </div>
 
-<div class="_input to the network"><img src="images/cnn/threeinput.png" class="three" height="300" width="700"></div>
+<div class="_input to the network"><img src="../../images/cnn/threeinput.png" class="three" height="300" width="700"></div>
 <p>
 </p>
 <div class="paragraph">
@@ -149,7 +181,7 @@ Feature extraction and classification are two key stages of a typical computer v
 <p>Difficult tasks require richer feature representation. It is difficult to detect a cat than detecting a digit. 
 </p>
 
-<p><img src="images/cnn/feature%20values.jpeg" height="300" width="500" class="center"></p>
+<p><img src="../../images/cnn/feature%20values.jpeg" height="300" width="500" class="center"></p>
  
 Our samples should have similar feature vectors, irrespective of their models, sizes, positions in the images, etc. Thus, a good feature should be informative, invariant to noise and a set of transformations (e.g., rotation and translation), and fast to compute.  
 For instance, features such as the number of wheels in the images, the number of doors in the images could help to classify the images into two different categories, namely "car"and "non-car."  </div>
@@ -165,7 +197,7 @@ For instance, features such as the number of wheels in the images, the number of
 <h2>CONVOLUTIONAL LAYERS</h2>
 <p>A convolutional layer is the most important component of a CNN. It comprises a set of filters (also called convolutional kernels) which are convolved with a given input to generate an output feature map.
 </p>
-<img src="images/cnn/flash%20man.jpeg" align="right" height="300" width="300">
+<img src="../../images/cnn/flash%20man.jpeg" align="right" height="300" width="300">
 </div>
 
 <div class="paragraph">
@@ -183,7 +215,7 @@ learning terms, this flashlight is called a filter/kernel and the region that it
 In case of 2D convolution each filter is a matrix. As an example 3x3 Given a 2D input feature map and a convolution filter of matrix sizes 5x5 and 3x3, respectively, a convolution layer multiplies the 3x3 filter with a highlighted patch (also 3x3) of the input feature map and sums up all values to generate one value in the output feature map. The filter slides along the width and height of the input feature map and this process continues until the filter can no longer slide further.</p>
 </div>
 
-<img src="images/cnn/convolution%20operation.png" align="middle" height="300" width="600" class="center"><div class="paragraph">
+<img src="../../images/cnn/convolution%20operation.png" align="middle" height="300" width="600" class="center"><div class="paragraph">
 <p>
 </p>
 <p></p>
@@ -198,7 +230,7 @@ Such a reduction in dimensions provides moderate invariance to scale and pose of
 
 </div>
 
-<img src="images/cnn/stride%20without%20pad.jpeg" height="300" width="680" class="center"><div class="paragraph">
+<img src="../../images/cnn/stride%20without%20pad.jpeg" height="300" width="680" class="center"><div class="paragraph">
 <p></p>
 <h2>Zero-Padding:</h2> 
 In convolutional neural networks, zero-padding refers to surrounding a matrix with zeros. This can help preserve features that exist at the edges of the original matrix and control the size of the output feature map. It will allow us to control the spatial size of the output volumes.we will use it to exactly preserve the spatial size of the input volume so the input and output width and height are the same. 
@@ -206,7 +238,7 @@ In convolutional neural networks, zero-padding refers to surrounding a matrix wi
 The computations that are performed at each step, as the filter is slid onto the input feature map to compute the corresponding value of the output feature map. The 3x3 filter is multiplied with the same sized region within a 7x7 input feature map (including zero-padding) and the resulting values are summed up to obtain a corresponding entry in the output feature map at each h x w and a stride length s, the output feature dimensions are given by     
 </div>
 <p>
-<img src="images/cnn/padding%20formula.jpeg" height="250px" width="600px" class="center"></p>
+<img src="../../images/cnn/padding%20formula.jpeg" height="250px" width="600px" class="center"></p>
 
 
 <div class="paragraph">
@@ -215,13 +247,13 @@ The computations that are performed at each step, as the filter is slid onto the
 
 
 
-<img src="images/cnn/padding.jpeg" height="300" width="600" class="center"><div class="paragraph">
+<img src="../../images/cnn/padding.jpeg" height="300" width="600" class="center"><div class="paragraph">
 <p>
 If p denotes the increase in the input feature map along with each dimension (by padding zeros), we can represent the modified output feature map dimensions as follows: </p>
 </div>
 
-<img src="images/cnn/padding%20formula%20with%20p.jpeg" height="150px" width="600px" class="center"><p>The following picture  shows output(3x3) and input(5x5) with zero padding=1 and stride=2,</p>
-<img src="images/cnn/stride.jpeg" height="300" width="600" class="center"><div class="paragraph">
+<img src="../../images/cnn/padding%20formula%20with%20p.jpeg" height="150px" width="600px" class="center"><p>The following picture  shows output(3x3) and input(5x5) with zero padding=1 and stride=2,</p>
+<img src="../../images/cnn/stride.jpeg" height="300" width="600" class="center"><div class="paragraph">
 <p>
 If the convolutional layers were to not zero-pad the inputs and apply only valid convolutions, then the spatial size of the output features will be reduced by a small factor after each convolution layer and the information at the borders will be "washed away" too quickly.</p>
 </div>
@@ -273,7 +305,7 @@ The figure shows the max pooling operation, where the maximum activation is chos
 </p>
 </div>
 
-<p><img src="images/cnn/max%20pooling.jpeg" class="center" height="300" width="600"></p>
+<p><img src="../../images/cnn/max%20pooling.jpeg" class="center" height="300" width="600"></p>
 <div class="paragraph">
 <p></p>
 <h2>FULLY CONNECTED LAYER:</h2>
@@ -282,7 +314,7 @@ The usual feed-forward layer is used at the end of the entire network. Think of 
 
 Fully connected layers correspond essentially to convolution layers with filters of size 1 x 1. Each unit in a fully connected layer is densely connected to all the units of the previous layer. </p>
 </div>
-<p><img src="images/cnn/fully%20connected.jpeg" class="center" height="300" width="600&lt;/img"></p>
+<p><img src="../../images/cnn/fully%20connected.jpeg" class="center" height="300" width="600&lt;/img"></p>
 <div class="paragraph">
 <p>
 The input from the other layers is flattened and sent so as the transform the output into the number of classes as desired by the network. Soft-max activation is used to assign confidence to each of the classes.
@@ -298,7 +330,7 @@ SOFT-MAX FUNCTION:</h2>
 <p>     This is a special kind of activation layer. We will get lots of output values for a set of images. Now we are going to apply soft-max on these value and it produces discrete probability vectors. It is special in the sense, the output for a particular neuron also depends upon every neuron in the layer.</p>
 </div>
 
-<p><img src="images/cnn/softmax%20function.jpeg" class="center" height="300" width="400&lt;/img"></p>
+<p><img src="../../images/cnn/softmax%20function.jpeg" class="center" height="300" width="400&lt;/img"></p>
 
 
 <p>The output then is used to calculate the loss and back-propagation is employed to train the network.</p>
@@ -320,7 +352,7 @@ This layer uses a "loss function," also called the "objective function," to esti
 
 
 
-<p><img src="images/cnn/loss%20formula2.jpeg" class="center" height="150" width="500"></p>
+<p><img src="../../images/cnn/loss%20formula2.jpeg" class="center" height="150" width="500"></p>
 <div class="paragraph">
 <p>
 where y denotes the desired output and p is the probability for each output category. There is a total of N neurons in the output layer. The probability of each class can be calculated using a soft-max function. Due to the form of the normalizing function in the loss, this loss is also called the soft-max loss. </p>
@@ -328,7 +360,7 @@ where y denotes the desired output and p is the probability for each output cate
 
 <div class="paragraph">
 <p>The overall Structure of CNN is following, </p>
-<p><img src="images/cnn/overall%20convolutional%20network.jpeg" class="center" height="400" width="800&lt;/img"></p>
+<p><img src="../../images/cnn/overall%20convolutional%20network.jpeg" class="center" height="400" width="800&lt;/img"></p>
 
 <p>
 To understand this clearly, we can take a sample image, </p>
@@ -366,29 +398,42 @@ Though we mentioned that we use filters of small sizes, because of the hierarchi
 </div>
 </div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/first-one/" class="u-url">First One</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                jayamuthu
-            </span></p>
-            <p class="dateline"><a href="posts/first-one/" rel="bookmark"><time class="published dt-published" datetime="2018-09-02T21:43:40+05:30" title="2018-09-02 21:43">2018-09-02 21:43</time></a></p>
-                <p class="commentline">
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/cnn/" rel="tag">CNN</a></li>
+            <li><a class="tag p-category" href="../../categories/introduction/" rel="tag">Introduction</a></li>
+            <li><a class="tag p-category" href="../../categories/neural-networks/" rel="tag">Neural networks</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../posts/first-one/" rel="prev" title="First One">Previous post</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
         
-<span class="fb-comments-count" data-url="/posts/first-one/">
-
-
-        </span></p>
-</div>
-    </header><div class="p-summary entry-summary">
-    ...# TODO
-    </div>
-    </article>
-</div>
-
-
-
         
 <div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+      appId      : 'selvakumar.v2.x',
+      status     : true,
+      xfbml      : true
+    });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script><div class="fb-comments" data-href="https://jayamuthu.github.io/posts/cnn/" data-width="470"></div>
+
+
+        </section></article><div id="fb-root"></div>
 <script>
     // thank lxml for this
     $('.fb-comments-count').each(function(i, obj) {
@@ -428,7 +473,7 @@ Though we mentioned that we use filters of small sizes, because of the hierarchi
 </div>
 
 
-            <script src="assets/js/jquery.min.js"></script><script src="assets/js/bootstrap.min.js"></script><script src="assets/js/moment-with-locales.min.js"></script><script src="assets/js/fancydates.js"></script><script src="assets/js/jquery.colorbox-min.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+            <script src="../../assets/js/jquery.min.js"></script><script src="../../assets/js/bootstrap.min.js"></script><script src="../../assets/js/moment-with-locales.min.js"></script><script src="../../assets/js/fancydates.js"></script><script src="../../assets/js/jquery.colorbox-min.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
     moment.locale("en");
     fancydates(0, "YYYY-MM-DD HH:mm");
     </script><!-- end fancy dates -->
