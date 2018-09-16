@@ -1,36 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>jayamuthu (Posts about Neural networks)</title><link>https://jayamuthu.github.io</link><description></description><atom:link rel="self" type="application/rss+xml" href="https://jayamuthu.github.io/categories/neural-networks.xml"></atom:link><language>en</language><lastBuildDate>Thu, 13 Sep 2018 19:21:12 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Convolutional Neural Networks</title><link>https://jayamuthu.github.io/posts/cnn/</link><dc:creator>jayamuthu</dc:creator><description>font-size:20px;
-  text-align:center;
-display: block;
-    margin-left: auto;
-    margin-right: auto;
-  
-}
-div.convolutional {
-    text-indent: 100px;
-
-}
-.center{
-display: block;
-    margin-left: auto;
-    margin-right: auto;
-    
-    height=500;
-    width=1000;
-}
-
-
-
-div.convnet{
-
-    margin-right:100px;
-    margin-left: 200px;
-}
-
-
-
-
-&lt;div class="convnet"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>jayamuthu (Posts about Neural networks)</title><link>https://jayamuthu.github.io</link><description></description><atom:link rel="self" type="application/rss+xml" href="https://jayamuthu.github.io/categories/neural-networks.xml"></atom:link><language>en</language><lastBuildDate>Sun, 16 Sep 2018 05:08:25 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Convolutional Neural Networks</title><link>https://jayamuthu.github.io/posts/cnn/</link><dc:creator>jayamuthu</dc:creator><description>&lt;div class="convnet"&gt;
 &lt;h1&gt;WHAT IS CONVOLUTIONAL NEURAL NETWORK&lt;/h1&gt;
 &lt;p&gt;
 &lt;img src="https://jayamuthu.github.io/images/cnn/how%20human%20sees.jpeg" class="humansees"&gt; &lt;/p&gt;
